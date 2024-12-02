@@ -1,0 +1,115 @@
+<div class="container">
+  <form [formGroup]="basicData" (ngSubmit)="basicsave(basicData.value)">
+    <h2 class="headtitel">Loan Facilities Detail</h2>
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Loan Main Category
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="prdSche"
+        (ionChange)="schemeChng($event, 'chng')">
+        <ion-select-option *ngFor="let pdt of scheme_master;let i=index" [value]="pdt.CODE">{{pdt.NAME}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!basicData.controls.prdSche.valid && (basicData.controls.prdSche.touched)">
+      <span class="errText">Must select Main Loan Product.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Loan Sub Category
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="janaLoan"
+        (ionChange)="productChange('prdChange')" (ionBlur)="productCheck()">
+        <ion-select-option *ngFor="let pdt of pdt_master;let i=index" [value]="pdt.prdCode">{{pdt.prdDesc}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!basicData.controls.janaLoan.valid && (basicData.controls.janaLoan.touched)">
+      <span class="errText">Must select Sub Category Desc.</span>
+    </span>
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Loan Amount Requested (in Rs.)
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input numberonly formControlName="loanAmount" type="tel" maxlength="10" [min]="loanAmountFrom"
+        [max]="loanAmountTo" (ionBlur)="calcProcessFess()">
+      </ion-input>
+    </ion-item>
+    <div
+      *ngIf="basicData.controls.loanAmount.value != '' && basicData.controls.loanAmount.value != undefined && basicData.controls.loanAmount.value != null"
+      class="message">
+      <ion-row>
+        <ion-col text-left>Loan amount between
+          <b>{{ loanAmountFrom }}</b> to
+          <b>{{ loanAmountTo }}.</b>
+        </ion-col>
+      </ion-row>
+    </div>
+    <span *ngIf="!basicData.controls.loanAmount.valid && (basicData.controls.loanAmount.touched)">
+      <span class="errText">Please enter valid Loan Amount(Only Numbers are allowed).</span>
+    </span>
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Tenure (Months)
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input numberonly formControlName="tenure" type="tel" maxlength="3" (ionBlur)="checkTenureProduct()">
+      </ion-input>
+    </ion-item>
+    <div
+      *ngIf="basicData.controls.tenure.value != '' && basicData.controls.tenure.value != undefined && basicData.controls.tenure.value != null"
+      class="message">
+      <ion-row>
+        <ion-col class="errorText">Tenure period between
+          <b>{{ tenureFrom }}</b> to
+          <b>{{ tenureTo }}.</b>
+        </ion-col>
+      </ion-row>
+    </div>
+    <span *ngIf="!basicData.controls.tenure.valid && (basicData.controls.tenure.touched)">
+      <span class="errText">Please enter valid Tenure (Only Numbers are allowed).</span>
+    </span>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Interest Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="interest"
+        (ionChange)="getIntRate($event)">
+        <ion-select-option *ngFor="let yn of intType;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!basicData.controls.interest.valid && (basicData.controls.interest.dirty || basicData.controls.interest.touched)">
+      <span class="errText">Must select the Interest Type.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Interest Rate
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="tel" maxlength="5" formControlName="intRate" [disabled]="true"></ion-input>
+    </ion-item>
+    <span *ngIf="basicData.controls.intRate.invalid && (basicData.controls.intRate.touched)">
+      <span class="errText">Enter Valid Interest Rate.</span>
+    </span>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button class="proceedbtn" shape="round" type="submit"
+            [disabled]="(basicData.invalid) || submitDisable">Save</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+
+
+  <ion-fab slot="fixed" horizontal="end">
+    <div class="fabBadge">{{signImglen}}</div>
+    <ion-fab-button style="--background: #DA107E;" (click)="signatureImg('sign')">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</div>

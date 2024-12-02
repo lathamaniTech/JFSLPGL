@@ -1,0 +1,127 @@
+
+.segment03 ion-segment{
+    width: 100% !important;
+    display: block !important;
+    }
+    .segment03 ion-segment-button {
+        font-size:13px;
+        width: 49% !important;
+        display: inline-block !important;
+        opacity: 1 !important;
+        --background:#da107e;
+        --color:#ffffff;
+        --background-checked: #fba41d !important;;
+        --color-checked: white;
+        --indicator-color : transparent!important; 
+        --indicator-box-shadow: transparent!important;
+       }
+
+
+       
+.custom-popover::part(content) {
+    width: auto !important;
+    right: 20px !important;
+    left: auto !important;
+    transform-origin: right top !important;
+    max-width: 90% !important;
+    white-space: pre-line !important;
+  }
+    
+
+.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+    border-color:#da107e !important;
+}
+
+.icon-zoom{
+    zoom: 2.0;
+}
+
+.layout{
+    border:1px solid #da107e;
+    border-radius:10px;
+    margin:10px;
+    display: flex;
+    padding:10px;
+    padding-bottom:0px;
+}
+
+.roundImg{
+    width: 80px;
+    height: 80px;
+    border-radius: 7px;
+}
+.wrapper1{
+    margin-right: 10px;
+}
+
+.wrapper2 h4{
+    margin-bottom:0px !important;
+}
+
+.wrapper2 ion-icon{
+    margin-bottom:7px;
+    color: #da107e;
+    zoom:1.2;
+}
+
+.wrapper2 strong{
+    margin-left:10px;
+    color:gray;
+}
+
+.buttonMd{
+    width:100%;
+    margin-top:-14px;
+}
+
+.NoDataContent{
+    height:50px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    position: absolute;
+ }
+ .NoDataContent h2{
+    color: darkgray;font-weight: bold;text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ }
+
+ .inner {
+    padding: 5px;
+    margin: 10px;
+}
+
+.questions {
+    margin-top: 15px;
+    font-size: 1.2rem;
+}
+
+.badge {
+    background: #da107e;
+    color: #fff;
+    padding: 5px 10px;
+    margin-left: 15px;
+    width: 50px;
+    line-height:50px;
+}
+
+.animblink{
+    animation: blink 0.2s 10;
+}
+
+@keyframes blink {
+    0% {
+        background: green;
+        color:white;
+    }
+    100% {
+        background: white;
+        color:green;
+    }
+  }
+
+.margin2px{
+    margin-top: 2px !important;
+}

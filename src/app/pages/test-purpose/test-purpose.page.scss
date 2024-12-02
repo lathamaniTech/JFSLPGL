@@ -1,0 +1,214 @@
+#top {
+    width: 100%;
+    height: 0%;
+    background-color: transparent;
+    transition: height 500ms linear;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 0;
+}
+
+#bottom {
+    height: 0px;
+    transition: height 500ms linear;
+    left: 0 !important;
+    right: 0 !important;
+    position: absolute;
+    bottom: 0%;
+}
+
+.bg {
+    width: 100vw;
+    height: 100vh;
+    background-color: whitesmoke;
+    opacity: 0.9;
+    position: absolute;
+}
+
+.mainCnt {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    top: 120px;
+    transition: width 1000ms linear, height 1000ms linear;
+}
+
+.lendPerfect {
+    color: var(--JFS-color-background);
+    margin: 20px auto !important;
+    text-align: center !important;
+    font-weight: bold !important;
+}
+
+.singleLine {
+    border-bottom: 2px solid var(--JFS-color-background);
+    width: 60px;
+}
+
+.module {
+    color: var(--JFS-color-background);
+    margin: 50px auto;
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.inputval {
+    width: 40%;
+    padding: 12px;
+    border-radius: 50px;
+    resize: vertical;
+    font-size: 15px;
+}
+
+.btn {
+    margin-bottom: 10% !important;
+    color: #e6ffff !important;
+    background: linear-gradient(to left, #fba41d 23%, #da107e 100%) !important;
+    border: 1px solid #000000 !important;
+    font-weight: bold !important;
+}
+
+.outer {
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    color: #000000 !important;
+    bottom: 5px;
+    margin: 0px;
+    text-align: center !important;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+#roundLogo {
+    width: 0;
+    height: 50%;
+    background: whitesmoke;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 999;
+    top: 5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 500ms linear;
+}
+
+.loginCard {
+    margin: 0 auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    text-align: center;
+    --background: linear-gradient(to bottom, #fba41d 5%, #da107e 140%) !important;
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+}
+
+.mainCont {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.credentials {
+    width: 85%;
+    height: 55px;
+    margin: 25px auto;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.credentials .icon {
+    margin-right: 10px;
+    color: #888;
+    font-size: 25px;
+    margin-top: 5px;
+}
+
+.credentials input {
+    border: none;
+    outline: none;
+    flex: 1;
+    height: 100%;
+    font-size: 16px;
+    border-radius: 50px;
+    padding: 0 15px;
+}
+
+.credentials input::placeholder {
+    color: #ccc;
+}
+
+.credentials .icon i {
+    font-size: 20px;
+}
+
+.credentials.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+#wlcm {
+    color: transparent;
+    height: 70%;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    position: relative;
+    padding-top: 100px;
+}
+
+// .farrow {
+//     width: 20%;
+//     padding: 10px;
+//     border-radius: 50px;
+//     resize: vertical;
+//     font-size: 20px;
+//     padding-top: 14px;
+//     background-color: var(--JFS-color-gold);
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+// }
+
+
+.farrow {
+    width: 20%;
+    padding: 10px;
+    border-radius: 50px;
+    resize: vertical;
+    font-size: 20px;
+    padding-top: 14px;
+    background-color: var(--JFS-color-gold);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.farrow.show {
+    transform: scale(1);
+    opacity: 1;
+}

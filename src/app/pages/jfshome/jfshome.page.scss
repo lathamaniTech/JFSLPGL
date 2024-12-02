@@ -1,0 +1,212 @@
+@media screen and (max-width: 480px) {
+    ion-footer ion-title .toolbar-title-md{
+        font-size: 1.2rem !important;
+       }
+       .lmsLeads {
+        margin: 1vh auto 0 auto !important;
+        --background: #D6D6D4 !important;
+        height: 50px;
+        position: relative;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 2px 24px #888;
+        box-shadow: 0px 2px 24px #888;
+    }
+    }
+   ion-footer .toolbar-background-md{
+       --background: #E9E9EC !important;
+   }
+   ion-footer ion-title{
+    text-align: center;
+   }
+   ion-footer ion-title .toolbar-title-md{
+    font-size: 1.5rem;
+   }
+   ion-content{
+           --background: #E9E9EC !important;
+       }
+       .carduser{
+           width:100% !important;
+       }
+   .subheadingmob{
+       --background: #7A9BC8 !important;
+       color:#ffffff !important;
+       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   }
+   .subheadingmob ion-col{
+           padding:2% 0;
+   }
+   .tabnewapp p img{
+       width:70%;
+       height:auto;
+       max-width: 420px;
+   }
+   .tabexistapp p img{
+       width:70%;
+       height:auto;
+       max-width: 420px;
+   }
+   .tabappStatus p img{
+       width:70%;
+       height:auto;
+       max-width: 420px;
+   }
+   .tablapsUpdate p img{
+       width:70%;
+       height:auto;
+       max-width: 420px;
+   }
+   ion-card{
+       border-radius:5px;
+   }
+   .contentui{
+       height:auto;
+   }
+   .crops{
+       border-left:5px solid green;
+   }
+   .crops .cardicon{
+       color:green;
+   }
+   .newuser{
+       border-left:5px solid darkgray;
+   }
+   .newuser .cardicon{
+       color:darkgray;
+   }
+   .appstatus{
+       border-left:5px solid red;
+   }
+   .appstatus .cardicon{
+       color:red;
+   }
+   .masupdates{
+       border-left:5px solid blue;
+   }
+   .masupdates .cardicon{
+       color:blue;
+   }
+   .cardimg{
+       width:90%;
+       height:90%;
+       border-radius:50%;
+       max-width:120px;
+       max-height:120px;
+       padding:5%;
+   }
+   ion-row .cardicon{
+       font-size:52px !important;
+       text-align: center;
+   }
+   h4{
+       font-size:14px;
+   }
+   .applicationtitle{
+       font-size:20px;
+       font-weight: bold;
+       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   }
+ @media only screen and (min-width:480px) {
+            .subheadingmob ion-col{
+           zoom: 1.5;
+   }
+    .centertab{
+        height:80vh;
+        position: relative;
+    }
+    .centertab  .axisui{
+    margin-top:7vh;
+    }
+     .mobileui{
+         display:none;
+     }
+     .axisui{ margin:0 auto;
+         --background:#d6d6d4;
+         height:180px;
+         //width:180px;
+         position: relative;
+         border-radius:5px;
+         box-shadow: 0px 2px 24px #888 !important;
+     }
+     .axisui ion-icon{
+         font-size:90px !important;
+     }
+     .axisui .center{
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        text-align: center;
+        transform: translate(-50%, -50%) }
+     }
+     .statusBar{
+        height: 25px;
+        --background: #FBA41D !important;
+    }
+    .statusBar ion-col{
+        padding:2px 0px 0px 0px !important;
+    }
+    .statusBar ion-grid{
+        padding-left: 10px !important;
+    }
+    ion-title
+    {
+        position: absolute !important;
+        width: 100% !important;
+        min-height: 56px;
+        text-align: center !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+    .rblred{
+        color: #F50688;
+    }
+.logofooter{
+width: 75px !important;
+height: 45px !important;
+padding: 3px !important;
+border-radius: 5px !important;
+}
+.LMS_icon{
+position: absolute !important;
+right: 20px !important;
+float: right !important;
+text-align: right !important;
+}
+.lmsLeads{ margin: 5vh auto 0 auto;
+  --background:#d6d6d4 !important;
+  height: 50px;
+  //width:180px;
+  position: relative;
+  border-radius:5px;
+  box-shadow: 0px 2px 24px #888;
+}
+.lmsLeads h4{
+font-size: 20px;
+color: #F50688 !important;
+margin-top: 0.3rem !important;
+}
+.lmsLeads .center{
+margin: 0;
+position: absolute;
+top: 50%;
+left: 50%;
+margin-right: -50%;
+text-align: center;
+padding-top: 8px;
+transform: translate(-50%, -50%)
+}
+.scroll-content{
+margin-bottom: 50px !important;
+}
+.rowBox{
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid #8888;
+    box-shadow: 0px 0px 7px #888;
+}

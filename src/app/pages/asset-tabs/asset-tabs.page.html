@@ -1,0 +1,1336 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Vehicle Details</ion-title>
+    <ion-buttons slot="start">
+      <!-- <ion-menu-button autoHide="true"></ion-menu-button> -->
+      <br>
+    </ion-buttons>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding" scrollY="true" (ionScroll)="onScrolling()">
+
+  <form [formGroup]="vehicleDetails" (ngSubmit)="vehicleDetailsSave(vehicleDetails.value)">
+
+    <div class="itemcard" *ngIf="this.vehicleType=='N'">
+      <ion-item-divider style="color: white;--background: #da107e; padding: 5px;">
+        New Vehicle
+      </ion-item-divider>
+    </div>
+
+    <div class="itemcard" *ngIf="this.vehicleType!=='N'">
+      <ion-item-divider style="color: white;--background: #da107e; padding: 5px;">
+        Used Vehicle
+      </ion-item-divider>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Catogery
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="vehicleCatogery" interface="popover" [interfaceOptions]="customPopoverOptions"
+        (ionChange)="orpApiValueChangeFieldReset('catogery')">
+        <ion-select-option *ngFor="let yn of vehicleCatogeryList;let i=index" [value]="yn">{{ yn }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.vehicleCatogery.invalid && (vehicleDetails.controls.vehicleCatogery.touched)">
+      <span *ngIf="vehicleDetails.controls.vehicleCatogery.errors.required">
+        <span class="errText">Must Select Vehicle Catogery.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable" >
+      <ion-label position="floating">Brand
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select *ngIf='makeApiList.length > 0' formControlName="brandName" interface="popover"
+        [interfaceOptions]="customPopoverOptions" (ionChange)="orpAuthFetch('model')">
+        <ion-select-option *ngFor="let model of makeApiList;let i=index" [value]="model">{{ model }}
+        </ion-select-option>
+      </ion-select>
+      <ion-input type="text" *ngIf='makeApiList.length == 0' formControlName="brandName"
+        [disabled]="submitDisable"></ion-input>
+      <!-- <ionic-selectable formControlName="brandName" [(ngModel)]="vehicleBrand" [items]="vehicleBrands"
+        itemValueField="optionValue" itemTextField="optionDesc" [canSearch]="true" [shouldStoreItemValue]="true"
+        (click)="onSearch()" [ngClass]="{'readonly-style': submitDisable}">
+      </ionic-selectable> -->
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.brandName.invalid && (vehicleDetails.controls.brandName.touched)">
+      <span *ngIf="vehicleDetails.controls.brandName.errors.required">
+        <span *ngIf='makeApiList.length > 0' class="errText">Must Select Brand Name.</span>
+        <span *ngIf='makeApiList.length == 0' class="errText">Must Enter Brand Name.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Model
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select *ngIf='modelApiList.length > 0' formControlName="model" interface="popover"
+        [interfaceOptions]="customPopoverOptions" [disabled]="submitDisable" (ionChange)="orpAuthFetch('variant')">
+        <ion-select-option *ngFor="let model of modelApiList;let i=index" [value]="model">{{ model }}
+        </ion-select-option>
+      </ion-select>
+      <ion-input type="text" *ngIf='modelApiList.length == 0' formControlName="model"
+        [disabled]="submitDisable"></ion-input>
+      <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="model">
+        <ion-select-option *ngFor="let model of modelMaster;let i=index" [value]="model.modelId">{{ model.modelName }}
+        </ion-select-option>
+      </ion-select> -->
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.model.invalid && (vehicleDetails.controls.model.touched)">
+      <span *ngIf="vehicleDetails.controls.model.errors.required">
+        <span *ngIf='modelApiList.length > 0' class="errText">Must Select Vehicle Model.</span>
+        <span *ngIf='modelApiList.length == 0' class="errText">Must Enter Vehicle Model.</span>
+      </span>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Year Of Manufacture
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="yearOfMan" interface="popover" [interfaceOptions]="customPopoverOptions"
+          [disabled]="submitDisable" (ionChange)="orpAuthFetch('variant')">
+          <ion-select-option *ngFor="let model of yearList;let i=index" [value]="model">{{ model }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.yearOfMan.invalid && (vehicleDetails.controls.yearOfMan.touched)">
+        <span *ngIf="vehicleDetails.controls.yearOfMan.errors.required">
+          <span class="errText">Must enter Year Of Manufacture.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.yearOfMan.errors.pattern">
+          <span class="errText">Enter valid Year Of Manufacture.</span>
+        </span>
+        <span
+          *ngIf="(vehicleDetails.controls.yearOfMan.errors?.minlength || vehicleDetails.controls.yearOfMan.errors?.maxlength)">
+          <span class="errText">Minimum and Maximum of 4 Numbers.</span>
+        </span>
+      </div>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Variant
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select *ngIf='varientApiList.length > 0' interface="popover" [interfaceOptions]="customPopoverOptions"
+        formControlName="variant" (ionChange)="this.vehicleType == 'N' ? this.orpAuthFetch('ORP') : vehicleDetails.controls.kmDriven.setValue('')">
+        <ion-select-option *ngFor="let model of varientApiList;let i=index" [value]="model">{{ model }}
+        </ion-select-option>
+      </ion-select>
+      <ion-input type="text" *ngIf='varientApiList.length == 0' formControlName="variant"
+        [disabled]="submitDisable" (ionBlur)="vehicleDetails.controls.kmDriven.setValue('')"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.variant.invalid && (vehicleDetails.controls.variant.touched)">
+      <span *ngIf="vehicleDetails.controls.variant.errors.required">
+        <span *ngIf='varientApiList.length > 0' class="errText">Must Select Vehicle Variant.</span>
+        <span *ngIf='varientApiList.length == 0' class="errText">Must Enter Vehicle Variant.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">CC
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="tel" formControlName="cc" maxlength="4"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.cc.invalid && (vehicleDetails.controls.cc.touched)">
+      <span *ngIf="vehicleDetails.controls.cc.errors.required">
+        <span class="errText">Must enter cc.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.cc.errors.pattern">
+        <span class="errText">Enter cc.</span>
+      </span>
+    </div>
+
+
+    <div class="mobileverify" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">RC No.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="rcNo" autocapitalize="characters"></ion-input>
+      </ion-item>
+      <ion-button *ngIf="!rcVerify" type="button" shape="round" class="btn"
+        [disabled]="vehicleDetails.controls.rcNo.invalid || submitDisable"
+        (click)="fetchDetailsFromRC()">Verify</ion-button>
+      <ion-button *ngIf="rcVerify" type="button" shape="round" color="success">Verified</ion-button>
+    </div>
+    <div *ngIf="vehicleDetails.controls.rcNo.invalid && (vehicleDetails.controls.rcNo.touched)">
+      <span *ngIf="vehicleDetails.controls.rcNo.errors.required">
+        <span class="errText">Must enter RC No.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.rcNo.errors.pattern">
+        <span class="errText">Enter valid RC No.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.rcNo.errors?.maxlength">
+        <span class="errText">Maximum of 10 characters.</span>
+      </span>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Engine No.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="engineNo"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.engineNo.invalid && (vehicleDetails.controls.engineNo.touched)">
+        <span *ngIf="vehicleDetails.controls.engineNo.errors.required">
+          <span class="errText">Must enter Engine No.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.engineNo.errors.pattern">
+          <span class="errText">Enter valid Engine No.</span>
+        </span>
+        <span
+          *ngIf="vehicleDetails.controls.engineNo.errors?.minlength || vehicleDetails.controls.engineNo.errors?.maxlength">
+          <span class="errText">Minimum and Maximum of 10 to 12 characters.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Chassis No.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="chassisNo"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.chassisNo.invalid && (vehicleDetails.controls.chassisNo.touched)">
+        <span *ngIf="vehicleDetails.controls.chassisNo.errors.required">
+          <span class="errText">Must enter Chassis No.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.chassisNo.errors.pattern">
+          <span class="errText">Enter valid Chassis No.</span>
+        </span>
+        <span
+          *ngIf="(vehicleDetails.controls.chassisNo.errors?.minlength || vehicleDetails.controls.chassisNo.errors?.maxlength)">
+          <span class="errText">Minimum and Maximum of 17 Characters.</span>
+        </span>
+      </div>
+    </div>
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item class="field" [disabled]="submitDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Vehicle Name as per RC
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="nameAsPerRC"></ion-input>
+      </ion-item>
+    </div>
+
+    <!-- <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Year Of Manufacture
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" maxlength="4" formControlName="yearOfMan" (ionBlur)="calculateRegDate()"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.yearOfMan.invalid && (vehicleDetails.controls.yearOfMan.touched)">
+        <span *ngIf="vehicleDetails.controls.yearOfMan.errors.required">
+          <span class="errText">Must enter Year Of Manufacture.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.yearOfMan.errors.pattern">
+          <span class="errText">Enter valid Year Of Manufacture.</span>
+        </span>
+        <span
+          *ngIf="(vehicleDetails.controls.yearOfMan.errors?.minlength || vehicleDetails.controls.yearOfMan.errors?.maxlength)">
+          <span class="errText">Minimum and Maximum of 4 Numbers.</span>
+        </span>
+      </div>
+    </div> -->
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Registration date
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="date" formControlName="registrationDate" [min]="minRegDate" [max]="maxRegDate"
+          (ionChange)="calculateVehicleAge()"></ion-input>
+        <!-- <ion-datetime displayFormat="DD-MM-YYYY" [min]="minRegDate" [max]="maxRegDate"
+          formControlName="registrationDate" pickerFormat="DD MMM YYYY"
+          (ionChange)="calculateVehicleAge()"></ion-datetime> -->
+      </ion-item>
+      <div
+        *ngIf="vehicleDetails.controls.registrationDate.invalid && (vehicleDetails.controls.registrationDate.touched)">
+        <span *ngIf="vehicleDetails.controls.registrationDate.errors.required">
+          <span class="errText">Must Select Registration date.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">Vehicle Age
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="vehicleAge">
+          <ion-select-option *ngFor="let yn of vehicleAgeMaster;let i=index" [value]="yn.CODE">{{ yn.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.vehicleAge.invalid && (vehicleDetails.controls.vehicleAge.touched)">
+        <span *ngIf="vehicleDetails.controls.vehicleAge.errors.required">
+          <span class="errText">Must Select Vehicle Age.</span>
+        </span>
+      </div>
+    </div>
+
+
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">Hypothecation Status
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="hypothecation" [disabled]="submitDisable"></ion-input>
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="hypothecation">
+          <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.hypothecation.invalid && (vehicleDetails.controls.hypothecation.touched)">
+        <span *ngIf="vehicleDetails.controls.hypothecation.errors.required">
+          <span class="errText">Must Select Hypothecation Status.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">Number of Owner
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="noofOwner" [disabled]="submitDisable"></ion-input>
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="noofOwner">
+          <ion-select-option *ngFor="let own of ownerList;let i=index" [value]="own.code">{{ own.name
+            }}</ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.noofOwner.invalid && (vehicleDetails.controls.noofOwner.touched)">
+        <span *ngIf="vehicleDetails.controls.noofOwner.errors.required">
+          <span class="errText">Must Select Number of Owner.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">KM's Driven
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="kmDriven" (ionBlur)="orpAuthFetch('ORP')"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.kmDriven.invalid && (vehicleDetails.controls.kmDriven.touched)">
+        <span *ngIf="vehicleDetails.controls.kmDriven.errors.required">
+          <span class="errText">Must enter driven kilometres.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.kmDriven.errors.pattern">
+          <span class="errText">Enter valid driven kilometres.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">On Road Price/Vehicle cost
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input numberonly type="tel" formControlName="onroadPrice" (ionBlur)="orpApiPriceCheck()"
+          (ionChange)="loanAmtRoadPriceCheck()"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.onroadPrice.invalid && (vehicleDetails.controls.onroadPrice.touched)">
+        <span *ngIf="vehicleDetails.controls.onroadPrice.errors.required">
+          <span class="errText">Must enter on road Price.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.onroadPrice.errors.pattern">
+          <span class="errText">Enter valid on road Price.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable">
+        <ion-label position="floating">Dealer quotation
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input numberonly type="tel" formControlName="dealerQuotation" (ionBlur)="finalAssetPrice()"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.dealerQuotation.invalid && (vehicleDetails.controls.dealerQuotation.touched)">
+        <span *ngIf="vehicleDetails.controls.dealerQuotation.errors.required">
+          <span class="errText">Must enter Dealer quotation.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.dealerQuotation.errors.pattern">
+          <span class="errText">Enter valid Dealer quotation.</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="submitDisable || obvEditable">
+        <ion-label position="floating">OBV
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input numberonly type="tel" formControlName="obv" (ionBlur)="finalAssetPrice()"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.obv.invalid && (vehicleDetails.controls.obv.touched)">
+        <span *ngIf="vehicleDetails.controls.obv.errors.required">
+          <span class="errText">Must enter OBV.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.obv.errors.pattern">
+          <span class="errText">Enter valid OBV.</span>
+        </span>
+      </div>
+    </div>
+
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Scheme
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="scheme">
+        <ion-select-option *ngFor="let yn of schemeMaster;let i=index" [value]="yn.CODE">{{ yn.NAME
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.scheme.invalid && (vehicleDetails.controls.scheme.touched)">
+      <span *ngIf="vehicleDetails.controls.scheme.errors.required">
+        <span class="errText">Must Select Vehicle Scheme.</span>
+      </span>
+    </div>
+
+    <div class="field" *ngIf="this.vehicleType!=='N'">
+      <ion-item [disabled]="true">
+        <ion-label position="floating">Final Asset Price
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input numberonly type="tel" formControlName="assetPrice"></ion-input>
+      </ion-item>
+      <div *ngIf="vehicleDetails.controls.assetPrice.invalid && (vehicleDetails.controls.assetPrice.touched)">
+        <span *ngIf="vehicleDetails.controls.assetPrice.errors.required">
+          <span class="errText">Must enter Final Asset Price.</span>
+        </span>
+        <span *ngIf="vehicleDetails.controls.assetPrice.errors.pattern">
+          <span class="errText">Enter valid Final Asset Price.</span>
+        </span>
+      </div>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Promo Code
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="promoCode">
+        <ion-select-option *ngFor="let yn of masterPromoCode;let i=index" [value]="yn.CODE">{{ yn.NAME
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.promoCode.invalid && (vehicleDetails.controls.promoCode.touched)">
+      <span *ngIf="vehicleDetails.controls.promoCode.errors.required">
+        <span class="errText">Must Select Promo Code.</span>
+      </span>
+    </div>
+
+    <div class="itemcard">
+      <ion-item-divider style="color: white;--background: #da107e; padding: 5px;">
+        Dealer Details
+      </ion-item-divider>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Dealer Name
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ionic-selectable formControlName="dealerName" [items]="dealerMaster" itemValueField="dealerCode"
+        itemTextField="dealerName" [canSearch]="true" [shouldStoreItemValue]="true"
+        [ngClass]="{'readonly-style': true}">
+      </ionic-selectable>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerName.invalid && (vehicleDetails.controls.dealerName.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerName.errors.required">
+        <span class="errText">Must Select Dealer Name.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Dealer Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="dealerType"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerType.invalid && (vehicleDetails.controls.dealerType.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerType.errors.required">
+        <span class="errText">Must enter Dealer Type.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.dealerType.errors.pattern">
+        <span class="errText">Enter Dealer Type.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Dealer IFSC Code
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="dealerIFSCcode"
+        (ionChange)="toUpperCase('vehicleDetails','dealerIFSCcode')"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerIFSCcode.invalid && (vehicleDetails.controls.dealerIFSCcode.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerIFSCcode.errors.required">
+        <span class="errText">Must enter Dealer IFSC Code.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.dealerIFSCcode.errors.pattern">
+        <span class="errText">Enter Dealer IFSC Code.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Dealer Bank
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="dealerBank"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerBank.invalid && (vehicleDetails.controls.dealerBank.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerBank.errors.required">
+        <span class="errText">Must enter Dealer Bank.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.dealerBank.errors.pattern">
+        <span class="errText">Enter Dealer Bank.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Dealer Current Account
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="dealerCurAcc"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerCurAcc.invalid && (vehicleDetails.controls.dealerCurAcc.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerCurAcc.errors.required">
+        <span class="errText">Must enter Dealer account.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.dealerCurAcc.errors.pattern">
+        <span class="errText">Enter Dealer account.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Dealer Branch
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="dealerBranch"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerBranch.invalid && (vehicleDetails.controls.dealerBranch.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerBranch.errors.required">
+        <span class="errText">Must enter Dealer Branch.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.dealerBranch.errors.pattern">
+        <span class="errText">Enter Dealer Branch.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Dealer Address
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="dealerAddress"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.dealerAddress.invalid && (vehicleDetails.controls.dealerAddress.touched)">
+      <span *ngIf="vehicleDetails.controls.dealerAddress.errors.required">
+        <span class="errText">Must enter Dealer Address.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.dealerAddress.errors.pattern">
+        <span class="errText">Enter Dealer Address.</span>
+      </span>
+    </div>
+
+    <div class="itemcard">
+      <ion-item-divider style="color: white;--background: #da107e; padding: 5px;">
+        Insurance Details
+      </ion-item-divider>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Insurance Cover
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="insuranceCover"
+        (ionChange)="InsCoverChange($event)">
+        <ion-select-option *ngFor="let yn of yesOrNoList;let i=index" [value]="yn.CODE">{{ yn.NAME
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.insuranceCover.invalid && (vehicleDetails.controls.insuranceCover.touched)">
+      <span *ngIf="vehicleDetails.controls.insuranceCover.errors.required">
+        <span class="errText">Must Select the Insurance Cover.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Insurance Policy No
+        <span *ngIf="showMand" class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="insPolicyNo"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.insPolicyNo.invalid && (vehicleDetails.controls.insPolicyNo.touched)">
+      <span *ngIf="vehicleDetails.controls.insPolicyNo.errors.required">
+        <span class="errText">Must enter Insurance Policy No.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.insPolicyNo.errors.pattern">
+        <span class="errText">Enter valid Insurance Policy No.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Insurance Company
+        <span *ngIf="showMand" class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="insCompany"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.insCompany.invalid && (vehicleDetails.controls.insCompany.touched)">
+      <span *ngIf="vehicleDetails.controls.insCompany.errors.required">
+        <span class="errText">Must enter Insurance Company.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.insCompany.errors.pattern">
+        <span class="errText">Enter Valid Insurance Company.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Insurance Date
+        <span *ngIf="showMand" class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="date" formControlName="insDate" [min]="minInsDate" [max]="maxInsDate">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.insDate.invalid && (vehicleDetails.controls.insDate.touched)">
+      <span *ngIf="vehicleDetails.controls.insDate.errors.required">
+        <span class="errText">Must enter Insurance Date.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.insDate.errors.pattern">
+        <span class="errText">Enter Insurance Date.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Insurance Expiry Date
+        <span *ngIf="showMand" class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="date" formControlName="insExpDate" [min]="mindate" [max]="maxdate">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.insExpDate.invalid && (vehicleDetails.controls.insExpDate.touched)">
+      <span *ngIf="vehicleDetails.controls.insExpDate.errors.required">
+        <span class="errText">Must enter Insurance Expiry Date.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.insExpDate.errors.pattern">
+        <span class="errText">Enter Insurance Expiry Date.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Insurance Value (Rs.)
+        <span *ngIf="showMand" class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="tel" formControlName="insValue"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.insValue.invalid && (vehicleDetails.controls.insValue.touched)">
+      <span *ngIf="vehicleDetails.controls.insValue.errors.required">
+        <span class="errText">Must enter Insurance Value.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.insValue.errors.pattern">
+        <span class="errText">Enter valid Insurance Value.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Nominee Name
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="nomName"></ion-input>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.nomName.invalid && (vehicleDetails.controls.nomName.touched)">
+      <span *ngIf="vehicleDetails.controls.nomName.errors.required">
+        <span class="errText">Must enter Nominee Name.</span>
+      </span>
+      <span *ngIf="vehicleDetails.controls.nomName.errors.pattern">
+        <span class="errText">Enter Nominee Name.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Relationship of Nominee
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="nomRel">
+        <ion-select-option *ngFor="let yn of dummy_masterNominee;let i=index" [value]="yn.CODE">{{ yn.NAME
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.nomRel.invalid && (vehicleDetails.controls.nomRel.touched)">
+      <span *ngIf="vehicleDetails.controls.nomRel.errors.required">
+        <span class="errText">Must Select Relationship of Nominee.</span>
+      </span>
+    </div>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Nominee Date of Birth
+        <span class="mandatory">*</span>
+      </ion-label>
+      <!-- <ion-datetime displayFormat="DD-MM-YYYY" min="1947" max="2003-12-31" formControlName="nomDOB"
+        pickerFormat="DD MMM YYYY" [disabled]="submitDisable"></ion-datetime> -->
+      <ion-input type="date" formControlName="nomDOB" [min]="1947" [max]="2003-12-31">
+      </ion-input>
+    </ion-item>
+    <span *ngIf="vehicleDetails.controls.nomDOB.invalid && (vehicleDetails.controls.nomDOB.touched)">
+      <span class="errText">Must Select Date of Birth.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Nominee Gender
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="nomGender">
+        <ion-select-option *ngFor="let yn of dummy_masterGender;let i=index" [value]="yn.code">{{ yn.name
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="vehicleDetails.controls.nomGender.invalid && (vehicleDetails.controls.nomGender.touched)">
+      <span *ngIf="vehicleDetails.controls.nomGender.errors.required">
+        <span class="errText">Must Select Gender.</span>
+      </span>
+    </div>
+
+    <div class="itemcard">
+      <ion-item-divider style="color: white;--background: #da107e; padding: 5px;">
+        Additional Loan Facilities Detail
+      </ion-item-divider>
+    </div>
+    <form [formGroup]="basicData">
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Loan Main Product
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="prdSche"
+          (ionChange)="schemeChng($event, 'chng')">
+          <ion-select-option *ngFor="let pdt of scheme_master;let i=index" [value]="pdt.CODE">{{pdt.NAME}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!basicData.controls.prdSche.valid && (basicData.controls.prdSche.touched)">
+        <span class="errText">Must select Main Loan Product.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Sub Category Desc
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="janaLoan"
+          (ionChange)="productChange('prdChange');lpiCalculation();" (ionBlur)="productCheck()">
+          <ion-select-option *ngFor="let pdt of pdt_master;let i=index" [value]="pdt.prdCode">{{pdt.prdDesc}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!basicData.controls.janaLoan.valid && (basicData.controls.janaLoan.touched)">
+        <span class="errText">Must select Sub Category Desc.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Vehicle Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="vehicleType"
+          (ionChange)="vehicleTypeChng()">
+          <ion-select-option *ngFor="let yn of vehicle;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.vehicleType.valid && (basicData.controls.vehicleType.dirty || basicData.controls.vehicleType.touched)">
+        <span class="errText">Must Select Vehicle Type.</span>
+      </span>
+
+      <div class="field" *ngIf="isNewVehicle">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Electric Vehicle
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="electricVehicle">
+            <ion-select-option *ngFor="let yn of ElectricType;let i=index" [value]="yn.code">{{ yn.name
+              }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span
+          *ngIf="!basicData.controls.electricVehicle.valid && (basicData.controls.electricVehicle.dirty || basicData.controls.electricVehicle.touched)">
+          <span class="errText">Must Select Electric Or Not.</span>
+        </span>
+      </div>
+
+      <ion-item class="field">
+        <ion-label position="floating">Dealer Name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <!-- <ion-select formControlName="dealerName"  [disabled]="submitDisable">
+          <ion-select-option *ngFor="let yn of dealerMaster;let i=index" [value]="yn.dealerCode">{{ yn.dealerName }}</ion-select-option>
+        </ion-select> -->
+        <ionic-selectable formControlName="dealerName" [items]="dealerMaster" itemValueField="dealerCode"
+          itemTextField="dealerName" [canSearch]="true" [shouldStoreItemValue]="true"
+          [ngClass]="{'readonly-style': submitDisable}" (onChange)="dealerNameChanged($event)">
+        </ionic-selectable>
+      </ion-item>
+      <div *ngIf="!basicData.controls.dealerName.valid && (basicData.controls.dealerName.touched)">
+        <span *ngIf="basicData.controls.dealerName.errors.required">
+          <span class="errText">Must Select Dealer Name.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Loan Amount Requested
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input numberonly formControlName="loanAmount" type="tel" maxlength="10" [min]="loanAmountFrom"
+          [max]="loanAmountTo" (ionBlur)="pddChargesCalc()" (ionChange)="lpiCalculation();">
+        </ion-input>
+      </ion-item>
+      <div style="width: 95%; margin: 0 auto;"
+        *ngIf="basicData.controls.loanAmount.value != '' && basicData.controls.loanAmount.value != undefined && basicData.controls.loanAmount.value != null"
+        class="message">
+        <ion-row>
+          <ion-col text-left>Loan amount between
+            <b>{{ loanAmountFrom }}</b> to
+            <b>{{ loanAmountTo }}.</b>
+          </ion-col>
+        </ion-row>
+      </div>
+      <span *ngIf="!basicData.controls.loanAmount.valid && (basicData.controls.loanAmount.touched)">
+        <span class="errText">Please enter valid Loan Amount(Only Numbers are allowed).</span>
+      </span>
+      <span *ngIf="loanAmtcheck" class="errText">Loan Amount should be lesser than On Road Price Amount</span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Tenure (Months)
+          <span class="mandatory">*</span>
+        </ion-label>
+        <!-- <ion-input type="tel" maxlength="3" formControlName="tenure" [disabled]="submitDisable"></ion-input> -->
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="tenure"
+          (ionChange)="EMICalculation();lpiCalculation()">
+          <ion-select-option *ngFor="let ten of vlTenure;let i=index" [value]="ten.CODE">{{ ten.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.tenure.valid && (basicData.controls.tenure.dirty || basicData.controls.tenure.touched)">
+        <span class="errText">Must enter Tenure (Months).</span>
+      </span>
+
+      <div class="field" *ngIf="this.vehicleType!=='N'">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">Asset age at Loan Maturity(Months)
+          </ion-label>
+          <ion-input type="text" formControlName="assetAge"></ion-input>
+        </ion-item>
+        <span
+          *ngIf="!basicData.controls.assetAge.valid && (basicData.controls.assetAge.dirty || basicData.controls.assetAge.touched)">
+          <span class="errText">Must enter Asset age at Loan Maturity.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Interest Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="interest"
+          (ionChange)="getIntRate($event)">
+          <ion-select-option value="1">Fixed</ion-select-option>
+          <ion-select-option value="2">Floating</ion-select-option>
+          <ion-select-option value="3">Hybrid</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div
+        *ngIf="(!basicData.controls.interest.valid || basicData.controls.interest.errors) && (basicData.controls.interest.touched)">
+        <span *ngIf="basicData.controls.interest.errors.required">
+          <span class="errText">Must select the Interest Type.</span>
+        </span>
+        <span *ngIf="basicData.controls.interest.errors.inCorrect">
+          <span class="errText">{{basicData.controls.interest.errors.errMsg}}.</span>
+        </span>
+      </div>
+
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Interest Rate
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input formControlName="intRate" type="text" maxlength="5" decimals
+          (ionChange)="EMICalculation();preEmiCalculation()"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.intRate.valid && (basicData.controls.intRate.dirty || basicData.controls.intRate.touched)">
+        <span *ngIf="basicData.controls.intRate.errors.required" class="errText">Must Enter Interest Rate.</span>
+      </span>
+      <span *ngIf="basicData.controls.intRate.errors && basicData.controls.intRate.errors.min">
+        <span class="errText">Min. Rate is {{minRate}}.</span>
+      </span>
+      <span *ngIf="basicData.controls.intRate.errors && basicData.controls.intRate.errors.max">
+        <span class="errText">Max. Rate is {{maxRate}}.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Purpose of Loan
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="purpose">
+          <ion-select-option *ngFor="let pur of masterPurposeofLoanVL;let i=index" [value]="pur.CODE">{{ pur.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!basicData.controls.purpose.valid && (basicData.controls.purpose.touched)">
+        <span class="errText">Must select Purpose of Loan.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Periodicity Installments
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="installment">
+          <ion-select-option *ngFor="let ins of installments;let i=index" [value]="ins.CODE">{{ ins.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.installment.valid && (basicData.controls.installment.dirty || basicData.controls.installment.touched)">
+        <span class="errText">Must Enter the Periodicity Installments.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Refinance
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="refinance">
+          <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.refinance.valid && (basicData.controls.refinance.dirty || basicData.controls.refinance.touched)">
+        <span class="errText">Must Select the Refinance.</span>
+      </span>
+
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Holiday Period (in month)
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="holiday" maxlength="2"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.holiday.valid && (basicData.controls.holiday.dirty || basicData.controls.holiday.touched)">
+        <span *ngIf="basicData.controls.holiday.errors.required">
+          <span class="errText">Must enter Holiday Period.</span>
+        </span>
+        <span *ngIf="basicData.controls.holiday.errors.pattern">
+          <span class="errText">Enter Valid Holiday Period (Only Numerics are allowed).</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Mode of Repayment
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="repayMode">
+          <ion-select-option *ngFor="let repay of Repayments;let i=index" [value]="repay.CODE">{{ repay.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.repayMode.valid && (basicData.controls.repayMode.dirty || basicData.controls.repayMode.touched)">
+        <span class="errText">Must select the Mode of Repayment.</span>
+      </span>
+
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Advance Installment
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="advavceInst" (ionChange)="advanceEmiReq($event)">
+          <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.advavceInst.valid && (basicData.controls.advavceInst.dirty || basicData.controls.advavceInst.touched)">
+        <span class="errText">Must Select Advance Installment.</span>
+      </span>
+
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">DB Date
+          <span class="mandatory">*</span>
+        </ion-label>
+        <!-- <ion-datetime displayFormat="DD-MM-YYYY" min={{mindate}} max={{maxdateDB}} formControlName="dbDate"
+          (ionBlur)="preEmiCalculation()" pickerFormat="DD MMM YYYY" [disabled]="submitDisable"></ion-datetime> -->
+        <ion-input type="date" formControlName="dbDate" [min]="mindate" [max]="maxdateDB"
+          (ionBlur)="preEmiCalculation()">
+        </ion-input>
+      </ion-item>
+      <span *ngIf="basicData.controls.dbDate.invalid && (basicData.controls.dbDate.touched)">
+        <span class="errText">Must Select DB Date.</span>
+      </span>
+
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">PRE Emi included in DP
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="preEmiDB"
+          (ionChange)="preEmiIncudeCheck($event)">
+          <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="basicData.controls.preEmiDB.invalid && (basicData.controls.preEmiDB.touched)">
+        <span class="errText">Must Select PRE Emi included in DP.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">Total Loan Amount
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input formControlName="totalloanAmount" type="tel">
+        </ion-input>
+      </ion-item>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">Margin Cost
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="margin" (ionChange)="downPaymentCalc()">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.margin.valid && (basicData.controls.margin.dirty || basicData.controls.margin.touched)">
+        <span *ngIf="basicData.controls.margin.errors.required">
+          <span class="errText">Must enter Margin Cost.</span>
+        </span>
+        <span *ngIf="basicData.controls.margin.errors.pattern">
+          <span class="errText">Enter Valid Margin Cost</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">Processing Fee
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="processingFee"
+          (ionChange)="gstCallForPF();downPaymentCalc();roundOffQuantity()"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.processingFee.valid && (basicData.controls.processingFee.dirty || basicData.controls.processingFee.touched)">
+        <span *ngIf="basicData.controls.processingFee.errors.required">
+          <span class="errText">Must enter Processing Fee.</span>
+        </span>
+        <span *ngIf="basicData.controls.processingFee.errors.pattern">
+          <span class="errText">Enter Valid Processing Fee</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">GST on PF
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="gstonPf"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.gstonPf.valid && (basicData.controls.gstonPf.dirty || basicData.controls.gstonPf.touched)">
+        <span *ngIf="basicData.controls.gstonPf.errors.required">
+          <span class="errText">Must enter GST on PF.</span>
+        </span>
+        <span *ngIf="basicData.controls.gstonPf.errors.pattern">
+          <span class="errText">Enter Valid GST on PF</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">Stamp duty
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="stampDuty" [(ngModel)]="stampDutyValue" (ionChange)="getGstStampDuty()">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.stampDuty.valid && (basicData.controls.stampDuty.dirty || basicData.controls.stampDuty.touched)">
+        <span *ngIf="basicData.controls.stampDuty.errors.required">
+          <span class="errText">Must enter Stamp duty.</span>
+        </span>
+        <span *ngIf="basicData.controls.stampDuty.errors.pattern">
+          <span class="errText">Enter Valid Stamp duty</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">GST on SDC
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="gstonSdc"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.gstonSdc.valid && (basicData.controls.gstonSdc.dirty || basicData.controls.gstonSdc.touched)">
+        <span *ngIf="basicData.controls.gstonSdc.errors.required">
+          <span class="errText">Must enter GST on SDC.</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">NACH + Documentation charges
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="nachCharges"
+          (ionChange)="downPaymentCalc();getGstNachCharges()"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.nachCharges.valid && (basicData.controls.nachCharges.dirty || basicData.controls.nachCharges.touched)">
+        <span *ngIf="basicData.controls.nachCharges.errors.required">
+          <span class="errText">Must enter NACH Charges.</span>
+        </span>
+        <span *ngIf="basicData.controls.nachCharges.errors.pattern">
+          <span class="errText">Enter Valid NACH Charges</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">GST on NACH Charges
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="gstonNach" (ionChange)="downPaymentCalc()">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.gstonNach.valid && (basicData.controls.gstonNach.dirty || basicData.controls.gstonNach.touched)">
+        <span *ngIf="basicData.controls.gstonNach.errors.required">
+          <span class="errText">Must enter GST on NACH Charges.</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">PDD Charges
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="pddCharges"
+          (ionChange)="downPaymentCalc();getGstPddCharges()"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.pddCharges.valid && (basicData.controls.pddCharges.dirty || basicData.controls.pddCharges.touched)">
+        <span *ngIf="basicData.controls.pddCharges.errors.required">
+          <span class="errText">Must enter PDD Charges.</span>
+        </span>
+        <span *ngIf="basicData.controls.pddCharges.errors.pattern">
+          <span class="errText">Enter Valid PDD Charges</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">GST on PDD Charges
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="gstonPddCharges" (ionChange)="downPaymentCalc()">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.gstonPddCharges.valid && (basicData.controls.gstonPddCharges.dirty || basicData.controls.gstonPddCharges.touched)">
+        <span *ngIf="basicData.controls.gstonPddCharges.errors.required">
+          <span class="errText">Must enter GST on PDD Charges.</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Borrower Health Insurance(Inc_GST)
+          <span class="mandatory">*</span>
+        </ion-label>
+        <!-- <ion-input type="tel" formControlName="borHealthIns" (ionChange)="downPaymentCalc()">
+        </ion-input> -->
+        <ion-select formControlName="borHealthIns" interface="popover" [interfaceOptions]="customPopoverOptions"
+          (ionChange)="downPaymentCalc()">
+          <ion-select-option *ngFor="let hos of hospicashIns;let i=index" [value]="hos.NAME">{{ hos.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.borHealthIns.valid && (basicData.controls.borHealthIns.dirty || basicData.controls.borHealthIns.touched)">
+        <span *ngIf="basicData.controls.borHealthIns.errors.required">
+          <span class="errText">Must enter Borrower Health Insurance.</span>
+        </span>
+        <span *ngIf="basicData.controls.borHealthIns.errors.pattern">
+          <span class="errText">Enter Valid Borrower Health Insurance</span>
+        </span>
+      </span>
+
+      <div class="field" *ngIf="coAppFlag == 'Y'">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Co-Borrower Health Insurance(Inc_GST)
+          </ion-label>
+          <!-- <ion-input type="tel" formControlName="coBorHealthIns" (ionChange)="downPaymentCalc()"></ion-input> -->
+          <ion-select formControlName="coBorHealthIns" interface="popover" [interfaceOptions]="customPopoverOptions"
+            (ionChange)="downPaymentCalc()">
+            <ion-select-option *ngFor="let hos of hospicashIns;let i=index" [value]="hos.NAME">{{ hos.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span
+          *ngIf="!basicData.controls.coBorHealthIns.valid && (basicData.controls.coBorHealthIns.dirty || basicData.controls.coBorHealthIns.touched)">
+          <span class="errText">Must enter Co-Borrower Health Insurance.</span>
+          <span *ngIf="basicData.controls.coBorHealthIns.errors.pattern">
+            <span class="errText">Enter Valid Co-Borrower Health Insurance</span>
+          </span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">LPI
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="insPremium" (ionChange)="downPaymentCalc()" (ionBlur)="lpiCheck()">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.insPremium.valid && (basicData.controls.insPremium.dirty || basicData.controls.insPremium.touched)">
+        <span *ngIf="basicData.controls.insPremium.errors.required">
+          <span class="errText">Must enter LPI.</span>
+        </span>
+        <span *ngIf="basicData.controls.insPremium.errors.pattern">
+          <span class="errText">Enter Valid LPI. </span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">LPI with DP
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="otherCharges"
+          (ionChange)="downPaymentCalc();getGstOtherCharges()"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.otherCharges.valid && (basicData.controls.otherCharges.dirty || basicData.controls.otherCharges.touched)">
+        <span *ngIf="basicData.controls.otherCharges.errors.required">
+          <span class="errText">Must enter LPI with DP.</span>
+        </span>
+        <span *ngIf="basicData.controls.otherCharges.errors.pattern">
+          <span class="errText">Enter Valid LPI with DP.</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">Pre-EMI
+        </ion-label>
+        <ion-input type="tel" formControlName="preEmi" (ionChange)="insuranceLPICheck();"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.preEmi.valid && (basicData.controls.preEmi.dirty || basicData.controls.preEmi.touched)">
+        <span class="errText">Must enter Pre-EMI.</span>
+        <span *ngIf="basicData.controls.preEmi.errors.pattern">
+          <span class="errText">Enter Valid Pre-EMI</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || advanceEmiNo">
+        <ion-label position="floating">Advance EMI Amount
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="advanceEmi" (ionBlur)="advanceEMIAdded();"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.advanceEmi.valid && (basicData.controls.advanceEmi.dirty || basicData.controls.advanceEmi.touched)">
+        <span class="errText">Must enter Advance EMI Amount.</span>
+        <span *ngIf="basicData.controls.advanceEmi.errors.pattern">
+          <span class="errText">Enter Valid Advance EMI Amount</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Segment Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="segmentType">
+          <ion-select-option *ngFor="let seg of segmentList;let i=index" [value]="seg.CODE">{{ seg.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.segmentType.valid && (basicData.controls.segmentType.dirty || basicData.controls.segmentType.touched)">
+        <span class="errText">Must select Segment Type.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">EMI
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="emi"></ion-input>
+      </ion-item>
+      <span *ngIf="!basicData.controls.emi.valid && (basicData.controls.emi.dirty || basicData.controls.emi.touched)">
+        <span *ngIf="basicData.controls.emi.errors?.required">
+          <span class="errText">Must enter EMI.</span>
+        </span>
+        <span *ngIf="basicData.controls.emi.errors?.pattern">
+          <span class="errText">Enter Valid EMI</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">EMI Mode
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="emiMode">
+          <ion-select-option value="SI">SI</ion-select-option>
+          <ion-select-option value="NACH">NACH</ion-select-option>
+          <ion-select-option value="PDC">PDC</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.emiMode.valid && (basicData.controls.emiMode.dirty || basicData.controls.emiMode.touched)">
+        <span class="errText">Must select EMI Mode.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">Total Down Payment
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="totalDownPay"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.totalDownPay.valid && (basicData.controls.totalDownPay.dirty || basicData.controls.totalDownPay.touched)">
+        <span *ngIf="basicData.controls.totalDownPay.errors.required">
+          <span class="errText">Must enter Total Down Payment.</span>
+        </span>
+        <span *ngIf="basicData.controls.totalDownPay.errors.pattern">
+          <span class="errText">Enter Valid Total Down Payment</span>
+        </span>
+      </span>
+
+      <ion-item class="field" [disabled]="defaultDisable">
+        <ion-label position="floating">DB Amount
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" formControlName="dbAmount"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!basicData.controls.dbAmount.valid && (basicData.controls.dbAmount.dirty || basicData.controls.dbAmount.touched)">
+        <span *ngIf="basicData.controls.dbAmount.errors.required">
+          <span class="errText">Must enter DB Amount.</span>
+        </span>
+        <span *ngIf="basicData.controls.dbAmount.errors.pattern">
+          <span class="errText">Enter Valid DB Amount</span>
+        </span>
+      </span>
+
+    </form>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button shape="round" type="submit" class="proceedbtn"
+            [disabled]="(vehicleDetails.invalid || basicData.invalid) || submitDisable">Save
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

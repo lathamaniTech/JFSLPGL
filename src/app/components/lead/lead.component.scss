@@ -1,0 +1,130 @@
+.capital {
+    text-transform: capitalize !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.leftAlign {
+    white-space: nowrap !important;
+}
+
+.break-word {
+    overflow-wrap: break-word !important;
+    text-align: left;
+}
+
+.leadNotFound {
+    height: 40vh;
+    font-size: 1.5em;
+    color: darkgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.space {
+    margin-top: 5px;
+}
+
+.leadHeader{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    font-size: 20px;
+}
+@media only screen and (min-width: 481px),
+(min-height: 501px) {
+
+    // tab lead card
+    .leadCard {
+        width: 60%;
+        margin-top: 20px;
+        margin-left: 21%;
+        max-height: 40%;
+        overflow: scroll;
+        // position: absolute;
+    }
+
+    .leadHeader {
+        background: #da107e;
+        color: white;
+    }
+
+    .leadIcon {
+        zoom: 2.0;
+        color: #da107e;
+    }
+
+    .cardContent {
+        margin-top: 25px;
+        overflow: scroll;
+    }
+
+    .leftAlign {
+        margin-top: 3px;
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 480px),
+(max-height: 500px) {
+
+    // mob
+    .leadCard {
+        width: 60%;
+        margin-left: 21%;
+        max-height: 500px;
+        overflow: scroll;
+        display: inline;
+        // position: absolute;
+    }
+
+    .leadHeader {
+        background: #da107e;
+        color: white;
+    }
+
+    .leadIcon {
+        zoom: 2.0;
+        color: #da107e;
+    }
+}
+
+// svg animation checkCircle
+#circleTick {
+    margin-top: 20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.checkCircle {
+    stroke-width: 15;
+    fill: none;
+    stroke: #41AD49;
+    stroke-dashoffset: 1000;
+    stroke-dasharray: 1000;
+    animation-name: circleTick;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+
+}
+
+.checkTick {
+    stroke-width: 7;
+    stroke: #41AD49;
+    stroke-dashoffset: 1000;
+    stroke-dasharray: 1000;
+    animation-name: circleTick;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    // animation-delay: 2s;
+}
+
+@keyframes circleTick {
+    to {
+        stroke-dashoffset: 0;
+    }
+
+}

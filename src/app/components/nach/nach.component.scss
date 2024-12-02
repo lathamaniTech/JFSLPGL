@@ -1,0 +1,48 @@
+.fabBadge{
+    color: #ffffff;
+    position: absolute;
+    background: #da107e;
+    padding: 5px 7px;
+    z-index: 1;
+    border-radius: 50%;
+    top: -6px;
+    right: -6px;
+    font-size: 12px;
+}
+
+.scroll-content{
+    padding-bottom: 0px !important;
+}
+
+.custom-popover::part(content) {
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  max-width: 90% !important;
+  white-space: pre-line !important;
+}
+
+.marginTop
+{
+margin-top: 30px;
+}
+.roundbtn {
+   text-align: center;
+}
+
+.nachContainer {
+
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      --color: none !important;
+      color: var(--ion-app-label) !important;
+    }
+  
+    .item-input-has-focus .label-md[floating],
+    .input-has-focus .label-md[floating],
+    .item-input-has-value .label-md[floating],
+    .input-has-value .label-md[floating] {
+      color: var(--ion-app-label);
+    }
+  }

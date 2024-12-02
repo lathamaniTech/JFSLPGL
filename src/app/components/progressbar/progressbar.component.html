@@ -1,0 +1,39 @@
+<div class="backDropProgress" style="width: 105vw;"></div>
+
+<div class="progressHeader">
+    <h4 class="text">KYC Images Uploading...</h4>
+    <br>
+    <!-- <div *ngIf="!sucess">{{uploadProgress}}%</div> -->
+    <div *ngIf="uploadImageCnt !== totalImageCnt">
+        <svg class="uploadProgress" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="80" height="100"
+            id="uploadProgress">
+            <!-- Background Circle -->
+            <circle class="backgroundCircle" cx="26" cy="26" r="25" fill="none" stroke="#e6e6e6" stroke-width="2" />
+            <!-- Progress Circle -->
+            <circle class="progressCircle" cx="26" cy="26" r="25" fill="none" stroke="#4caf50" stroke-width="4"
+                stroke-dasharray="157" stroke-dashoffset="157" />
+            <!-- Upload Icon -->
+            <path class="uploadArrow" fill="none" stroke="#4caf50" stroke-width="2"
+                d="M26 14 L26 38 M18 22 L26 14 L34 22" />
+        </svg>
+    </div>
+
+    <div *ngIf="uploadImageCnt == totalImageCnt">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" id="circleTick">
+            <circle class="checkCircle" cx="26" cy="26" r="25" fill="none" />
+            <path class="checkTick" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+        </svg>
+    </div>
+
+    <div *ngIf="sucess && sucessMsg != 'Failed'" class="sucessMsg"><b>{{sucessMsg}}</b></div>
+    <div *ngIf="sucess && sucessMsg == 'Failed'" class="sucessMsgRed"><b>{{sucessMsg}}</b></div>
+    <!-- <br>
+    <div class="outerDiv">
+        <div class="innerDiv" #progressbar></div>
+    </div> -->
+    <br>
+    <div>{{uploadImageCnt}}/{{totalImageCnt}}</div>
+    <br>
+    <!-- <ion-button [disabled]="!sucess" style="--background: #4CAF50;" class="modalClosebtn" (click)="close($event)">Done</ion-button> -->
+    <button class="modalClosebtn" (click)="close($event)">Done</button>
+</div>

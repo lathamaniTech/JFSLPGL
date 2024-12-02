@@ -1,0 +1,21 @@
+.inputCover .input-cover{
+    display: none;
+  }
+
+  .headtitel{
+    margin-bottom: 0px;
+}
+
+.proceedbtn {
+  --background: #FBA41D;
+  color: white;
+}
+
+.custom-popover::part(content) {
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  max-width: 90% !important;
+  white-space: pre-line !important;
+}

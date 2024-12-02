@@ -1,0 +1,54 @@
+<ion-content padding style='background-color: #fff'>
+  <div class="container">
+    <div class="container-body">
+      <div class="container-image"><img src="assets/imgs/login.png" class="myLogo" /></div>
+      <div class="fsetext">
+        <div class="fsehead">JSFB - GL Mobility Solution</div>
+        <div class="fseborder"></div>
+        <!-- <div class="fsecontent">JSFB - PD Mobility Solution</div> -->
+        <div class="logo">
+          <img src="assets/imgs/JSB_logo.png" class="myLogo" />
+        </div>
+
+        <div class="fselogin">
+
+          <div #loginDiv class="loginbtn" (click)="onClickLoginBtn()">
+            <button ion-button class="fsebutton" style="border-radius: 40px" round color="jsfgoald">LOGIN</button>
+
+            <div class="morph-content" #loginpage>
+              <div class="morph-head">
+                <div class="loginlogo"><img src="assets/imgs/JSB_logo.png" class="myLogo" /></div>
+                <ion-card class="loginCard">
+                  <div class="content-style-form content-style-form-1">
+                    <span class="icon icon-close" (click)="$event.stopPropagation();close()"><ion-icon
+                        name="close-circle" color='light'></ion-icon></span>
+                    <h2 style="color: #FFFFFF;">Welcome</h2>
+                    <form>
+                      <p><label>User Name</label>
+                        <ion-input type="text" name='username' [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="userData.username"></ion-input>
+                      </p>
+                      <p><label>Password</label>
+                        <ion-input type="password" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="userData.password"></ion-input>
+                      </p>
+                      <button style='text-align: center;margin: 0 auto;margin-top: 10px; border-radius: 40px'
+                        class="fsebutton" round color="jsfgoald" (click)="login()">LOGIN</button>
+                    </form>
+                  </div>
+                </ion-card>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="background">&copy; SysArc Infomatix - LEND<i>perfect</i> - v {{ version }}</div>
+
+
+</ion-content>

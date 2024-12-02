@@ -1,0 +1,146 @@
+<ion-slide>
+  <div class="container">
+    <form [formGroup]="entityData" (ngSubmit)="entitysave(entityData.value)">
+      <h2 class="headtitel">Entity Details</h2>
+      <ion-item class="field">
+        <ion-label position="floating">Name of Enterprise
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="enterName" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!entityData.controls.enterName.valid && (entityData.controls.enterName.dirty || entityData.controls.enterName.touched)">
+        <span class="errText">Must Enter valid Name of Enterprise.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Constitution<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="constitution"  (ionChange)="constitutionChng($event)" [disabled]="submitDisable">
+          <ion-select-option *ngFor="let cons of cons_master;let i=index" [value]="cons.CODE">
+            {{ cons.NAME }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!entityData.controls.constitution.valid && (entityData.controls.constitution.touched)">
+        <span class="errText">Must select Constitution.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">CIN
+          <span *ngIf="cinMand" class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="cin" (ionChange)="toUpperCase('entityData','cin')" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+      <div *ngIf="entityData.controls.cin.invalid && (entityData.controls.cin.touched)">
+        <span *ngIf="entityData.controls.cin.errors.required">
+          <span class="errText">Must enter CIN.</span>
+        </span>
+        <span *ngIf="entityData.controls.cin.errors.pattern">
+          <span class="errText">Enter Valid CIN.</span>
+        </span>
+      </div>
+
+      <ion-item class="field">
+        <ion-label position="floating">Registration No.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="regNo" (ionChange)="toUpperCase('entityData','regNo')" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+      <div *ngIf="entityData.controls.regNo.invalid && (entityData.controls.regNo.touched)">
+        <span *ngIf="entityData.controls.regNo.errors.required">
+          <span class="errText">Must enter Registration No.</span>
+        </span>
+        <span *ngIf="entityData.controls.regNo.errors.pattern">
+          <span class="errText">Enter Valid Registration No.</span>
+        </span>
+      </div>
+
+      <ion-item class="field">
+        <ion-label position="floating">GSTIN
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="gst" (ionChange)="toUpperCase('entityData','gst')" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+      <div *ngIf="entityData.controls.gst.invalid && (entityData.controls.gst.touched)">
+        <span *ngIf="entityData.controls.gst.errors.required">
+          <span class="errText">Must enter GSTIN.</span>
+        </span>
+        <span *ngIf="entityData.controls.gst.errors.pattern">
+          <span class="errText">Enter Valid GSTIN.</span>
+        </span>
+      </div>
+
+      <ion-item class="inputCover">
+        <ion-label position="floating">Date of Incorporation
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-datetime displayFormat="DD-MM-YYYY" min="1900-01-01" formControlName="doi" [disabled]="submitDisable"
+          pickerFormat="DD MMM YYYY"></ion-datetime>
+      </ion-item>
+      <span
+        *ngIf="!entityData.controls.doi.valid && (entityData.controls.doi.dirty || entityData.controls.doi.touched)">
+        <span class="errText">Must select Date of Incorporation.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Business Vintage
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="busiVintage" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+      <div *ngIf="entityData.controls.busiVintage.invalid && (entityData.controls.busiVintage.touched)">
+        <span *ngIf="entityData.controls.busiVintage.errors.required">
+          <span class="errText">Must enter Business Vintage.</span>
+        </span>
+        <span *ngIf="entityData.controls.busiVintage.errors.pattern">
+          <span class="errText">Enter Valid Business Vintage.</span>
+        </span>
+      </div>
+
+      <ion-item class="field">
+        <ion-label position="floating">Shop Ownership
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="ownership"  [disabled]="submitDisable">
+          <ion-select-option *ngFor="let edu of dummy_master;let i=index" [value]="edu.code">{{ edu.Name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!entityData.controls.ownership.valid && (entityData.controls.ownership.touched)">
+        <span class="errText">Must select ownership.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Industry Type<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="industry"  [disabled]="submitDisable"
+          (ionChange)="getEnterValue('industry')">
+          <ion-select-option *ngFor="let ind of ind_master;let i=index" [value]="ind.CODE">{{ ind.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!entityData.controls.industry.valid && (entityData.controls.industry.touched)">
+        <span class="errText">Must select Industry Type.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Nature of Business<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="enterprise"  [disabled]="submitDisable">
+          <ion-select-option *ngFor="let nat of nat_master;let i=index" [value]="nat.CODE">{{ nat.NAME }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!entityData.controls.enterprise.valid && (entityData.controls.enterprise.touched)">
+        <span class="errText">Must select Nature of Business.</span>
+      </span>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <!-- <button ion-button round type="submit" color="jsfgoald"
+              [disabled]="(entityData.invalid) || submitDisable">Save</button> -->
+              <ion-button class="proceedbtn" shape="round" type="submit"
+              [disabled]="(entityData.invalid) || submitDisable">Save</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+</ion-slide>

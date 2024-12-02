@@ -1,0 +1,39 @@
+<ion-slide>
+  <div>
+
+    <h2 class="headtitel">Aadhaar Enabled EKYC</h2>
+    <!-- <form (ngSubmit)="fingerprintpage(aadharData.value)"> -->
+    <ion-card>
+      <ion-row>
+        <ion-col size="10" align-self-center>
+          <ion-row>
+            <ion-col>
+              <ion-item class="nolinewidth" lines=none class="no-padding" *ngIf="aadhaarVID==='Aadhaar'">
+                <ion-input type="tel" maxlength="12" placeholder="Enter Aadhaar Number" [(ngModel)]="aadharNum" class="inputstyle1"></ion-input>
+              </ion-item>
+              <ion-item class="nolinewidth" lines=none class="no-padding" *ngIf="aadhaarVID==='VID'">
+                <ion-input type="tel" maxlength="12" placeholder="Enter Virtual ID Number" [(ngModel)]="vidNum" class="inputstyle1"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="2"style="padding-left:0px;" align-self-center>
+          <div class="kyccard">
+            <ion-row style="margin-top: 15px;">
+              <ion-col style="padding-left:0px;">
+                <ion-card class="shadowgreen" (click)="fingerprintpage(aadharNum)">
+                  <ion-icon name="finger-print" style="zoom:3.0;"></ion-icon>
+                  <p>
+                    <b>Submit</b>
+                  </p>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <!-- </form> -->
+
+  </div>
+</ion-slide>

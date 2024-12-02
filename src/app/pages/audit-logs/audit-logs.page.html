@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Audit Logs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="auditLog" (ngSubmit)="auditgen(auditLog.value)">
+    <ion-item class="field">
+      <ion-label position="floating">Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="typeOfLog">
+        <ion-select-option *ngFor="let log of typeOfLogList;let i=index" [value]="log.CODE">{{ log.NAME }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!auditLog.controls.typeOfLog.valid && (auditLog.controls.typeOfLog.touched)">
+      <span class="errText">Must select Type.</span>
+    </span>
+    <div class="newdate">
+      <ion-item class="field">
+        <ion-label position="floating">Start Date
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="date" formControlName="startDate" displayFormat="DD/MM/YYYY" min="{{startmindate}}"
+          max="{{startmaxdate}}" (ionChange)="calcendDate()">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!auditLog.controls.startDate.valid && (auditLog.controls.startDate.dirty || auditLog.controls.startDate.touched)">
+        <span class="errText">Select Start Date.</span>
+      </span>
+    </div>
+
+    <!-- <div class="newdate"> -->
+      <ion-item class="field">
+        <ion-label position="floating">End Date
+          <span class="mandatory">*</span>
+        </ion-label>
+        <!-- <ion-datetime formControlName="endDate" displayFormat="DD/MM/YYYY" min="{{endmindate}}" max="{{endmaxdate}}"
+          pickerFormat="DD MMM YYYY">
+        </ion-datetime> -->
+        <ion-input type="date" formControlName="endDate" [min]="endmindate" [max]="endmaxdate"
+          [disabled]="submitDisable || dobDisable">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!auditLog.controls.endDate.valid && (auditLog.controls.endDate.dirty || auditLog.controls.endDate.touched)">
+        <span class="errText">Select Start Date.</span>
+      </span>
+    <!-- </div> -->
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button shape="round" type="submit" color="warning" [disabled]="auditLog.invalid">Generate Logs</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

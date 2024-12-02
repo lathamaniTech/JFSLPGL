@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Credit Check
+      <span (click)="homePage()">
+        <ion-icon name="home" style="float:right;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <div class="segment03 top10">
+    <ion-segment [(ngModel)]="custType" (ionChange)="tabChanges()">
+      <ion-segment-button value="Promoter" style="margin-right: -4px;" (click)="loadAllApplicantDetails()">Applicant
+      </ion-segment-button>
+      <ion-segment-button value="CoApplicant" style="margin-right: -4px;">Co-Applicant
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div *ngIf="custType === 'Promoter'">
+    <div *ngIf="applicantDetails">
+
+      <div class="layout">
+        <div class="wrapper1">
+          <img class="roundImg" [src]="applicantDetails[0].profPic">
+          <img class="roundImg" src="assets/imgs/person1.png" *ngIf=" !applicantDetails[0].profPic">
+        </div>
+        <div class="wrapper2">
+          <ion-label class="margin2px">
+            <h4>{{applicantDetails[0].firstname ? applicantDetails[0].firstname : ""}}</h4>
+            <span style="display: flex;margin: 5px;">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+              <strong>{{this.global.basicDec(applicantDetails[0].mobNum) ?
+                this.global.basicDec(applicantDetails[0].mobNum) : ""}}</strong>
+            </span><br>
+          </ion-label>
+        </div>
+      </div>
+
+      <div class="inner">
+        <ion-row>
+          <ion-col size="9">
+            <div class="questions">Required Score : </div>
+          </ion-col>
+          <ion-col size="2">
+            <ion-badge class="badge ion-badge-end">{{requiredScore ? requiredScore : "-"}}</ion-badge>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="inner">
+        <ion-row>
+          <ion-col size="9">
+            <div class="questions">Hi Mark Score : </div>
+          </ion-col>
+          <ion-col size="2">
+            <ion-badge class="badge animblink ion-badge-end" [ngStyle]="{'background':getColor(cibilScore)}">
+              {{cibilScore}}</ion-badge>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="custType === 'CoApplicant'">
+
+    <div class="NoDataContent" *ngIf='coapplicantsList.length ==0'>
+      <h2>No Co-Applicant(s) data found!</h2>
+    </div>
+
+    <div *ngIf="coapplicantsList.length>0">
+      <ion-item>
+        <ion-label position="floating">CoApplicant
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" (ionChange)="onCoAppChange($event)">
+          <ion-select-option *ngFor="let coApp of coapplicantsList;let i=index" value={{coApp.id}}>{{coApp.firstname}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+
+    <div *ngIf="showCoApp">
+      <div class="layout" *ngFor="let coapp of coapplicant;let i=index">
+        <div class="wrapper1">
+          <img class="roundImg" [src]="coapplicant[0].profPic">
+          <img class="roundImg" src="assets/imgs/person1.png" *ngIf=" !coapplicant[0].profPic">
+        </div>
+        <div class="wrapper2">
+          <ion-label>
+            <h4>{{coapplicant[0].firstname ? coapplicant[0].firstname : ""}}</h4>
+            <span style="display: flex;margin: 5px;">
+              <ion-icon name="phone-portrait-outline"></ion-icon><strong>{{coapplicant[0].mobNum ?
+                this.global.basicDec(coapplicant[0].mobNum) : ""}}</strong>
+            </span><br>
+          </ion-label>
+        </div>
+      </div>
+
+      <div class="inner">
+        <ion-row>
+          <ion-col size="9">
+            <div class="questions">Required Score : </div>
+          </ion-col>
+          <ion-col size="2">
+            <ion-badge class="badge ion-badge-end">{{requiredScore ? requiredScore : "-"}}</ion-badge>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="inner">
+        <ion-row>
+          <ion-col size="9">
+            <div class="questions">Hi Mark Score : </div>
+          </ion-col>
+          <ion-col size="2">
+            <ion-badge class="badge animblink ion-badge-end" [ngStyle]="{'background':getColor(cibilScore)}" item-end>
+              {{cibilScore}}</ion-badge>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+<ion-footer *ngIf="showFooter">
+  <ion-button color="warning" expand="full" (click)="forwardToWeb()" [disabled]="this.creditChecked=='1'">Forward to
+    credit check</ion-button>
+</ion-footer>

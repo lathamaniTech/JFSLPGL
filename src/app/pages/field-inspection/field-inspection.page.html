@@ -1,0 +1,388 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Field Investigation
+      <span (click)="homePage()">
+        <ion-icon name="home" style="float:right;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+
+<ion-content>
+
+  <div *ngIf="showField">
+    <form [formGroup]="fieldInspectionDetails" (ngSubmit)="fieldInspectionDetailsSave(fieldInspectionDetails.value)">
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Location
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="fieldLocation"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.fieldLocation.invalid && (fieldInspectionDetails.controls.fieldLocation.dirty || fieldInspectionDetails.controls.fieldLocation.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.fieldLocation.errors.required">
+            <span class="errText">Must enter Location.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.fieldLocation.errors.pattern">
+            <span class="errText">Enter valid Location.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Date
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="inspectedDate">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.inspectedDate.invalid && (fieldInspectionDetails.controls.inspectedDate.dirty || fieldInspectionDetails.controls.inspectedDate.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.inspectedDate.errors.required">
+            <span class="errText">Must Select Date.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">App No.
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="appNo">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.appNo.invalid && (fieldInspectionDetails.controls.appNo.dirty || fieldInspectionDetails.controls.appNo.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.appNo.errors.required">
+            <span class="errText">Must enter Application Number.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.appNo.errors.pattern">
+            <span class="errText">Enter Valid Application Number</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Person met / Spoken to
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="personMet">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.personMet.invalid && (fieldInspectionDetails.controls.personMet.dirty || fieldInspectionDetails.controls.personMet.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.personMet.errors.required">
+            <span class="errText">Must enter person met.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.personMet.errors.pattern">
+            <span class="errText">Enter Valid person met</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Relationship with Customer
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="customerRelationship">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.customerRelationship.invalid && (fieldInspectionDetails.controls.customerRelationship.dirty || fieldInspectionDetails.controls.customerRelationship.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.customerRelationship.errors.required">
+            <span class="errText">Must enter Relationship with Customer.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.customerRelationship.errors.pattern">
+            <span class="errText">Enter Valid Relationship with Customer</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">Customer Name
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="customerName">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.customerName.invalid && (fieldInspectionDetails.controls.customerName.dirty || fieldInspectionDetails.controls.customerName.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.customerName.errors.required">
+            <span class="errText">Must enter Customer Name.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.customerName.errors.pattern">
+            <span class="errText">Enter Valid Customer Name</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">Customer Mob No
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="customerMobileNum">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.customerMobileNum.invalid && (fieldInspectionDetails.controls.customerMobileNum.dirty || fieldInspectionDetails.controls.customerMobileNum.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.customerMobileNum.errors.required">
+            <span class="errText">Must enter Customer Mob No.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.customerMobileNum.errors.pattern">
+            <span class="errText">Enter Valid Customer Mob No</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Customer Address
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="customerAddress">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.customerAddress.invalid && (fieldInspectionDetails.controls.customerAddress.dirty || fieldInspectionDetails.controls.customerAddress.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.customerAddress.errors.required">
+            <span class="errText">Must enter Customer Address.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.customerAddress.errors.pattern">
+            <span class="errText">Enter Valid Customer Address</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">House Ownership
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="houseOwnerShip">
+            <ion-select-option *ngFor="let op of ownershipMaster;let i=index" [value]="op.CODE">{{op.NAME}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.houseOwnerShip.invalid && (fieldInspectionDetails.controls.houseOwnerShip.dirty || fieldInspectionDetails.controls.houseOwnerShip.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.houseOwnerShip.errors.required">
+            <span class="errText">Must Select House Ownership.</span>
+          </span>
+        </div>
+      </div>
+
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Any Additional Remarks</ion-label>
+          <ion-input type="text" formControlName="additionalRemarks">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.additionalRemarks.invalid && (fieldInspectionDetails.controls.additionalRemarks.dirty || fieldInspectionDetails.controls.additionalRemarks.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.additionalRemarks.errors.required">
+            <span class="errText">Must enter Additional Remarks.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.additionalRemarks.errors.pattern">
+            <span class="errText">Enter Valid Additional Remarks</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">Latitude <span class="mandatory">*</span></ion-label>
+          <ion-input type="text" formControlName="latitude">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.latitude.invalid && (fieldInspectionDetails.controls.latitude.dirty || fieldInspectionDetails.controls.latitude.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.latitude.errors.required">
+            <span class="errText">Must enter Latitude.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.latitude.errors.pattern">
+            <span class="errText">Enter Valid Latitude</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">Longitude <span class="mandatory">*</span></ion-label>
+          <ion-input type="text" formControlName="longitude">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.longitude.invalid && (fieldInspectionDetails.controls.longitude.dirty || fieldInspectionDetails.controls.longitude.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.longitude.errors.required">
+            <span class="errText">Must enter Longitude.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.longitude.errors.pattern">
+            <span class="errText">Enter Valid Longitude</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="itemcard">
+        <ion-item-divider style="color: white;--background: #da107e; padding: 5px;">
+          Neighbours Check
+        </ion-item-divider>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Neighbour 1 Name <span class="mandatory">*</span></ion-label>
+          <ion-input type="text" formControlName="neighbourName1"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.neighbourName1.invalid && (fieldInspectionDetails.controls.neighbourName1.dirty || fieldInspectionDetails.controls.neighbourName1.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.neighbourName1.errors.required">
+            <span class="errText">Must enter Neighbour 1 Name.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.neighbourName1.errors.pattern">
+            <span class="errText">Enter Valid Neighbour 1 Name</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Neighbour 1 status <span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="neighbour1Check">
+            <ion-select-option value="1">positive</ion-select-option>
+            <ion-select-option value="2">Negative</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.neighbour1Check.invalid && (fieldInspectionDetails.controls.neighbour1Check.dirty || fieldInspectionDetails.controls.neighbour1Check.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.neighbour1Check.errors.required">
+            <span class="errText">Must select Neighbour 1 status.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Neighbour 2 Name <span class="mandatory">*</span></ion-label>
+          <ion-input type="text" formControlName="neighbourName2"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.neighbourName2.invalid && (fieldInspectionDetails.controls.neighbourName2.dirty || fieldInspectionDetails.controls.neighbourName2.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.neighbourName2.errors.required">
+            <span class="errText">Must enter Neighbour 2 Name.</span>
+          </span>
+          <span *ngIf="fieldInspectionDetails.controls.neighbourName2.errors.pattern">
+            <span class="errText">Enter Valid Neighbour 2 Name</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Neighbour 2 status <span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="neighbour2Check">
+            <ion-select-option value="1">positive</ion-select-option>
+            <ion-select-option value="2">Negative</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.neighbour2Check.invalid && (fieldInspectionDetails.controls.neighbour2Check.dirty || fieldInspectionDetails.controls.neighbour2Check.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.neighbour2Check.errors.required">
+            <span class="errText">Must select Neighbour 2 status.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Residence/Locality Stability > 1 year <span
+              class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="residenceStabilityCheck" [disabled]="submitDisable">
+            <ion-select-option value="Y">Yes</ion-select-option>
+            <ion-select-option value="N">No</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div
+          *ngIf="fieldInspectionDetails.controls.residenceStabilityCheck.invalid && (fieldInspectionDetails.controls.residenceStabilityCheck.dirty || fieldInspectionDetails.controls.residenceStabilityCheck.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.residenceStabilityCheck.errors.required">
+            <span class="errText">Must select Residence/Locality.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Agency Feedback
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="agencyFeedback">
+            <ion-select-option value="1">Positive</ion-select-option>
+            <ion-select-option value="2">Negative</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div
+          *ngIf="!fieldInspectionDetails.controls.agencyFeedback.valid && (fieldInspectionDetails.controls.agencyFeedback.dirty || fieldInspectionDetails.controls.agencyFeedback.touched)">
+          <span *ngIf="fieldInspectionDetails.controls.agencyFeedback.errors.required">
+            <span class="errText">Must select Agency Feedback</span>
+          </span>
+        </div>
+      </div>
+
+      <ion-row class="marginTop">
+        <ion-col>
+          <div class="fabBadge">{{proofImglen}}</div>
+          <ion-fab class="ionfabicons" vertical="bottom" horizontal="end">
+            <ion-fab-button style="--background: #FBA41D;" (click)="showpicmaodal('idproof')">
+              <ion-icon style="font-size: 1.8rem;" name="create"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+
+          <div class="buttspace roundbtn" class="ion-text-center">
+            <ion-button type="submit" [disabled]="(fieldInspectionDetails.invalid) || submitDisable" shape="round"
+              color="warning">Save</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <hr>
+    <div class="buttspace roundbtn" style="text-align: center;">
+      <ion-button shape="round" type="button" color="warning" [disabled]="fieldSbt || submitDisable"
+        (click)="submitFieldIns()">Submit</ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="!showField">
+    <ion-item *ngIf="feedback == '1'">
+      <ion-label position="floating">Choose user for manual approval <span class="mandatory">*</span></ion-label>
+      <ion-select (ionChange)="onUserChange($event)">
+        <ion-select-option *ngFor="let op of positiveUserList;let i=index" [value]="op.UserGroup">{{op.UserGroupName}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="feedback == '2'">
+      <ion-label position="floating">Choose user for FI rejection <span class="mandatory">*</span></ion-label>
+      <ion-select (ionChange)="onUserChange($event)">
+        <ion-select-option *ngFor="let op of negativeUserList;let i=index" [value]="op.UserGroup">{{op.UserGroupName}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="buttspace roundbtn" style="text-align: center;">
+      <ion-button type="button" color="warning" [disabled]="disableBtn" (click)="fiSubmit()">Submit</ion-button>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-toolbar hideBackButton="true">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Lead Details
+      <span (click)="homePage()">
+        <ion-icon name="home" style="float:right;margin-right: 15px; padding: 0px 5px;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-padding">
+  <fieldset>
+    <legend>Personal Details</legend>
+    <ion-row>
+      <ion-col size="6">
+        <p class="label">First Name</p>
+        <p class="fieldName">{{cifData.AppFirstName}}</p>
+        <p class="label">LeadId</p>
+        <p class="fieldName">{{cifData.LeadId}}</p>
+        <p class="label">Aadhar</p>
+        <p class="fieldName">{{cifData.Aadhar}}</p>
+      </ion-col>
+      <ion-col size="6">
+        <p class="label">Last Name</p>
+        <p class="fieldName">{{cifData.AppLastName}}</p>
+        <p class="label">PAN.No</p>
+        <p class="fieldName">{{cifData.PanNum}}</p>
+        <p class="label">Phone</p>
+        <p class="fieldName">{{cifData.Mobile}}</p>
+      </ion-col>
+    </ion-row>
+  </fieldset>
+
+</ion-content>
+
+<ion-footer>
+  <div class="buttspace roundbtn ion-text-align">
+    Would you like to use Existing Data in Lead Process?
+    <!--<button ion-button round (click)="presentLoadingCustom()" color="jsfgoald">Proceed</button>-->
+  </div>
+  <ion-row style="text-align: center !important;">
+    <ion-col size="6" class="ion-text-align">
+      <ion-button class="proceedbtn" shape="round" (click)="presentLoadingCustomNo()">No</ion-button>
+    </ion-col>
+    <ion-col size="6" class="ion-text-align">
+      <ion-button class="proceedbtn" shape="round" (click)="presentLoadingCustomYes()">Yes</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

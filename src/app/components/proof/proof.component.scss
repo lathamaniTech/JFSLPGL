@@ -1,0 +1,51 @@
+.fabBadge {
+    color: #ffffff;
+    position: absolute;
+    background-color: #fba41d;
+    padding: 5px 7px;
+    z-index: 1;
+    border-radius: 50%;
+    top: -6px;
+    right: -6px;
+    font-size: 12px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    width: 100%;
+}
+
+.vault {
+    background-color: #fba41d;
+    color: #FFF;
+    padding: 10px 5px !important;
+    font-size: 11px;
+}
+
+.rvault {
+    background-color: red;
+    color: #FFF;
+    padding: 10px 5px !important;
+    font-size: 11px;
+}
+
+.custom-popover::part(content) {
+    width: auto !important;
+    right: 20px !important;
+    left: auto !important;
+    transform-origin: right top !important;
+    max-width: 90% !important;
+    white-space: pre-line !important;
+}
+
+.item-md .item-button {
+    padding: 0 0em !important;
+    height: 25px;
+    font-size: 1.2rem;
+}
+
+.ion-select::part(container) {
+    width: 100%;
+}

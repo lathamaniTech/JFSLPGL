@@ -1,0 +1,710 @@
+<div class="container">
+  <h2 class="headtitel">Address Details</h2>
+  <div class="segment002 top10">
+    <ion-segment [(ngModel)]="addressType">
+      <ion-segment-button value="Permanent" style="margin-right: -4px;">Permanent</ion-segment-button>
+      <ion-segment-button value="Present" style="margin-right: -4px;">Present</ion-segment-button>
+      <ion-segment-button value="Business" style="margin-right: -4px;">Office / Business
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- PERMANENT ADDRESS TAB -->
+  <div *ngIf="addressType==='Permanent'">
+
+    <div *ngIf="userType != 'A'">
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label>Same as Applicant Permanent Address</ion-label>
+        <ion-checkbox checked="false" color="jsfpink" [(ngModel)]="appSameCheck" (ionChange)="dataAppchanged($event)"
+          style="--checkmark-color : green;"></ion-checkbox>
+      </ion-item>
+    </div>
+
+    <ion-item *ngIf="isSecondAdd">
+      <ion-label>Use Address From Second KYC</ion-label>
+      <ion-checkbox checked="false" color="jsfpink" [(ngModel)]="useSecondAdd" (ionChange)="secondAddress($event)"
+        [disabled]="submitDisable"></ion-checkbox>
+    </ion-item>
+
+    <form [formGroup]="permanentAdrsData" (ngSubmit)="permanentAdrsSave(permanentAdrsData.value)">
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Permanent Address Type<span class="mandatory">*</span></ion-label>
+        <ion-select formControlName="perm_type">
+          <ion-select-option *ngFor="let adr of adrType;let i=index;" [value]="adr.CODE">{{ adr.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_type.valid && (permanentAdrsData.controls.perm_type.dirty || permanentAdrsData.controls.perm_type.touched)">
+        <span class="errText">Must Select Permanent Address Type.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable || ekycDisable">
+        <ion-label position="floating">Permanent Address as per KYC<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="perm_permAdrsKYC"
+          (ionChange)="getaddressproof('permanent')">
+          <ion-select-option *ngFor="let perm of permAdrsList;let i=index" [value]="perm.CODE">{{ perm.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_permAdrsKYC.valid && (permanentAdrsData.controls.perm_permAdrsKYC.dirty || permanentAdrsData.controls.perm_permAdrsKYC.touched)">
+        <span class="errText">Must Select the Permanent Address as per KYC.</span>
+      </span>
+
+      <div class="field" *ngIf="permanentAdrsData.controls.perm_permAdrsKYC.value == '5'">
+        <ion-item [disabled]="submitDisable || applicantDisable">
+          <ion-label position="floating">If Manual Entry, type of document collected<span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="perm_manualEntry">
+            <ion-select-option *ngFor="let np of notPermAdrsList;let i=index" [value]="np.CODE">{{ np.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span
+          *ngIf="!permanentAdrsData.controls.perm_manualEntry.valid && (permanentAdrsData.controls.perm_manualEntry.dirty || permanentAdrsData.controls.perm_manualEntry.touched)">
+          <span class="errText">Must select the Permanent Address as per KYC.</span>
+        </span>
+
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable || addressoneDisable">
+        <ion-label position="floating">Plot/House/Flat/Door No. & Street etc.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="perm_plots">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_plots.valid && (permanentAdrsData.controls.perm_plots.dirty || permanentAdrsData.controls.perm_plots.touched)">
+        <span
+          *ngIf="permanentAdrsData.controls.perm_plots.errors?.required || permanentAdrsData.controls.perm_plots.errors?.pattern">
+          <span class="errText">Must enter valid Plot/House/Flat/Door No. & Street etc.</span>
+        </span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_plots.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_plots.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable || addresstwoDisable">
+        <ion-label position="floating">Locality/Colony name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="perm_locality">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_locality.valid && (permanentAdrsData.controls.perm_locality.dirty || permanentAdrsData.controls.perm_locality.touched)">
+        <span
+          *ngIf="permanentAdrsData.controls.perm_locality.errors?.required || permanentAdrsData.controls.perm_locality.errors?.pattern">
+          <span class="errText">Must enter valid Locality/Colony name.</span>
+        </span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_locality.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_locality.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable">
+        <ion-label position="floating">Address Line 3
+        </ion-label>
+        <ion-input type="text" formControlName="perm_line3">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_line3.valid && (permanentAdrsData.controls.perm_line3.dirty || permanentAdrsData.controls.perm_line3.touched)">
+        <span
+          *ngIf="permanentAdrsData.controls.perm_line3.errors?.required || permanentAdrsData.controls.perm_line3.errors?.pattern">
+          <span class="errText">Must enter valid Locality/Colony name.</span>
+        </span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_line3.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_line3.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <!-- <ion-item class="field" [disabled]="submitDisable || applicantDisable || perStateDisable"> -->
+      <ion-item class="field">
+        <ion-label position="floating">State
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ionic-selectable formControlName="perm_states" [items]="master_states" itemValueField="stateCode"
+          itemTextField="stateName" [canSearch]="true" (onChange)="getCityValue('perState')"
+          [shouldStoreItemValue]="true"
+          [ngClass]="{'readonly-style': submitDisable || applicantDisable || perStateDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="perm_states"
+          (ionChange)="getCityValue('perState')">
+          <ion-select-option *ngFor="let state of master_states;let i=index" [value]="state.stateCode">{{
+            state.stateName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_states.valid && (permanentAdrsData.controls.perm_states.dirty || permanentAdrsData.controls.perm_states.touched)">
+        <span class="errText">Must Select the State.</span>
+      </span>
+
+      <!-- <ion-item class="field" [disabled]="submitDisable || applicantDisable || perCityDisable"> -->
+      <ion-item class="field">
+        <ion-label position="floating">City/Taluq/Village
+          <span class="mandatory">*</span>
+        </ion-label>
+
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="perm_cities" [items]="permanentCity"
+          itemValueField="cityCode" itemTextField="cityName" [canSearch]="true"
+          [ngClass]="{'readonly-style': submitDisable || applicantDisable || perStateDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="perm_cities">
+          <ion-select-option *ngFor="let city of permanentCity;let i=index" [value]="city.cityCode">{{ city.cityName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_cities.valid && (permanentAdrsData.controls.perm_cities.dirty || permanentAdrsData.controls.perm_cities.touched)">
+        <span class="errText">Must Select the City/Taluq/Village.</span>
+      </span>
+
+      <!-- <ion-item class="field" [disabled]="submitDisable || applicantDisable || perCityDisable"> -->
+      <ion-item class="field">
+        <ion-label position="floating">District
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="perm_district" [items]="permanentCity"
+          itemValueField="cityCode" itemTextField="cityName" [canSearch]="true"
+          [ngClass]="{'readonly-style': submitDisable || applicantDisable || perStateDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="perm_district">
+          <ion-select-option *ngFor="let city of permanentCity;let i=index" [value]="city.cityCode">{{ city.cityName
+            }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_district.valid && (permanentAdrsData.controls.perm_district.dirty || permanentAdrsData.controls.perm_district.touched)">
+        <span class="errText">Must Select District.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable || ekycDisable">
+        <ion-label position="floating">Pincode
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" maxlength="6" formControlName="perm_pincode" (ionChange)="pincodeValidation('perm')">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_pincode.valid && ( permanentAdrsData.controls.perm_pincode.touched)">
+        <span class="errText">Must enter valid Pincode.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Country
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="perm_countries" value="India"></ion-input>
+
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_countries.valid && (permanentAdrsData.controls.perm_countries.dirty || permanentAdrsData.controls.perm_countries.touched)">
+        <span class="errText">Must Select the Country.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable || landMarkDisable">
+        <ion-label position="floating">Land Mark
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="perm_landmark">
+        </ion-input>
+
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_landmark.valid && (permanentAdrsData.controls.perm_landmark.dirty || permanentAdrsData.controls.perm_landmark.touched)">
+        <span class="errText">Must enter valid Land Mark.</span>
+      </span>
+      <span *ngIf="permanentAdrsData.controls.perm_landmark.errors?.maxlength">
+        <span class="errText">Maximum of 50 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || applicantDisable">
+        <ion-label position="floating">No. of years in Current Residence
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="perm_yrsCurCity">
+          <ion-select-option *ngFor="let city of yrsCurCity;let i=index" [value]="city.CODE">{{ city.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!permanentAdrsData.controls.perm_yrsCurCity.valid && (permanentAdrsData.controls.perm_yrsCurCity.dirty || permanentAdrsData.controls.perm_yrsCurCity.touched)">
+        <span class="errText">Must Select No. of years in Current Residence.</span>
+      </span>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <ion-button class="proceedbtn" shape="round" type="submit"
+              [disabled]="(permanentAdrsData.invalid) || submitDisable">Save</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+    <p class="extraSpace">&nbsp;</p>
+  </div>
+
+  <!-- PRESENT ADDRESS TAB   -->
+  <div *ngIf="addressType==='Present'">
+
+    <ion-item class="field">
+      <ion-label>Same as Permanent Address</ion-label>
+      <ion-checkbox checked="false" color="jsfpink" [(ngModel)]="permSameCheck" (ionChange)="dataPermchanged($event)"
+        [disabled]="submitDisable" style="--checkmark-color : green;"></ion-checkbox>
+    </ion-item>
+
+    <form [formGroup]="presentAdrsData" (ngSubmit)="presentAddressSave(presentAdrsData.value)">
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Present Address Type<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_type">
+          <ion-select-option *ngFor="let adr of adrType;let i=index" [value]="adr.CODE">{{ adr.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_type.valid && (presentAdrsData.controls.pres_type.dirty || presentAdrsData.controls.pres_type.touched)">
+        <span class="errText">Must Select Present Address Type.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">Present Address as per KYC<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_presmAdrsKYC"
+          (ionChange)="getaddressproof('present')">
+          <ion-select-option *ngFor="let perm of permAdrsList;let i=index" [value]="perm.CODE">{{ perm.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_presmAdrsKYC.valid && (presentAdrsData.controls.pres_presmAdrsKYC.dirty || presentAdrsData.controls.pres_presmAdrsKYC.touched)">
+        <span class="errText">Must Select the present Address as per KYC.</span>
+      </span>
+
+      <div class="field" *ngIf="presentAdrsData.controls.pres_presmAdrsKYC.value == '5'">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">If Manual Entry, type of document collected<span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_manualEntry">
+            <ion-select-option *ngFor="let np of notPermAdrsList;let i=index" [value]="np.CODE">{{ np.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span
+          *ngIf="!presentAdrsData.controls.pres_manualEntry.valid && (presentAdrsData.controls.pres_manualEntry.dirty || presentAdrsData.controls.pres_manualEntry.touched)">
+          <span class="errText">Must select the present Address as per KYC.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">Plot/House/Flat/Door No. & Street etc.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="pres_plots"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_plots.valid && (presentAdrsData.controls.pres_plots.dirty || presentAdrsData.controls.pres_plots.touched)">
+        <span
+          *ngIf="presentAdrsData.controls.pres_plots.errors?.required || presentAdrsData.controls.pres_plots.errors?.pattern">
+          <span class="errText">Must enter valid Plot/House/Flat/Door No. & Street etc.</span>
+        </span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_plots.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_plots.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">Locality/Colony name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="pres_locality">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_locality.valid && (presentAdrsData.controls.pres_locality.dirty || presentAdrsData.controls.pres_locality.touched)">
+        <span
+          *ngIf="presentAdrsData.controls.pres_locality.errors?.required || presentAdrsData.controls.pres_locality.errors?.pattern">
+          <span class="errText">Must enter valid Locality/Colony name.</span>
+        </span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_locality.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_locality.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">Address Line 3
+        </ion-label>
+        <ion-input type="text" formControlName="pres_line3">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_line3.valid && (presentAdrsData.controls.pres_line3.dirty || presentAdrsData.controls.pres_line3.touched)">
+        <span
+          *ngIf="presentAdrsData.controls.pres_line3.errors?.required || presentAdrsData.controls.pres_line3.errors?.pattern">
+          <span class="errText">Must enter valid Locality/Colony name.</span>
+        </span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_line3.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_line3.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">State
+          <span class="mandatory">*</span>
+        </ion-label>
+
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="pres_states" [items]="master_states"
+          itemValueField="stateCode" itemTextField="stateName" [canSearch]="true" (onChange)="getCityValue('preState')"
+          [ngClass]="{'readonly-style': submitDisable || permantDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_states"
+          (ionChange)="getCityValue('preState')">
+          <ion-select-option *ngFor="let state of master_states;let i=index" [value]="state.stateCode">{{
+            state.stateName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_states.valid && (presentAdrsData.controls.pres_states.dirty || presentAdrsData.controls.pres_states.touched)">
+        <span class="errText">Must Select the State.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">City/Taluq/Village
+          <span class="mandatory">*</span>
+        </ion-label>
+
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="pres_cities" [items]="presentCity"
+          itemValueField="cityCode" itemTextField="cityName" [canSearch]="true"
+          [ngClass]="{'readonly-style': submitDisable || permantDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_cities">
+          <ion-select-option *ngFor="let city of presentCity;let i=index" [value]="city.cityCode">{{ city.cityName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_cities.valid && (presentAdrsData.controls.pres_cities.dirty || presentAdrsData.controls.pres_cities.touched)">
+        <span class="errText">Must Select the City/Taluq/Village.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">District
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="pres_district" [items]="presentCity"
+          itemValueField="cityCode" itemTextField="cityName" [canSearch]="true"
+          [ngClass]="{'readonly-style': submitDisable || permantDisable}">
+        </ionic-selectable>
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_district">
+          <ion-select-option *ngFor="let city of presentCity;let i=index" [value]="city.cityCode">{{ city.cityName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_district.valid && (presentAdrsData.controls.pres_district.dirty || presentAdrsData.controls.pres_district.touched)">
+        <span class="errText">Must Select the District.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">Pincode
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" maxlength="6" formControlName="pres_pincode" (ionChange)="pincodeValidation('pres')">
+        </ion-input>
+      </ion-item>
+      <span *ngIf="!presentAdrsData.controls.pres_pincode.valid && (presentAdrsData.controls.pres_pincode.touched)">
+        <span class="errText">Must enter valid Pincode.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Country
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="pres_countries" value="India"></ion-input>
+
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_countries.valid && (presentAdrsData.controls.pres_countries.dirty || presentAdrsData.controls.pres_countries.touched)">
+        <span class="errText">Must Select the Country.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">Land Mark
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="pres_landmark">
+        </ion-input>
+
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_landmark.valid && (presentAdrsData.controls.pres_landmark.dirty || presentAdrsData.controls.pres_landmark.touched)">
+        <span class="errText">Must enter valid Land Mark.</span>
+      </span>
+      <span *ngIf="presentAdrsData.controls.pres_landmark.errors?.maxlength">
+        <span class="errText">Maximum of 50 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || permantDisable">
+        <ion-label position="floating">No. of years in Current city
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pres_yrsCurCity">
+          <ion-select-option *ngFor="let city of yrsCurCity;let i=index" [value]="city.CODE">{{ city.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!presentAdrsData.controls.pres_yrsCurCity.valid && (presentAdrsData.controls.pres_yrsCurCity.dirty || presentAdrsData.controls.pres_yrsCurCity.touched)">
+        <span class="errText">Must Select No. of years in Current city.</span>
+      </span>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <ion-button class="proceedbtn" shape="round" type="submit"
+              [disabled]="(presentAdrsData.invalid) || submitDisable">Save</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+    <p class="extraSpace">&nbsp;</p>
+  </div>
+
+  <!-- BUSINESS ADDRESS TAB -->
+  <div *ngIf="addressType==='Business'">
+
+    <form [formGroup]="businessAdrsData" (ngSubmit)="businessAdrsSave(businessAdrsData.value)">
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Office/Business Address Type<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="busi_type">
+          <ion-select-option *ngFor="let adr of adrType;let i=index" [value]="adr.CODE">{{ adr.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_type.valid && (businessAdrsData.controls.busi_type.dirty || businessAdrsData.controls.busi_type.touched)">
+        <span class="errText">Must Select Business Address Type.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || businessDisable">
+        <ion-label position="floating">Plot/House/Flat/Door No. & Street etc.
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="busi_plots">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_plots.valid && (businessAdrsData.controls.busi_plots.dirty || businessAdrsData.controls.busi_plots.touched)">
+        <span
+          *ngIf="businessAdrsData.controls.busi_plots.errors?.required || businessAdrsData.controls.busi_plots.errors?.pattern">
+          <span class="errText">Must enter valid Plot/House/Flat/Door No. & Street etc.</span>
+        </span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_plots.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_plots.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || businessDisable">
+        <ion-label position="floating">Locality/Colony name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="busi_locality">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_locality.valid && (businessAdrsData.controls.busi_locality.dirty || businessAdrsData.controls.busi_locality.touched)">
+        <span
+          *ngIf="businessAdrsData.controls.busi_locality.errors?.required || businessAdrsData.controls.busi_locality.errors?.pattern">
+          <span class="errText">Must enter valid Locality/Colony name.</span>
+        </span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_locality.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_locality.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || businessDisable">
+        <ion-label position="floating">Address Line 3
+        </ion-label>
+        <ion-input type="text" formControlName="busi_line3">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_line3.valid && (businessAdrsData.controls.busi_line3.dirty || businessAdrsData.controls.busi_line3.touched)">
+        <span
+          *ngIf="businessAdrsData.controls.busi_line3.errors?.required || businessAdrsData.controls.busi_line3.errors?.pattern">
+          <span class="errText">Must enter valid Locality/Colony name.</span>
+        </span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_line3.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_line3.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">State
+          <span class="mandatory">*</span>
+        </ion-label>
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="busi_states"
+          (ionChange)="getCityValue('busState')">
+          <ion-select-option *ngFor="let state of master_states;let i=index" [value]="state.stateCode">{{
+            state.stateName }}
+          </ion-select-option>
+        </ion-select> -->
+
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="busi_states" [items]="master_states"
+          itemValueField="stateCode" itemTextField="stateName" [canSearch]="true" (onChange)="getCityValue('busState')"
+          [ngClass]="{'readonly-style': submitDisable || businessDisable}">
+        </ionic-selectable>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_states.valid && (businessAdrsData.controls.busi_states.dirty || businessAdrsData.controls.busi_states.touched)">
+        <span class="errText">Must Select the State.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">City/Taluq/Village
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="busi_cities" [items]="businessCity"
+          itemValueField="cityCode" itemTextField="cityName" [canSearch]="true"
+          [ngClass]="{'readonly-style': submitDisable || businessDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="busi_cities">
+          <ion-select-option *ngFor="let city of businessCity;let i=index" [value]="city.cityCode">{{ city.cityName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_cities.valid && (businessAdrsData.controls.busi_cities.dirty || businessAdrsData.controls.busi_cities.touched)">
+        <span class="errText">Must Select the City/Taluq/Village.</span>
+      </span>
+      <ion-item class="field">
+        <ion-label position="floating">District
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ionic-selectable [shouldStoreItemValue]="true" formControlName="busi_district" [items]="businessCity"
+          itemValueField="cityCode" itemTextField="cityName" [canSearch]="true"
+          [ngClass]="{'readonly-style': submitDisable || businessDisable}">
+        </ionic-selectable>
+
+        <!-- <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="busi_district">
+          <ion-select-option *ngFor="let city of businessCity;let i=index" [value]="city.cityCode">{{ city.cityName }}
+          </ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_district.valid && (businessAdrsData.controls.busi_district.dirty || businessAdrsData.controls.busi_district.touched)">
+        <span class="errText">Must Select the District.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || businessDisable">
+        <ion-label position="floating">Pincode
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" maxlength="6" formControlName="busi_pincode" (ionChange)="pincodeValidation('perm')">
+        </ion-input>
+      </ion-item>
+      <span *ngIf="!businessAdrsData.controls.busi_pincode.valid && ( businessAdrsData.controls.busi_pincode.touched)">
+        <span class="errText">Must enter valid Pincode.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="true">
+        <ion-label position="floating">Country
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="busi_countries" value="India"></ion-input>
+
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_countries.valid && (businessAdrsData.controls.busi_countries.dirty || businessAdrsData.controls.busi_countries.touched)">
+        <span class="errText">Must Select the Country.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || businessDisable">
+        <ion-label position="floating">Land Mark
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="busi_landmark">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_landmark.valid && (businessAdrsData.controls.busi_landmark.dirty || businessAdrsData.controls.busi_landmark.touched)">
+        <span class="errText">Must enter valid Land Mark.</span>
+      </span>
+      <span *ngIf="businessAdrsData.controls.busi_landmark.errors?.maxlength">
+        <span class="errText">Maximum of 50 characters.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable || businessDisable">
+        <ion-label position="floating">No. of years in Current city
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="busi_yrsCurCity">
+          <ion-select-option *ngFor="let city of yrsCurCity;let i=index" [value]="city.CODE">{{ city.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!businessAdrsData.controls.busi_yrsCurCity.valid && (businessAdrsData.controls.busi_yrsCurCity.dirty || businessAdrsData.controls.busi_yrsCurCity.touched)">
+        <span class="errText">Must enter valid No. of years in Current city.</span>
+      </span>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <ion-button class="proceedbtn" shape="round" type="submit"
+              [disabled]="(businessAdrsData.invalid) || submitDisable">Save</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+    <p class="extraSpace">&nbsp;</p>
+  </div>
+
+
+</div>

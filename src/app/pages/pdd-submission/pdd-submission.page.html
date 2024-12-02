@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="title">PDD Submission</ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+
+    <form [formGroup]="PddData">
+      <div class="mobileverify">
+        <ion-item [disabled]="pddDisable">
+          <ion-label position="floating">RC No.
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="rcNo" autocapitalize="characters"></ion-input>
+        </ion-item>
+        <ion-button *ngIf="!rcVerify" type="button" shape="round" class="btn"
+          [disabled]="PddData.controls.rcNo.invalid || pddDisable" (click)="fetchDetailsFromRC()">Verify</ion-button>
+        <ion-button *ngIf="rcVerify" type="button" shape="round" color="success">Verified</ion-button>
+      </div>
+      <div *ngIf="PddData.controls.rcNo.invalid && (PddData.controls.rcNo.touched)">
+        <span *ngIf="PddData.controls.rcNo.errors.required">
+          <span class="errText">Must enter Rc No.</span>
+        </span>
+      </div>
+
+      <ion-item [disabled]="pddDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Engine No <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="engineNo"></ion-input>
+      </ion-item>
+      <div *ngIf="PddData.controls.engineNo.invalid && (PddData.controls.engineNo.touched)">
+        <span *ngIf="PddData.controls.engineNo.errors.required">
+          <span class="errText">Must enter Engine No.</span>
+        </span>
+        <!-- <span *ngIf="PddData.controls.engineNo.errors.pattern">
+      <span class="errText">Enter Valid Engine No.</span>
+    </span> -->
+      </div>
+
+      <ion-item [disabled]="pddDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Chassis No <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="chassisno"></ion-input>
+      </ion-item>
+      <div *ngIf="PddData.controls.chassisno.invalid && (PddData.controls.chassisno.touched)">
+        <span *ngIf="PddData.controls.chassisno.errors.required">
+          <span class="errText">Must enter Chassis No.</span>
+        </span>
+        <!-- <span *ngIf="PddData.controls.chassisno.errors.pattern">
+      <span class="errText">Enter Valid Chassis No.</span>
+    </span> -->
+      </div>
+
+      <ion-item [disabled]="pddDisable">
+        <ion-label position="floating">Final Invoice <span class="mandatory">*</span></ion-label>
+        <ion-input type="tel" formControlName="finalInvoice"></ion-input>
+      </ion-item>
+      <div *ngIf="PddData.controls.finalInvoice.invalid && (PddData.controls.finalInvoice.touched)">
+        <span *ngIf="PddData.controls.finalInvoice.errors.required">
+          <span class="errText">Must enter Final Invoice.</span>
+        </span>
+      </div>
+
+      <ion-item [disabled]="pddDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Name as per RC <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="nameAsPerRC"></ion-input>
+      </ion-item>
+      <div *ngIf="PddData.controls.nameAsPerRC.invalid && (PddData.controls.nameAsPerRC.touched)">
+        <span *ngIf="PddData.controls.nameAsPerRC.errors.required">
+          <span class="errText">Must enter Final Invoice.</span>
+        </span>
+      </div>
+      <ion-item [disabled]="pddDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Hypothecation Status<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="hypothecation"></ion-input>
+      </ion-item>
+      <div *ngIf="PddData.controls.hypothecation.invalid && (PddData.controls.hypothecation.touched)">
+        <span *ngIf="PddData.controls.hypothecation.errors.required">
+          <span class="errText">Must enter Hypothecation Status</span>
+        </span>
+      </div>
+      <ion-item *ngIf="hypothecation" [disabled]="pddDisable || RCFetchDetailsDisable">
+        <ion-label position="floating">Hypothecation Company<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="hypothecationName"></ion-input>
+      </ion-item>
+      <div *ngIf="PddData.controls.hypothecationName.invalid && (PddData.controls.hypothecationName.touched)">
+        <span *ngIf="PddData.controls.hypothecationName.errors.required">
+          <span class="errText">Must enter Hypothecation Company</span>
+        </span>
+      </div>
+
+    </form>
+
+
+    <form [formGroup]="PddDetails">
+      <ion-item class="field"> <!-- class="dropDown"-->
+        <ion-label position="floating">Document Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="docType"
+          (ionChange)="onchangeDocType($event)">
+          <ion-select-option *ngFor="let doc of Document_Type;let i=index" [value]="doc.docId">{{ doc.docDescription}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="PddDetails.controls.docType.invalid && (PddDetails.controls.docType.touched)">
+        <span *ngIf="PddDetails.controls.docType.errors.required">
+          <span class="errText">Must Select Document Type</span>
+        </span>
+      </div>
+
+      <ion-item> <!-- class="dropDown"-->
+        <ion-label position="floating">Remarks
+        </ion-label>
+        <ion-input type="text" formControlName="remarks" [disabled]="pddDisable"></ion-input>
+      </ion-item>
+      <div *ngIf="PddDetails.controls.remarks.invalid && (PddDetails.controls.remarks.touched)">
+        <span *ngIf="PddDetails.controls.remarks.errors.required">
+          <span class="errText">Must enter Remarks.</span>
+        </span>
+        <span *ngIf="PddDetails.controls.remarks.errors.pattern">
+          <span class="errText">Enter Valid Remarks.</span>
+        </span>
+      </div>
+
+
+    </form>
+    <div class="addbtn">
+      <ion-button shape="round" color="warning" (click)="PddDetailsSave(PddDetails.value)" type="button"
+        [disabled]="(PddData.invalid && PddDetails.invalid) || pddDisable">ADD</ion-button>
+    </div>
+
+    <ion-item lines="none">
+      <div>
+        <ion-row *ngFor="let pddArray of pddDetailsArray;let j=index">
+          <ion-col size="3" style="height: 100px">
+            <div *ngFor="let pddImg of pddArray.AllImages;let i=index">
+              <img *ngIf="pddImg.type == 'image'" class="image{{i+1}}" src="{{pddImg.imgpath}}">
+              <img *ngIf="pddImg.type != 'image'" class="image{{i+1}}" src="assets/imgs/files2.jpg">
+            </div>
+            <div *ngIf="pddArray.AllImages.length == 0">
+              <img class="image1" src="assets/imgs/noImgs.png">
+              <img class="image2" src="assets/imgs/noImgs.png">
+              <img class="image3" src="assets/imgs/noImgs.png">
+            </div>
+          </ion-col>
+          <ion-col size="5" class="content">
+            <div class="inner">{{pddArray.docDescription}}</div>
+            <div class="inner">{{pddArray.remarks}}</div>
+            <div class="innerImg">{{pddArray.AllImages.length}} Images Added</div>
+          </ion-col>
+          <ion-col size="2">
+            <!-- <button ion-button class="addCircleBtn" (click)="addPddImages(pddArray.docType)" [disabled]="pddDisable">
+              <ion-icon class="addCircle" name="add-circle"></ion-icon>
+            </button> -->
+            <ion-button class="addCircleBtn" (click)="viewIdProof(pddArray.docType,[])" [disabled]="pddDisable">
+              <ion-icon class="addCircle" name="add-circle"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="2">
+            <!-- <button ion-button class="deleteBtn" (click)="deleteDoc(pddArray.docType)" [disabled]="pddDisable">
+            <ion-icon class="trashIcon" name="trash"></ion-icon>
+          </button> -->
+            <input #fileref [hidden]="true" type="file" (change)="onFileSelect($event)" />
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-item>
+
+  </div>
+</ion-content>
+
+<ion-footer style="background-color: white;" *ngIf="!showFinalBtn">
+
+  <!-- <div style="text-align: center;">
+    <button ion-button icon-start round class="uploadButton" (click)="pddDocUpload()" [disabled]="uploadBtn || pddDisable" >
+      <ion-icon class="uploadIcon" name="cloud-upload"></ion-icon>
+      UPLOAD
+    </button>
+  </div> -->
+</ion-footer>
+<ion-footer style="background-color: white;" *ngIf="showFinalBtn">
+  <div style="text-align: center;">
+    <ion-button slot="start" shape="round" class="uploadButton" (click)="finalWorkFlow()">
+      <!-- <ion-icon class="uploadIcon" name="cloud-upload"></ion-icon> -->
+      Proceed to Disbursed Account
+    </ion-button>
+  </div>
+</ion-footer>

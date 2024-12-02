@@ -1,0 +1,78 @@
+// page-proof-modal {
+    ion-content{
+        --background: transparent !important;
+    }
+
+    ion-row ion-col{
+        font-size: 18px;
+        vertical-align: bottom;
+        padding: .75rem;
+        color:white;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .content{
+        border-radius: 10px;
+    }
+
+    .iconlist ion-icon{
+        font-size:34px;
+        margin: auto;
+    }
+    .iconpart ion-grid {
+        margin-top:15% !important;
+        --background:black;
+    }
+
+        .imgdelete{
+            color: #e93b04;
+            text-align: center;
+            font-size: 30px;
+            position: absolute;
+            right: 4%;
+            top: -3%;
+            --background: rgba(255, 255, 255, 0.4);
+            padding: 0px 10px;
+            border-radius: 20px;
+            }
+
+            .proofModal{
+                width:80%;height:70vh;border-radius:5px;margin-left:1%;margin-top: 10%;
+            }
+
+        @media only screen and (max-width: 480px) {
+                .proofModal{
+                    width:100%;
+                    height: 81vh;
+                    border-radius:0px;
+                    margin-left: 0%;
+                    margin-top: 0 !important;
+                }
+                .scroll-content {
+                     padding: 0px !important;
+                }
+                .bgColor{
+                    background:rgba(0,0,0,0.5);
+                    border-radius: 0px;
+                    margin-top:0%;
+                }
+        
+            }
+        
+            @media only screen and (min-width: 700px) {
+                .iconpart ion-grid {
+                    margin-top: 0% !important;
+                    --background: black;
+                }
+                .scroll-content {
+                    padding: 0px !important;
+                }
+                .proofModal{
+                    width:80%;height: 100%;border-radius:5px;margin-left:1%;margin-top: 10%;
+                }
+            }
+
+
+    
+
+// }

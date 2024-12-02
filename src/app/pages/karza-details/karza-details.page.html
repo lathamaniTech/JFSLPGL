@@ -1,0 +1,203 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>KarzaDetails</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div *ngIf="idType == 'passport' && !dldata">
+    <form [formGroup]="passportForm" (ngSubmit)="passportKarza(passportForm.value)">
+      <ion-item class="field">
+        <ion-label position="floating">Enter Name as per Passport
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <div *ngIf="passportForm.controls.name.invalid && (passportForm.controls.name.touched)">
+        <span *ngIf="passportForm.controls.name.errors.required">
+          <span class="errText">Must enter name.</span>
+        </span>
+        <span *ngIf="passportForm.controls.name.errors.pattern">
+          <span class="errText">Enter Valid name.</span>
+        </span>
+      </div>
+
+      <ion-item class="field">
+        <ion-label position="floating">Enter Last Name as per Passport
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="lastName"></ion-input>
+      </ion-item>
+      <div *ngIf="passportForm.controls.lastName.invalid && (passportForm.controls.lastName.touched)">
+        <span *ngIf="passportForm.controls.lastName.errors.required">
+          <span class="errText">Must enter Last Name.</span>
+        </span>
+        <span *ngIf="passportForm.controls.lastName.errors.pattern">
+          <span class="errText">Enter Valid Last Name.</span>
+        </span>
+      </div>
+
+      <div class="newdate">
+        <ion-item class="field">
+          <ion-label position="floating">Enter Date of Birth as per Passport
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="dob"></ion-input>
+        </ion-item>
+      </div>
+      <span *ngIf="passportForm.controls.dob.invalid && (passportForm.controls.dob.touched)">
+        <span class="errText">Must Select Date of Birth.</span>
+      </span>
+
+      <div class="newdate">
+        <ion-item class="field">
+          <ion-label position="floating">Enter Passport Expiry Date
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="doe" [min]="mindate" [max]="maxdate"></ion-input>
+        </ion-item>
+      </div>
+      <span *ngIf="passportForm.controls.doe.invalid && (passportForm.controls.doe.touched)">
+        <span class="errText">Must Select Expiry Date.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Select Gender as per Passport
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="gender"  [disabled]="submitDisable">
+          <ion-select-option *ngFor="let gen of genderList;let i=index" [value]="gen.code">{{ gen.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!passportForm.controls.gender.valid && (passportForm.controls.gender.touched)">
+        <span class="errText">Must select Gender.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="pType"  [disabled]="submitDisable">
+          <ion-select-option *ngFor="let gen of typeList;let i=index" [value]="gen.code">{{ gen.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!passportForm.controls.pType.valid && (passportForm.controls.pType.touched)">
+        <span class="errText">Must select Type.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Country Code
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="countryCode"
+          (ionChange)="setFilteredItems(passportForm.controls.countryCode.value)"></ion-input>
+      </ion-item>
+      <div *ngIf="passportForm.controls.countryCode.invalid && (passportForm.controls.countryCode.touched)">
+        <span *ngIf="passportForm.controls.countryCode.errors.required">
+          <span class="errText">Must enter country code.</span>
+        </span>
+        <span *ngIf="passportForm.controls.countryCode.errors.pattern">
+          <span class="errText">Enter valid country code.</span>
+        </span>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <!-- <button ion-button round type="submit" color="jsfgoald" [disabled]="passportForm.invalid">Get Data</button> -->
+            <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="passportForm.invalid">Get Data</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
+  <div *ngIf="idType == 'drivingLicence' && !dldata">
+    <form [formGroup]="dlForm" (ngSubmit)="dlKarza(dlForm.value)">
+      <div class="newdate">
+        <ion-item class="field">
+          <ion-label position="floating">Enter Date of Birth as per Driving License
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="dob"></ion-input>
+        </ion-item>
+      </div>
+      <span *ngIf="dlForm.controls.dob.invalid && (dlForm.controls.dob.touched)">
+        <span class="errText">Must Select Date of Birth.</span>
+      </span>
+
+      <div class="newdate">
+        <ion-item class="field">
+          <ion-label position="floating">Enter Driving License Expiry Date
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="doeLic" [min]="mindate" [max]="maxdate"></ion-input>
+        </ion-item>
+      </div>
+      <span *ngIf="dlForm.controls.doeLic.invalid && (dlForm.controls.doeLic.touched)">
+        <span class="errText">Must Select Driving License Expiry Date.</span>
+      </span>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <!-- <button ion-button round type="submit" color="jsfgoald" [disabled]="dlForm.invalid">Get Data</button> -->
+            <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="dlForm.invalid">Get Data</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+
+  <div *ngIf="idType == 'pan' || idType == 'voterid' || idType == 'aadhar'|| dldata">
+    <form [formGroup]="dlDataForm" (ngSubmit)="dlDataFormPopulate(dlDataForm.value)">
+
+      <ion-item class="field">
+        <ion-label position="floating">Please Select First name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="firstname" interface="popover" [interfaceOptions]="customPopoverOptions"  [disabled]="submitDisable"
+          (ionChange)="selectFirstName()">
+          <ion-select-option *ngFor="let dl of dlFirstArray;let i=index" [value]="dl">{{ dl }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="dlFirstArray.length > 1" class="field">
+        <ion-label position="floating">Please Select Last name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="lastname" interface="popover" [interfaceOptions]="customPopoverOptions" [disabled]="submitDisable"
+          (ionChange)="selectFirstName()">
+          <ion-select-option *ngFor="let dl of dlFirstArray;let i=index" [value]="dl">{{ dl }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="dlFirstArray.length > 2" class="field">
+        <ion-label position="floating">Please Select Middle name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="middlename" interface="popover" [interfaceOptions]="customPopoverOptions" [disabled]="submitDisable"
+          (ionChange)="selectFirstName()">
+          <ion-select-option *ngFor="let dl of dlFirstArray;let i=index" [value]="dl">{{ dl }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <!-- <button ion-button round type="submit" color="jsfgoald" [disabled]="dlDataForm.invalid">Get Data</button> -->
+            <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="dlDataForm.invalid">Get Data</ion-button>
+          </div>
+        </ion-col>
+
+      </ion-row>
+    </form>
+  </div>
+</ion-content>

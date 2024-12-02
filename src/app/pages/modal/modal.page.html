@@ -1,0 +1,52 @@
+<ion-header>
+
+  <ion-toolbar hideBackButton="true">
+    <ion-title>
+      <span *ngIf="idProof">ID Proof Details</span>
+      <span>
+        <ion-icon name="close-circle-outline" style="float:right;" (click)="closeModal()"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+
+  <div *ngIf="noData" class="existPlaceholder">
+    <h2>No Data found !</h2>
+  </div>
+
+  <ion-list *ngIf="idProof" class="ion-margin">
+    <!-- <ion-grid> -->
+      <!-- <ion-row> -->
+        <div size="12" class="ion-margin" *ngFor="let promoterProof of promoterProofData; let i= index">
+          <ion-item-sliding #slidingItem>
+            <ion-item lines="none" class="ion-no-padding" (click)="passDetails(promoterProof,i)">
+              <!-- <ion-card> -->
+                <ion-row>
+                  <ion-col size="2">
+                    <ion-icon name="newspaper-outline" class="proofIcon"></ion-icon>
+                  </ion-col>
+                  <ion-col size="10">
+                    <div class="item-container"><b>{{ promoterProof.promoIDType | valuemap: promoterProof.promoIDType |
+                        async }}</b></div>
+                    <div class="item-container">{{ this.globFunc.basicDec(promoterProof.promoIDRef) }}</div>
+                  </ion-col>
+                </ion-row>
+              <!-- </ion-card> -->
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-button color="danger" (click)="deleteData(promoterProof)">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      <!-- </ion-row> -->
+    <!-- </ion-grid> -->
+  </ion-list>
+
+</ion-content>

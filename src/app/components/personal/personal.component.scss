@@ -1,0 +1,8 @@
+.custom-popover::part(content) {
+    width: auto !important;
+    right: 20px !important;
+    left: auto !important;
+    transform-origin: right top !important;
+    max-width: 90% !important;
+    white-space: pre-line !important;
+  }

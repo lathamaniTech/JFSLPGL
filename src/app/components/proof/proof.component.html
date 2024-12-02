@@ -1,0 +1,120 @@
+<div class="container">
+
+  <h2 class="headtitel">KYC Details</h2>
+  <form [formGroup]="proofData" (ngSubmit)="proofpromotersave(proofData.value)">
+    <div>
+      <ion-item class="field">
+        <ion-label position="floating">KYC Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="promoIDType"
+          [disabled]="submitDisable || IDTypeDisable" (ionChange)='getDocuments($event)'>
+          <ion-select-option *ngFor="let docs of docs_master;let i=index" [value]="docs.DocID">{{ docs.DocDesc
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!proofData.controls.promoIDType.valid && (proofData.controls.promoIDType.dirty || proofData.controls.promoIDType.touched)">
+        <span class="errText">Must Select the KYC Type.</span>
+      </span>
+    </div>
+
+    <div *ngIf="documentDetails">
+      <ion-item class="field">
+        <ion-label position="floating">Document Details
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="promoDoc"
+          [(ngModel)]="promoDoc" multiple="true" [disabled]="submitDisable">
+          <ion-select-option *ngFor="let doc of docslist_master" [value]="doc.DocId">{{ doc.DocName }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span
+        *ngIf="!proofData.controls.promoDoc.valid && (proofData.controls.promoDoc.dirty || proofData.controls.promoDoc.touched)">
+        <span class="errText">Must Select the Document Details.</span>
+      </span>
+    </div>
+    <ion-item class="field" [disabled]="idNumDisable">
+      <ion-label position="floating"><span *ngIf="!janaRefId">ID Number</span><span *ngIf="janaRefId">Jana Reference
+          ID</span>
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input [type]="textType" formControlName="promoIDRef" [disabled]="submitDisable || vaultDisable"
+        (ionChange)="toUpperCase('proofData','promoIDRef');aadharValidation()"></ion-input>
+
+      <div class="button-container">
+        <ion-button fill="clear" style="color:#da107e" *ngIf="aadhar && !vaultDisable && vaultStatus == 'N'"
+          (click)="viewAadhar()">
+          <ion-icon style="font-size: 28px;" [name]="textType == 'password' ? 'eye' : 'eye-off'"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus == 'N'" (click)="aadhaarVaultInsert()">
+          <span class="vault">Vault</span>
+        </ion-button>
+
+        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus == 'Y'" (click)="aadhaarVaultRetrieve('janaId')">
+          <span class="vault">Retrieve</span>
+        </ion-button>
+
+        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus == 'Y'" (click)="removeVault()">
+          <span class="rvault">Remove</span>
+        </ion-button>
+      </div>
+
+    </ion-item>
+    <span
+      *ngIf="!proofData.controls.promoIDRef.valid && (proofData.controls.promoIDRef.dirty || proofData.controls.promoIDRef.touched)">
+      <span class="errText">Must Enter the Valid ID Number.</span>
+    </span>
+
+    <ion-item class="field" *ngIf="aadhar" [disabled]="submitDisable || vaultStatus == 'Y'">
+      <ion-label position="floating">AEPS<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="aepsStatus">
+        <ion-select-option *ngFor="let id of aepsTypes;let i=index" [value]="id.code">{{ id.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!proofData.controls.aepsStatus.valid && (proofData.controls.aepsStatus.touched)">
+      <span class="errText">Please select AEPS Flag.</span>
+    </span>
+    <!---------------------------------------------------------------------------------------->
+    <div *ngIf="expdate">
+      <div class="newdate">
+        <ion-item class="field">
+          <ion-label position="floating">Expiry Date
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="promoexpiry" min="{{mindate}}" max="{{maxdate}}"
+            [disabled]="submitDisable">
+          </ion-input>
+        </ion-item>
+        <span
+          *ngIf="!proofData.controls.promoexpiry.valid && (proofData.controls.promoexpiry.dirty || proofData.controls.promoexpiry.touched)">
+          <span class="errText">Select Expiry Date.</span>
+        </span>
+      </div>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="(proofData.invalid) || submitDisable">
+            Save</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+  <ion-fab horizontal="start" slot="fixed">
+    <div class="fabBadge">{{proofImglen}}</div>
+    <ion-fab-button style="--background: #DA107E;" (click)="showpicmaodal('idproof')">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab horizontal="end" slot="fixed">
+    <div class="fabBadge">{{promoterDatalen}}</div>
+    <ion-fab-button style="--background: #DA107E;" (click)="viewIdProof('proofType')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>

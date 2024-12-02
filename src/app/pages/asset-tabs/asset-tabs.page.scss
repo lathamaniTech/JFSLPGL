@@ -1,0 +1,99 @@
+// page-asset-tabs {
+.readonly-style {
+  pointer-events: none;
+  color: #999;
+}
+
+.custom-popover::part(content) {
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  max-width: 90% !important;
+  white-space: pre-line !important;
+}
+
+.tab-button-text {
+  white-space: normal;
+  width: 55%;
+}
+
+.mandatory {
+  color: red;
+  padding-left: 5px;
+}
+
+.errText {
+  color: red !important;
+  font-size: 14px !important;
+  text-align: center !important;
+}
+
+.fabBadge {
+  color: #ffffff;
+  position: absolute;
+  background: #da107e;
+  padding: 5px 7px;
+  z-index: 1;
+  border-radius: 50%;
+  top: -6px;
+  right: -6px;
+  font-size: 12px;
+}
+
+.scroll-content {
+  padding-bottom: 0px !important;
+}
+
+.marginTop {
+  margin-top: 30px;
+}
+
+.stockyhead1 {
+  position: sticky;
+  overflow: scroll;
+  top: -11px;
+  left: 0px;
+  width: 100%;
+  z-index: 3;
+}
+
+.stockyhead2 {
+  position: sticky;
+  overflow: scroll;
+  top: -11px;
+  left: 0px;
+  width: 100%;
+  z-index: 4;
+}
+
+.stockyhead3 {
+  position: sticky;
+  overflow: scroll;
+  top: -11px;
+  left: 0px;
+  width: 100%;
+  z-index: 5;
+}
+
+.stockyhead4 {
+  position: sticky;
+  overflow: scroll;
+  top: -11px;
+  left: 0px;
+  width: 100%;
+  z-index: 6;
+}
+
+.stockyhead5 {
+  position: sticky;
+  overflow: scroll;
+  top: -11px;
+  left: 0px;
+  width: 100%;
+  z-index: 7;
+}
+
+
+
+// }

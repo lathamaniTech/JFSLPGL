@@ -1,0 +1,43 @@
+// view-reference-details {
+
+    .container {
+        width: 100vw;
+        height: auto;
+        margin-top: 20px;
+    }
+    
+    .cardcontainer {
+        border: 1px solid #da1072 !important;
+            // border-radius: 10px;
+            margin-top: 10px;
+            padding:10px;
+      }
+    
+    
+      .labelcontent {
+        font-size: 1rem;  
+      }
+    
+      .labeltext {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    
+      .icons {
+        margin-top: 5px;
+        color: #da107e;
+        font-size: 1.5rem;
+      }
+    
+      .closeIcon {
+        float: right;
+        margin-right: 10px;
+        zoom: 1.3;
+        color: #fff;
+    }
+    
+    .label-md {
+      margin: 0px 8px 0px 0;
+    }
+    // }
+    

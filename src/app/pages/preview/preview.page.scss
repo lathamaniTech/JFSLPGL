@@ -1,0 +1,78 @@
+// page-preview {
+
+    .toolbar-background-md{
+        --background: #da107e !important;
+    }
+    .card-header-md{
+        --background: #fba41d;
+        color:white;
+        text-align: center;
+    }
+    .toolbar-title-md{
+        color: white;
+        text-align: center;
+    }
+
+    .createicon{
+        color: black;
+        zoom: 1.5;
+    }
+    .centerAlign .input-wrapper{
+        text-align: center;
+    }
+    .addressSeg{
+        margin-top: 20px;
+        font-size: 16px;
+    }
+    .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+        border-color: #f4f4f4;
+        opacity: 1;
+        --background: deeppink;
+        // font-size: 16px;
+        color: white;
+        // font-style: bold;
+    }
+    .segment-md .segment-button{
+        color: black;
+    }
+    .toolbar-md{
+        text-align: center;
+        color: white;
+    }
+    .footerIcon{
+        zoom: 1.7;
+        // margin-top: 5px;
+    }
+    .statusBar{
+        height: 25px;
+        --background: #fba41d;
+    }
+    .statusBar ion-col{
+        padding:2px 0px 0px 0px !important;
+    }
+    .statusBar ion-grid{
+        padding-left: 10px !important;
+    }
+
+    .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+    color: #FFFFFF !important;
+    --background: transparent;
+}
+
+.item-divider-md {
+     padding-left: 0px;
+    }
+
+    ion-item-group{
+        margin-top: 16px;
+    }
+    .segment-button{
+        border: solid thin deeppink;
+    }
+.segment-md .segment-button{
+    border-bottom-color: deeppink;
+    color: deeppink;
+}
+
+
+// }

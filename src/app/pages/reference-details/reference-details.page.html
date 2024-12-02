@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Reference Details</ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="referenceDetails" (ngSubmit)="referenceDetailsSave(referenceDetails.value)">
+
+    <ion-item class="field">
+      <ion-label position="floating">Name
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="refName" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+    <div *ngIf="referenceDetails.controls.refName.invalid && (referenceDetails.controls.refName.touched)">
+      <span *ngIf="referenceDetails.controls.refName.errors.required">
+        <span class="errText">Must enter Name.</span>
+      </span>
+      <span
+        *ngIf="referenceDetails.controls.refName.errors.pattern || referenceDetails.controls.refName.errors.maxLength">
+        <span class="errText">Enter Valid Name.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Mobile Number
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input numberonly type="tel" maxlength="10" formControlName="mobileNo" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+    <div *ngIf="referenceDetails.controls.mobileNo.invalid && (referenceDetails.controls.mobileNo.touched)">
+      <span *ngIf="referenceDetails.controls.mobileNo.errors.required">
+        <span class="errText">Must enter Mobile number.</span>
+      </span>
+      <span *ngIf="referenceDetails.controls.mobileNo.errors.pattern">
+        <span class="errText">Enter Valid Mobile number.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Address
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-textarea formControlName="refAddress" [disabled]="submitDisable"></ion-textarea>
+    </ion-item>
+    <div *ngIf="referenceDetails.controls.refAddress.invalid && (referenceDetails.controls.refAddress.touched)">
+      <span *ngIf="referenceDetails.controls.refAddress.errors.required">
+        <span class="errText">Must enter address.</span>
+      </span>
+      <span *ngIf="referenceDetails.controls.refAddress.errors.pattern">
+        <span class="errText">Enter Valid address.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Relationship of with Applicant or Co-Applicant
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="relationship" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let relationship of relationShipMaster;let i=index" [value]="relationship.CODE">{{
+          relationship.NAME }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="referenceDetails.controls.relationship.invalid && (referenceDetails.controls.relationship.touched)">
+      <span *ngIf="referenceDetails.controls.relationship.errors.required">
+        <span class="errText">Must Select Relationship of Nominee.</span>
+      </span>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn" style="text-align: center;">
+          <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="(referenceDetails.invalid) || submitDisable">
+            Save
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+  <ion-fab class="ionfabicons" slot="fixed" vertical="bottom" horizontal="end" (click)="viewReferenceDetails()">
+    <ion-fab-button style="--background: #FBA41D;">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+    <ion-badge class="badge">{{referenceDetailsData.length}}</ion-badge>
+  </ion-fab>
+
+</ion-content>

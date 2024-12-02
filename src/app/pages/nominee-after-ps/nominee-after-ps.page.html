@@ -1,0 +1,445 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Nominee Details</ion-title>
+  </ion-toolbar>
+  <!-- <status></status> -->
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="nomiDetails" (ngSubmit)="nomiDetailsSave(nomiDetails.value)">
+
+    <ion-row>
+      <ion-item class="field" size="3">
+        <ion-label position="floating">Title
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="nomTitle" [disabled]="submitDisable">
+          <ion-select-option *ngFor="let tit of titles;let i=index" [value]="tit.CODE">{{ tit.NAME }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="field" size="9">
+        <ion-label position="floating">Nominee Name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="nominame" [value]="nominame" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+
+      <span *ngIf="!nomiDetails.controls.nomTitle.valid && (nomiDetails.controls.nomTitle.touched)">
+        <span class="errText">Must Select Nominee Title.</span>
+      </span>
+      <div *ngIf="nomiDetails.controls.nominame.invalid && (nomiDetails.controls.nominame.touched)">
+        <span *ngIf="nomiDetails.controls.nominame.errors.required">
+          <span class="errText">Must enter Nominee name.</span>
+        </span>
+        <span *ngIf="nomiDetails.controls.nominame.errors.pattern">
+          <span class="errText">Enter Valid Nominee name.</span>
+        </span>
+      </div>
+    </ion-row>
+
+    <!-- <div class="newdate"> -->
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Date Of Birth
+        <span class="mandatory">*</span>
+      </ion-label>
+      <!-- <ion-datetime displayFormat="DD-MM-YYYY" min="1900-01-01" formControlName="nomdob" [max]="mindate"
+        pickerFormat="DD MMM YYYY" [disabled]="submitDisable" (ionBlur)="calculate_age($event)"></ion-datetime> -->
+      <ion-input type="date" formControlName="nomdob" [max]="mindate" [disabled]="submitDisable"
+        (ionBlur)="calculate_age($event)">
+      </ion-input>
+    </ion-item>
+    <!-- </div> -->
+
+    <span *ngIf="nomiDetails.controls.nomdob.invalid && (nomiDetails.controls.nomdob.touched)">
+      <span class="errText">Must Select Nominee Date Of Birth.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Age</ion-label>
+      <ion-input type="tel" maxlength="3" formControlName="nomiage" [disabled]="true"></ion-input>
+    </ion-item>
+
+    <div *ngIf="nomiDetails.controls.nomiage.invalid && (nomiDetails.controls.nomiage.touched)">
+      <span *ngIf="nomiDetails.controls.nomiage.errors.required">
+        <span class="errText">Must enter Nominee Age.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.nomiage.errors.pattern">
+        <span class="errText">Enter Valid Nominee Age.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Relationship
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="nomrelation" [disabled]="submitDisable && relation"
+        (click)="getRelateValue($event)">
+        <ion-select-option *ngFor="let relation of master_relations;let i=index" value="{{ relation.CODE }}">{{ relation.NAME
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <span
+      *ngIf="fetchRelate || (!nomiDetails.controls.nomrelation.valid && (nomiDetails.controls.nomrelation.dirty ||nomiDetails.controls.nomrelation.touched))">
+      <span class="errText">Must Select Nominee Relationship.</span>
+    </span>
+
+    <!--     <span *ngIf="fetchRelate">
+      <span class="errText">AAAAA Must Select Nominee Relationship.</span>
+    </span>-->
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Address Line1
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="nomi_address1" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+    <span
+      *ngIf="!nomiDetails.controls.nomi_address1.valid && (nomiDetails.controls.nomi_address1.dirty || nomiDetails.controls.nomi_address1.touched)">
+      <!-- <span class="errText">Must enter valid Locality/Colony name.</span> -->
+      <span
+        *ngIf="nomiDetails.controls.nomi_address1.errors?.required || nomiDetails.controls.nomi_address1.errors?.pattern">
+        <span class="errText">Must enter valid Nominee Address Line1.</span>
+      </span>
+    </span>
+    <span *ngIf="nomiDetails.controls.nomi_address1.errors?.maxlength">
+      <span class="errText">Maximum of 40 characters.</span>
+    </span>
+    <span *ngIf="nomiDetails.controls.nomi_address1.errors?.minlength">
+      <span class="errText">Minimum of 3 characters.</span>
+    </span>
+
+    <!-- <div *ngIf="nomiDetails.controls.nomi_address1.invalid && (nomiDetails.controls.nomi_address1.touched)">
+      <span *ngIf="nomiDetails.controls.nomi_address1.errors.required">
+        <span class="errText">Must enter Nominee Address Line1.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.nomi_address1.errors.pattern">
+        <span class="errText">Enter Valid Nominee Address Line1.</span>
+      </span>
+    </div> -->
+
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Address Line2
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="nomi_address2" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+
+    <span
+      *ngIf="!nomiDetails.controls.nomi_address2.valid && (nomiDetails.controls.nomi_address2.dirty || nomiDetails.controls.nomi_address2.touched)">
+      <!-- <span class="errText">Must enter valid Locality/Colony name.</span> -->
+      <span
+        *ngIf="nomiDetails.controls.nomi_address2.errors?.required || nomiDetails.controls.nomi_address2.errors?.pattern">
+        <span class="errText">Must enter valid Nominee Address Line2.</span>
+      </span>
+    </span>
+    <span *ngIf="nomiDetails.controls.nomi_address2.errors?.maxlength">
+      <span class="errText">Maximum of 40 characters.</span>
+    </span>
+    <span *ngIf="nomiDetails.controls.nomi_address2.errors?.minlength">
+      <span class="errText">Minimum of 3 characters.</span>
+    </span>
+
+    <!-- <div *ngIf="nomiDetails.controls.nomi_address2.invalid && (nomiDetails.controls.nomi_address2.touched)">
+      <span *ngIf="nomiDetails.controls.nomi_address2.errors.required">
+        <span class="errText">Must enter Nominee Address Line2.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.nomi_address2.errors.pattern">
+        <span class="errText">Enter Valid Nominee Address Line2.</span>
+      </span>
+    </div> -->
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Address Line3
+        <!-- <span class="mandatory">*</span> -->
+      </ion-label>
+      <ion-input type="text" formControlName="nomi_address3" [disabled]="submitDisable || relation"></ion-input>
+    </ion-item>
+
+    <span
+      *ngIf="!nomiDetails.controls.nomi_address3.valid && (nomiDetails.controls.nomi_address3.dirty || nomiDetails.controls.nomi_address3.touched)">
+      <!-- <span class="errText">Must enter valid Locality/Colony name.</span> -->
+      <span
+        *ngIf="nomiDetails.controls.nomi_address3.errors?.required || nomiDetails.controls.nomi_address3.errors?.pattern">
+        <span class="errText">Must enter valid Nominee Address Line3.</span>
+      </span>
+    </span>
+    <span *ngIf="nomiDetails.controls.nomi_address3.errors?.maxlength">
+      <span class="errText">Maximum of 40 characters.</span>
+    </span>
+    <span *ngIf="nomiDetails.controls.nomi_address3.errors?.minlength">
+      <span class="errText">Minimum of 3 characters.</span>
+    </span>
+
+
+    <!-- <div *ngIf="nomiDetails.controls.nomi_address3.invalid && (nomiDetails.controls.nomi_address3.touched)">
+      <span *ngIf="nomiDetails.controls.nomi_address3.errors.required">
+        <span class="errText">Must enter Nominee Address Line3.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.nomi_address3.errors.pattern">
+        <span class="errText">Enter Valid Nominee Address Line3.</span>
+      </span>
+    </div> -->
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee State
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="nomistates" (ionChange)="getCityValue('nominee')"
+        [disabled]="submitDisable">
+        <ion-select-option *ngFor="let state of master_states;let i=index" [value]="state.stateCode">{{ state.stateName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <span
+      *ngIf="!nomiDetails.controls.nomistates.valid && (nomiDetails.controls.nomistates.dirty || nomiDetails.controls.nomistates.touched)">
+      <span class="errText">Must Select the Nominee State.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee City
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="nomicities" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let city of nominee_cities;let i=index" [value]="city.cityCode">{{ city.cityName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <span
+      *ngIf="!nomiDetails.controls.nomicities.valid && (nomiDetails.controls.nomicities.dirty || nomiDetails.controls.nomicities.touched)">
+      <span class="errText">Must Select the Nominee City.</span>
+    </span>
+
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Pincode
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="tel" maxlength="6" formControlName="nomipincode" [value]="pc" [disabled]="submitDisable"
+        (ionChange)="pincodeValidation('nom')"></ion-input>
+    </ion-item>
+
+    <span *ngIf="!nomiDetails.controls.nomipincode.valid && (nomiDetails.controls.nomipincode.touched)">
+      <span class="errText">Must Enter the Nominee Pincode.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Country
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="nomicountries" [disabled]="true" value="India"></ion-input>
+    </ion-item>
+
+    <ion-item class="field">
+      <ion-label position="floating">Nominee Contact Number</ion-label>
+      <ion-input type="tel" maxlength="10" formControlName="nomiCNum" [value]="nomiCNum" [disabled]="submitDisable">
+      </ion-input>
+    </ion-item>
+
+    <div *ngIf="nomiDetails.controls.nomiCNum.invalid && (nomiDetails.controls.nomiCNum.touched)">
+      <span *ngIf="nomiDetails.controls.nomiCNum.errors.required">
+        <span class="errText">Must enter Nominee Contact Number.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.nomiCNum.errors.pattern">
+        <span class="errText">Enter Valid Nominee Contact Number.</span>
+      </span>
+    </div>
+
+    <div *ngIf="guardian">
+      <h2 class="g_details">Guardian Details</h2>
+
+      <ion-row>
+        <ion-item class="field" size="3">
+          <ion-label position="floating">Title
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select formControlName="guaTitle" [disabled]="submitDisable">
+            <ion-select-option *ngFor="let tit of titles;let i=index" [value]="tit.CODE">{{ tit.NAME }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="field" size="9">
+          <ion-label position="floating">Guardian Name
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="guaname" [value]="guaname" [disabled]="submitDisable"></ion-input>
+        </ion-item>
+      </ion-row>
+      <span *ngIf="!nomiDetails.controls.guaTitle.valid && (nomiDetails.controls.guaTitle.touched)">
+        <span class="errText">Must Select Guardian Title.</span>
+      </span>
+
+      <div *ngIf="nomiDetails.controls.guaname.invalid && (nomiDetails.controls.guaname.touched)">
+        <span *ngIf="nomiDetails.controls.guaname.errors.required">
+          <span class="errText">Must enter Guardian name.</span>
+        </span>
+        <span *ngIf="nomiDetails.controls.guaname.errors.pattern">
+          <span class="errText">Enter Valid Guardian name.</span>
+        </span>
+      </div>
+
+      <ion-item class="field">
+        <ion-label position="floating">Relationship to Nominee
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="guarelation" [disabled]="submitDisable">
+          <ion-select-option *ngFor="let relation of master_relations;let i=index" value="{{ relation.CODE }}">{{ relation.NAME
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <span *ngIf="!nomiDetails.controls.guarelation.valid && (nomiDetails.controls.guarelation.touched)">
+        <span class="errText">Must Select Nominee Relationship.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian Contact Number</ion-label>
+        <ion-input type="tel" maxlength="10" formControlName="guaCNum" [value]="guaCNum" [disabled]="submitDisable">
+        </ion-input>
+      </ion-item>
+
+      <div *ngIf="nomiDetails.controls.guaCNum.invalid && (nomiDetails.controls.guaCNum.touched)">
+        <span *ngIf="nomiDetails.controls.guaCNum.errors.required">
+          <span class="errText">Must enter Guardian Contact Number.</span>
+        </span>
+        <span *ngIf="nomiDetails.controls.guaCNum.errors.pattern">
+          <span class="errText">Enter Valid Guardian Contact Number.</span>
+        </span>
+      </div>
+
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian Address Line1
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="gua_address1" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+
+      <span
+        *ngIf="!nomiDetails.controls.gua_address1.valid && (nomiDetails.controls.gua_address1.dirty || nomiDetails.controls.gua_address1.touched)">
+        <!-- <span class="errText">Must enter valid Locality/Colony name.</span> -->
+        <span
+          *ngIf="nomiDetails.controls.gua_address1.errors?.required || nomiDetails.controls.gua_address1.errors?.pattern">
+          <span class="errText">Must enter valid Guardian Address Line1.</span>
+        </span>
+      </span>
+      <span *ngIf="nomiDetails.controls.gua_address1.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.gua_address1.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+
+      <!-- <div *ngIf="nomiDetails.controls.gua_address1.invalid && (nomiDetails.controls.gua_address1.touched)">
+        <span *ngIf="nomiDetails.controls.gua_address1.errors.required">
+          <span class="errText">Must enter Guardian Address Line1.</span>
+        </span>
+        <span *ngIf="nomiDetails.controls.gua_address1.errors.pattern">
+          <span class="errText">Enter Valid Guardian Address Line1.</span>
+        </span>
+      </div> -->
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian Address Line2
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="gua_address2" [disabled]="submitDisable"></ion-input>
+      </ion-item>
+
+      <span
+        *ngIf="!nomiDetails.controls.gua_address2.valid && (nomiDetails.controls.gua_address2.dirty || nomiDetails.controls.gua_address2.touched)">
+        <!-- <span class="errText">Must enter valid Locality/Colony name.</span> -->
+        <span
+          *ngIf="nomiDetails.controls.gua_address2.errors?.required || nomiDetails.controls.gua_address2.errors?.pattern">
+          <span class="errText">Must enter valid Guardian Address Line2.</span>
+        </span>
+      </span>
+      <span *ngIf="nomiDetails.controls.gua_address2.errors?.maxlength">
+        <span class="errText">Maximum of 40 characters.</span>
+      </span>
+      <span *ngIf="nomiDetails.controls.gua_address2.errors?.minlength">
+        <span class="errText">Minimum of 3 characters.</span>
+      </span>
+      <!-- <div *ngIf="nomiDetails.controls.gua_address2.invalid && (nomiDetails.controls.gua_address2.touched)">
+        <span *ngIf="nomiDetails.controls.gua_address2.errors.required">
+          <span class="errText">Must enter Guardian Address Line2.</span>
+        </span>
+        <span *ngIf="nomiDetails.controls.gua_address2.errors.pattern">
+          <span class="errText">Enter Valid Guardian Address Line2.</span>
+        </span>
+      </div> -->
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian State
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="guastates" (ionChange)="getCityValue('guardian')"
+          [disabled]="submitDisable">
+          <ion-select-option *ngFor="let state of master_states;let i=index" [value]="state.stateCode">{{ state.stateName }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <span
+        *ngIf="!nomiDetails.controls.guastates.valid && (nomiDetails.controls.guastates.dirty || nomiDetails.controls.guastates.touched)">
+        <span class="errText">Must Select the Guardian State.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian City
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="guacities" [disabled]="submitDisable">
+          <ion-select-option *ngFor="let city of guardian_cities;let i=index" [value]="city.cityCode">{{ city.cityName }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <span
+        *ngIf="!nomiDetails.controls.guacities.valid && (nomiDetails.controls.guacities.dirty || nomiDetails.controls.guacities.touched)">
+        <span class="errText">Must Select the Guardian City.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian Pincode
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="tel" maxlength="6" formControlName="guapincode" [value]="pc" [disabled]="submitDisable"
+          (ionChange)="pincodeValidation('guar')"></ion-input>
+      </ion-item>
+
+      <span *ngIf="!nomiDetails.controls.guapincode.valid && (nomiDetails.controls.guapincode.touched)">
+        <span class="errText">Must Enter the Guardian Pincode.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">Guardian Country
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="guacountries" [disabled]="true" value="India"></ion-input>
+      </ion-item>
+
+      <span
+        *ngIf="!nomiDetails.controls.guacountries.valid && (nomiDetails.controls.guacountries.dirty || nomiDetails.controls.guacountries.touched)">
+        <span class="errText">Must Select the Guardian Country.</span>
+      </span>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button type="submit" class="proceedbtn" shape="round" [disabled]="(nomiDetails.invalid) || relation">
+            Save
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

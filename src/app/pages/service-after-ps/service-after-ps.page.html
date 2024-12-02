@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Service Requested Details</ion-title>
+  </ion-toolbar>
+  <!-- <status></status> -->
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="servDetails" (ngSubmit)="servDetailsSave(servDetails.value)">
+
+    <ion-item class="field">
+      <ion-label position="floating">Account Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="acType" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let ac of accountType;let i=index" [value]="ac.CODE">{{ ac.NAME }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!servDetails.controls.acType.valid && (servDetails.controls.acType.touched)">
+      <span class="errText">Must Select Account Type.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Mode of Operation
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="modeofoper" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let mo of modeOperation;let i=index" [value]="mo.CODE">{{ mo.NAME }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!servDetails.controls.modeofoper.valid && (servDetails.controls.modeofoper.touched)">
+      <span class="errText">Must Select Mode of Operation.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Operating Instructions
+        <span class="mandatory">*</span>
+      </ion-label>
+      <!-- <ion-input type="text" formControlName="operaInst" [value]="operaInst" [disabled]="submitDisable"></ion-input> -->
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="operaInst" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let opt of OperationInstruction;let i=index" [value]="opt.CODE">{{ opt.NAME }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="!servDetails.controls.operaInst.valid && (servDetails.controls.operaInst.touched)">
+      <span class="errText">Must Select Operating Instructions.</span>
+    </span>
+
+    <ion-item class="field">
+      <ion-label position="floating">Authorized Signatory Promoter
+        <span class="mandatory">*</span>
+      </ion-label>
+      <!-- <ion-input type="text" formControlName="authSign" [value]="authSign" [disabled]="true"></ion-input> -->
+      <ion-input type="text" formControlName="authSign" [disabled]="true"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="(servDetails.invalid) || submitDisable">
+            Save
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <div class="fabBadge">{{annexImglen}}</div>
+    <ion-fab-button style="--background: #FBA41D;" (click)="showpicmaodal('annexure')">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <div class="fabBadge">{{signImglen}}</div>
+    <ion-fab-button style="--background: #FBA41D;" (click)="showpicmaodal('signature')">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+

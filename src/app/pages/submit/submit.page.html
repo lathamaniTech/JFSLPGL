@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Submit
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div>
+    <div class="center-div">
+      <ion-row>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="basicLength == 0 ? 'addRed' : 'addGreen'">Loan Facilities</p>
+        </ion-col>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="sourcingLength == 0 ? 'addRed' : 'addGreen'">Sourcing Details</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="promoterLength == 0 ? 'addRed' : 'addGreen'">Applicant Details</p>
+        </ion-col>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="presentAdrsLength == 0 ? 'addRed' : 'addGreen'">Applicant Present Address
+            Details</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="permaAdrsLength == 0 ? 'addRed' : 'addGreen'">Applicant Permanent Address
+            Details</p>
+        </ion-col>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="promoProofLength == 0 ? 'addRed' : 'addGreen'">Applicant Proof Details</p>
+        </ion-col>
+        <ion-col size="6" size=sm>
+          <p class="addPdMg" [ngClass]="vehicleDetailsLength == 0 ? 'addRed' : 'addGreen'">Vehicle Details</p>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="applicant.guaFlag == 'Y'">
+        <ion-row>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="guapromoterLength == 0 ? 'addRed' : 'addGreen'">Guarantor Details</p>
+          </ion-col>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="guapresentAdrsLength == 0 ? 'addRed' : 'addGreen'">Guarantor Present Address
+              Details</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="guapermaAdrsLength == 0 ? 'addRed' : 'addGreen'">Guarantor Permanent Address
+              Details</p>
+          </ion-col>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="guapromoProofLength == 0 ? 'addRed' : 'addGreen'">Guarantor Proof Details</p>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div *ngIf="applicant.coAppFlag == 'Y'">
+        <ion-row>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="coappLength == 0 ? 'addRed' : 'addGreen'">Co-Applicant Details</p>
+          </ion-col>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="coapppresentAdrsLength == 0 ? 'addRed' : 'addGreen'">Co-Applicant Present
+              Address Details</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="coapppermaAdrsLength == 0 ? 'addRed' : 'addGreen'">Co-Applicant Permanent
+              Address Details</p>
+          </ion-col>
+          <ion-col size="6" size=sm>
+            <p class="addPdMg" [ngClass]="coapppromoProofLength == 0 ? 'addRed' : 'addGreen'">Co-Applicant Proof Details
+            </p>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <ion-item>
+        <ion-label>I hereby declare that I have seen and verified the Original KYC.</ion-label>
+        <ion-checkbox color="jsfpink" [(ngModel)]="iagree" style="--checkmark-color : green;"></ion-checkbox>
+      </ion-item>
+    </div>
+    <div style="text-align:center">
+      <ion-button shape="round" color="danger" type="button" [disabled]="submitDisable || !iagree"
+        (click)="submitCall()">Submit</ion-button>
+        <!-- <button ion-button round color="danger" type="button" *ngIf="documentCheck"
+        (click)="getDocumentStatusCheck()">Re - upload</button> -->
+    </div>
+  </div>
+
+  <ng-template #dynamic></ng-template>
+
+</ion-content>

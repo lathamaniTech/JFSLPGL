@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div>
+    <ion-grid>
+      <ion-row class="ion-no-padding ion-justify-content-center ion-align-items-center" style="text-align: center;">
+        <ion-col size="2"></ion-col>
+        <ion-col size="4" (click)="newapplicantclick()">
+          <div class="text-center" class="axisui" style="margin-top:100px;">
+            <div class="rowBox">
+              <ion-icon style="color: #f50688;" class="cardicon" name="person-add"></ion-icon>
+              <h4>New Lead</h4>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="4" (click)="existapplicantclick('online')">
+          <div class="axisui" style="margin-top: 100px;">
+            <div class="rowBox">
+              <ion-icon style="color: #f50688;" class="cardicon" name="people"></ion-icon>
+              <h4>Existing Leads</h4>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row>
+
+      <ion-row class="ion-no-padding ion-justify-content-center ion-align-items-center" style="text-align: center;">
+        <ion-col size="2"></ion-col>
+        <ion-col size="4"  class="ion-text-center" (click)="submittedApplicant()">
+          <div class="axisui">
+            <div class="rowBox">
+              <ion-icon style="color: #f50688;" class="cardicon" name="document-text"></ion-icon>
+              <h4>Existing Applications</h4>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="4" (click)="existapplicantclick('offline')">
+          <div class="axisui">
+            <div class="rowBox">
+              <ion-icon style="color: #f50688;" class="cardicon" name="thunderstorm"></ion-icon>
+              <h4>Offline Leads</h4>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row>
+
+      <!-- <ion-row class="ion-no-padding ion-justify-content-center ion-align-items-center" style="width: 100%;">
+        <ion-col size="2"></ion-col>
+        <ion-col size="8"  class="ion-text-center" (click)="checkLMS()">
+          <div class="lmsLeads">
+            <div class="center">
+              <h4>LMS Leads</h4>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row>
+
+      <ion-row class="ion-no-padding ion-justify-content-center ion-align-items-center" style="width: 100%;">
+        <ion-col size="2"></ion-col>
+        <ion-col size="8" class="ion-text-center" (click)="groupInbox()">
+          <div class="lmsLeads">
+            <div class="center">
+              <h4>Group Inbox</h4>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row> -->
+
+      <!-- <ion-row class="ion-no-padding ion-justify-content-center ion-align-items-center" style="width: 100%;">
+        <ion-col size="2"></ion-col>
+        <ion-col size="8" class="ion-text-center" (click)="takeImage()">
+          <div class="lmsLeads">
+            <div class="center">
+              <h4>Capture Document</h4>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row> -->
+
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar style="--background: #FBA41D !important;">
+    <!-- <img class="logofooter" src="assets/imgs/lend-logo.png"> -->
+    <ion-title style="color: black; font-size: medium;">&copy; Copyright 2019 SysArc Infomatix.</ion-title>
+  </ion-toolbar>
+</ion-footer>

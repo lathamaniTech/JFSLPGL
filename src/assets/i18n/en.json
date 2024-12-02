@@ -1,0 +1,9 @@
+{
+    "audidLog": {
+        "start_date" : "Start Date",
+        "end_date" : "End Date",
+        "start_time" : "Start Time",
+        "end_time" : "End Time",
+        "generate_log" : "Generate Log"
+    }
+}

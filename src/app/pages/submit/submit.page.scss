@@ -1,0 +1,48 @@
+    .center-div{
+        margin: 20px 25px;
+        border: 1px solid #00518f;
+        color: #ffffff;
+        box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    .addPdMg{
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .addGreen{
+        border-left: 10px solid #2ec95c;
+        color: green;	
+	    background-color: #e1f8e1;
+    }
+
+    .addRed{
+        border-left: 10px solid #e83b3b;
+        color: #e83b3b;	
+	    background-color: #f8d4d4;
+    }
+
+    ion-label{
+        overflow: auto !important;
+        white-space: normal !important;
+    }
+
+        @media screen and (max-width: 480px) {
+            .scroll-content {
+                padding: 0px !important;
+            }
+            .addPdMg {
+                padding: 10px !important;
+                margin: 0px !important;
+            }
+            .center-div {
+                margin: 20px 10px;
+                border: 1px solid #00518f;
+                color: #ffffff;
+                -webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+                box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+        
+    }
+
+

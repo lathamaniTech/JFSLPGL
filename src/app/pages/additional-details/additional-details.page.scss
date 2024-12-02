@@ -1,0 +1,367 @@
+// page-additional-details {
+
+    .custom-popover::part(content) {
+        width: auto !important;
+        right: 20px !important;
+        left: auto !important;
+        transform-origin: right top !important;
+        max-width: 90% !important;
+        white-space: pre-line !important;
+      }
+
+      
+    .scroll-content{
+        padding-bottom: 0px !important;
+    }
+    .segment ion-toolbar{
+        padding: 0 !important;
+        min-height: auto !important;
+        border-bottom: 3px solid #fba41d;
+        }
+
+        .segment .segment-md .segment-button.segment-activated{
+        border: 0px;
+        --background: #fba41d;
+        height:52px;
+        }
+        .segment-md .segment-button ion-icon {
+            font-size: 2.6rem;
+            line-height: 4rem;
+            color: #ffffff;
+        }
+        .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+            opacity: 1;
+            border-color: #ffffff;
+        }
+        .segment-md .segment-button {
+            border:none !important;
+        }
+    
+        .toolbar .segment-md {
+            height: 52px !important;
+        }
+        .segtext{
+            display: block;
+            font-size: 15px;
+            color: white;
+            line-height: 18px;
+            text-align: center;
+     
+         }
+         .takepic{
+            text-align: center; margin: auto; width: 140px;
+        }
+        .userimg {
+            width: 130px;
+            height: 130px;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        .headtitel{
+            margin-bottom: 0px;
+        }
+        .mandatory{
+            color: red;
+            padding-left: 5px;
+        }
+        .buttspace{
+            margin-top:4%;
+            clear: both !important;
+            margin: 0 auto;
+        }
+        .roundbtn{
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+        .shadowgreen{
+            box-shadow: 0px 2px 12px green !important;
+        }
+        .kyccard ion-card{
+            border-radius: 50%;
+            width: 85px;
+            height: 85px;
+            margin: auto;
+        }
+        .segment2 ion-segment{
+            width: 100% !important;
+            display: block !important;
+            }
+        .genMale.segment-button, .genFem.segment-button, .genOth.segment-button{
+            color: #115cad !important;
+            width: 31% !important;
+            display: inline-block !important;
+            border-bottom: solid 1px #115cad !important;
+        }
+        .segment2 .genMale.segment-button.segment-activated, .segment2 .genFem.segment-button.segment-activated, .segment2 .genOth.segment-button.segment-activated,.genMale1.segment-button {
+            color: #115cad !important;
+            width: 31% !important;
+            display: inline-block !important;
+            font-weight: bold;
+            border-bottom: solid 5px #115cad !important;
+        }
+        .genderLabel{
+            color: #999 !important;
+            font-size: 80% !important;
+        }
+        .newdate .input-cover{
+            display: none;
+        }
+        .nolinewidth .item-inner{
+            margin-left:-9px;
+        }
+
+        .toolbarseg{
+            height:44px;
+            background:gray;
+            margin-left:13px;
+            border-radius:3px;
+            margin-top: 15px;
+        }
+        .classcif{
+            color:white !important;
+            background:#da107e;
+            border-radius:3px;
+        }
+        .classcif h3{
+            color:white !important;
+            font-size:18px;
+            margin-top: 0.7rem !important;
+        }
+    
+        .classaadhar{
+            color:white !important;
+            background:#fba41d;
+            border-radius:3px;
+        }
+        .classaadhar h3{
+            color:white !important;
+            font-size:18px;
+            margin-top: 0.7rem !important;
+        }
+
+        .ccardkyc{
+            color:white;
+            padding: 2px;
+            margin-top:12px;
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 100%;
+        }
+    
+        .ccardkyc .paddingadd{padding: 0 !important;}
+
+        .titlesize{
+        font-size: 16px;
+          }
+
+        .proofdes ion-select {
+            max-width: none;
+        }
+
+        .dividebtn  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+            border-bottom:none;
+            box-shadow: none;
+        }
+    
+        .dividebtn .list-md .item-input.item-input-has-focus:last-child, .list-md .item-input.input-has-focus:last-child{
+            box-shadow:none;
+            -webkit-box-shadow: none;
+        }
+    
+        .dividebtn .button-block-md {
+            height:42px;
+            vertical-align: baseline !important;
+            border-radius:3px;
+            margin-top:6px;
+        }
+    
+        .dividebtn ion-input{
+            margin-left:20px;
+            padding-left:17px;
+        }
+    
+        .dividebtn .item-inner{
+            padding-right: 0px !important;
+        }
+        
+    .inputstyle1{
+        --background:lightgray;
+        border:none !important;
+        width:100%;
+        margin-left: 15px;
+        border-radius: 2px;
+    }
+    .leadcalss{
+        width: 44%;
+        margin: 0 auto;
+        //margin-left: 285px;
+    }
+    .leadcalss p {text-align: left;}
+
+    .statusBar{
+        height: 25px;
+        --background: #fba41d;
+    }
+    .statusBar ion-col{
+        padding:2px 0px 0px 0px !important;
+    }
+    .statusBar ion-grid{
+        padding-left: 10px !important;
+    }
+
+    .segment1 ion-segment{
+            width: 100% !important;
+            display: block !important;
+            }
+        .fsFather.segment-button, .fsSpouse.segment-button{
+            color: #115cad !important;
+            width: 48% !important;
+            display: inline-block !important;
+            border-bottom: solid 1px #115cad !important;
+        }
+        .segment1 .fsFather.segment-button.segment-activated, .segment1 .fsSpouse.segment-button.segment-activated,.fsFather1.segment-button {
+            color: #115cad !important;
+            width: 48% !important;
+            display: inline-block !important;
+            font-weight: bold;
+            border-bottom: solid 5px #115cad !important;
+        }
+       
+
+    .segment02 ion-segment{
+            width: 100% !important;
+            display: block !important;
+            }
+    .proofPromo.segment-button, .ProofEntity.segment-button{
+        font-size:18px;
+        color: #ffffff !important;
+        width: 49% !important;
+        display: inline-block !important;
+        --background:#fba41d;
+        }
+    .segment02 .proofPromo.segment-button.segment-activated, .segment02 .ProofEntity.segment-button.segment-activated{
+        font-size:18px;
+        color: #ffffff !important;
+        width: 49% !important;
+        display: inline-block !important;
+        font-weight: bold;
+        --background:#da107e;
+        }
+
+    .segment01 ion-segment{
+            width: 100% !important;
+            display: block !important;
+            }
+    .Aadhaar.segment-button, .VID.segment-button, .Entity.segment-button{
+        font-size:18px;
+        color: #ffffff !important;
+        width: 33% !important;
+        display: inline-block !important;
+        --background:#fba41d;
+        }
+    .segment01 .Aadhaar.segment-button.segment-activated, .segment01 .VID.segment-button.segment-activated, .segment01 .Entity.segment-button.segment-activated{
+        font-size:18px;
+        color: #ffffff !important;
+        width: 33% !important;
+        display: inline-block !important;
+        font-weight: bold;
+        --background:#da107e;
+        }
+    .top10{
+        margin-top: 16px !important;
+    }
+    .errText{
+        color: red !important;
+        font-size: 14px !important;
+        text-align: center !important;
+    }
+
+
+        @media only screen and (min-width: 481px),(min-height: 501px) { // tab
+    // lead card
+    .leadCard{
+        width: 60%;
+        margin-top: 20px;
+        margin-left: 21%;
+        max-height: 40%;
+        overflow: scroll;
+        // position: absolute;
+    }
+    .leadHeader{
+        --background: #da107e;
+        color: white;
+    }
+    .leadIcon{
+        zoom: 2.0;
+        color: #da107e;
+    }
+    .cardContent{
+        margin-top: 25px;
+        overflow: scroll;
+    }
+    .leftAlign{
+        margin-top: 3px;
+        text-align: left;
+    }
+ }
+ @media only screen and (max-width: 480px),(max-height: 500px) { // mob
+     .leadCard{
+        width: 60%;
+        margin-left: 21%;
+        max-height: 500px;
+        overflow: scroll;
+        // position: absolute;
+    }
+    .leadHeader{
+        --background: #da107e;
+        color: white;
+    }
+    .leadIcon{
+        zoom: 2.0;
+        color: #da107e;
+    }
+ }
+    // svg animation checkCircle
+    #circleTick{
+        margin-top: 20px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
+    .checkCircle{
+        stroke-width:15;
+        fill:none;
+        stroke:#41AD49;
+        stroke-dashoffset: 1000;
+        stroke-dasharray: 1000;
+        animation-name: circleTick;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        
+    }
+    .checkTick{
+        stroke-width: 7;
+        stroke:#41AD49;
+        stroke-dashoffset: 1000;
+        stroke-dasharray: 1000;
+        animation-name: circleTick;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        // animation-delay: 2s;
+    }
+.toolbar-title-md{
+    text-align: center;
+}
+    @keyframes circleTick{
+        to{
+            stroke-dashoffset: 0;
+        }
+
+    }
+
+
+
+    
+// }

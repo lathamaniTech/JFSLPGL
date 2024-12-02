@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Group Inbox
+      <span (click)="serachClick()">
+        <ion-icon name="search" style="float:right;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <ion-searchbar *ngIf="showSearch" placeholder="Name, Application No, Flow point" (ionInput)="filterItems($event)">
+  </ion-searchbar>
+
+  <ion-refresher slot="fixed" (ionRefresh)="getGroupInboxData($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="NoDataContent" *ngIf='groupInboxList.length == 0'>
+    <h2>No data found!</h2>
+  </div>
+
+
+  <div class="paginationTab">
+    <ion-row class="rowHight">
+      <ion-col size="3" class="backCol" style="justify-content: center;">
+        <button style="font-size: medium;display: flex; background: none;" [disabled]='count == 0'  (click)='pageCount("-")'>
+          <ion-icon name="arrow-back"></ion-icon>Prev
+        </button>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+      <ion-col size="2" class="countCol">{{count+1}}</ion-col>
+      <ion-col size="2"></ion-col>
+      <ion-col size="3" class="nextCol" style="justify-content: flex-end;">
+        <button style="font-size: medium; display: flex; background: none;" [disabled]='groupInboxList.length < 20' (click)='pageCount("+")'>
+          Next<ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+  <div *ngIf='groupInboxList.length > 0'>
+    <div class="groupListContainer" *ngFor="let groupData of groupInboxList;let i=index">
+      <ion-row>
+        <ion-col size="1">
+          <ion-icon class="icons" name="person"></ion-icon>
+        </ion-col>
+        <ion-col size="5"><span class="labeltext">Customer Name</span>
+          <div class="labelcontent">{{groupData.firstName}}</div>
+        </ion-col>
+        <ion-col size="1">
+          <ion-icon class="icons" name="document"></ion-icon>
+        </ion-col>
+        <ion-col size="5"><span class="labeltext">Proposal Number</span>
+          <div class="labelcontent">{{groupData.AppNo}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="lead">
+        <ion-col size="1">
+          <p class="icons">₹</p>
+        </ion-col>
+        <ion-col size="5"><span class="labeltext">Loan Amount</span>
+          <div class="labelcontent">{{groupData.loanAmt}}</div>
+        </ion-col>
+        <ion-col size="1">
+          <ion-icon class="icons" name="git-network"></ion-icon>
+        </ion-col>
+        <ion-col size="3"><span class="labeltext">Flow point</span>
+          <div class="labelcontent">{{groupData.flowPointDesc}}</div>
+        </ion-col>
+        <ion-col size="2" style="display: flex; justify-content: center; align-items: center;">
+          <!-- <ion-icon class="forwadIcon" name="arrow-dropright-circle" (click)="proceedApplication(groupData)">
+          </ion-icon> -->
+          <ion-icon class="forwadIcon" name="caret-forward-circle" (click)="getUserDetails(groupData)"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row *ngIf="groupData.SfosLead.LeadMain.Lead.SendbackRemarks.length > 0">
+        <ion-col size="1">
+          <ion-icon class="icons" name="chatbox-ellipses-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="1"0><span class="labeltext">Sendback Remarks</span>
+          <div class="labelcontent">{{groupData.SfosLead.LeadMain.Lead.SendbackRemarks}}</div>
+        </ion-col>
+      </ion-row> -->
+    </div>
+  </div>
+  <!-- Implement ngx-pagination -->
+  <!-- <pagination-controls class="paginator" previousLabel="Prev" nextLabel="Next" (pageChange)="onChange($event)">
+  </pagination-controls> -->
+</ion-content>

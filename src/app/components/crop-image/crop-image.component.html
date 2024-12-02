@@ -1,0 +1,48 @@
+<ion-header>
+  <div class="ion-buttonGroup">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 style="text-align: center;">
+          <ion-button class="buttons" (click)="reset()">Reset</ion-button>
+        </ion-col>
+
+        <ion-col col-6 style="text-align: center;">
+          <ion-button class="savebutton" (click)="save()">Save</ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div>
+    <!-- <img #image [src]="myImage"> -->
+    <img style="height: 650px !important;" #image src="{{'data:image/jpeg;base64,'+myImage}}">
+  </div>
+  <!-- <ion-row style="background: black;color: whitesmoke;">
+    <ion-col col-4 class="location">
+        <ion-icon name="location"></ion-icon>{{location.latitude}}
+    </ion-col>
+    <ion-col col-4 class="location">
+        <ion-icon name="location"></ion-icon>{{location.longitude}}
+    </ion-col>
+  </ion-row> -->
+  <ion-row>
+    <ion-col col-4>
+      <ion-button class="buttons" outline icon-left (click)="zoomin()">
+        <ion-icon name="add"></ion-icon> Zoom
+      </ion-button>
+    </ion-col>
+    <ion-col col-4>
+      <ion-button class="buttons" outline icon-left (click)="zoomout()">
+        <ion-icon name="remove"></ion-icon> Zoom
+      </ion-button>
+    </ion-col>
+    <ion-col col-4>
+      <ion-button class="buttons" block outline icon-left (click)="rotate()">
+        <ion-icon name="refresh"></ion-icon> 90 deg
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,58 @@
+// page-modal {
+
+    .existPlaceholder{
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .existPlaceholder h2{
+        color: darkgray !important;
+        font-weight: bold !important;
+        text-align: center;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    ion-item{
+        border: 1px solid #aaa;
+        border-radius: 4px;
+    }
+
+    .card-md{
+        margin: 0px !important;
+        width: 100% !important;
+        box-shadow: inset 0px 2px 4px 3px rgba(0,0,0,0.1) !important;
+    }
+    .label-md{
+        margin: 0px !important;
+    }
+    .item-container{
+        font-size: 15px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 15px;
+    }
+    .icon-detail{
+        font-size: 30px !important;
+        color: #da107e !important;
+    }
+    .proofIcon{
+        margin-top: 5px;
+        color: #fba41d !important;
+        font-size: 35px;
+    }
+    .item-md.item-block .item-inner{
+        padding-right: 0px !important;
+    }
+    .item-md {
+        padding-left: 0px !important;
+    }
+    
+// }

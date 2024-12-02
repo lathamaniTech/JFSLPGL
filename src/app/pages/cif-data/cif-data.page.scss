@@ -1,0 +1,40 @@
+// page-cif-data {
+
+fieldset {
+    border: solid 3px #fba41d;
+    border-radius: 10px;
+    padding: 5px 10px 10px 10px !important;
+}
+
+fieldset+fieldset {
+    margin: 16px 0px 0px 0px;
+}
+
+legend {
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 0px 5px;
+    color: #da107e;
+    --background: #fba41d;
+    border: solid 2px #fba41d;
+}
+
+p.profile-img {
+    margin: 0px !important;
+}
+
+p.label {
+    color: #999;
+    font-size: 1rem;
+    margin: 0px;
+}
+
+p.fieldName {
+    font-size: 1.2rem;
+    font-weight: normal;
+    text-transform: none;
+    color: #00518f;
+    margin: 8px 0px 18px 0px;
+}
+
+// }

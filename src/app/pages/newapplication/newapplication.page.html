@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="position: relative;">
+      Lead Details
+      <span (click)="existPage()">
+        <ion-icon name="person" style="float:right;padding: 0px 5px;"></ion-icon>
+      </span>
+      <span (click)="homePage()">
+        <ion-icon name="home" style="float:right;margin-right: 15px; padding: 0px 5px;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+  <div style="display: flex; justify-content: center;zoom: 1.5;margin-bottom: 10px;">
+    <ion-avatar *ngIf="entityPic">
+      <p class="takepic" (click)="takeentiProfPic('entiProfPic')" *ngIf="!entiProfImg">
+        <img src="assets/imgs/profile.png" class="userimg">
+      </p>
+      <p class="takepic" (click)="takeentiProfPic('entiProfPic')" *ngIf="entiProfImg">
+        <img [src]="entiProfPic" class="userimg">
+      </p>
+    </ion-avatar>
+    <ion-avatar *ngIf="promoterPic">
+      <p class="takepic" (click)="takeProfPic('profPic')" *ngIf="!profImg">
+        <img src="assets/imgs/profile.png" class="userimg">
+      </p>
+      <p class="takepic" (click)="takeProfPic('profPic')" *ngIf="profImg">
+        <img [src]="profPic" class="userimg">
+      </p>
+    </ion-avatar>
+  </div>
+
+  <div class="segment">
+    <ion-segment [(ngModel)]="userdetail" value="basic" (ionChange)="onSegmentChanged($event)">
+      <ion-segment-button value="basic" *ngIf="basicShow">
+        <span *ngIf="basicTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="cash" class="segicon"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="sourcing" *ngIf="basicShow">
+        <span *ngIf="sourcingTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="information-circle" class="segicon"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="entity" *ngIf="basicShow && customerType == '2'">
+        <span *ngIf="entityTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="cog" class="segicon"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="personal">
+        <span *ngIf="personalTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="person" class="segicon"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="idproof">
+        <span *ngIf="idproofTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="newspaper" class="segicon"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="address">
+        <span *ngIf="addressTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="location" class="segicon"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="lead" *ngIf="leadShow">
+        <span *ngIf="leadTick">
+          <ion-icon name="checkmark-circle" class="greentik"></ion-icon>
+        </span>
+        <ion-icon name="speedometer" class="segicon"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+</ion-header>
+
+<ion-content no-padding [scrollEvents]="true">
+  <div [ngSwitch]="userdetail">
+    <ion-slides #mySlider (ionSlideDidChange)="onSlideChanged($event)">
+      <ion-slide *ngIf="basicShow">
+        <app-basic (saveStatus)="showSubmittedTick($event)"></app-basic>
+      </ion-slide>
+      <ion-slide *ngIf="basicShow">
+        <app-sourcing (saveStatus)="showSubmittedTick($event)"></app-sourcing>
+      </ion-slide>
+      <ion-slide>
+        <app-personal (saveStatus)="showSubmittedTick($event)" (clearvalue)="clearpromo()"></app-personal>
+      </ion-slide>
+      <ion-slide>
+        <app-proof (saveStatus)="showSubmittedTick($event)"></app-proof>
+      </ion-slide>
+      <ion-slide>
+        <app-address (saveStatus)="showSubmittedTick($event)"></app-address>
+      </ion-slide>
+      <ion-slide *ngIf="leadShow">
+        <app-lead (saveStatus)="showSubmittedTick($event)" [checkProof]="addressTick"></app-lead>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

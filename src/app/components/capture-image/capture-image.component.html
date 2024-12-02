@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Document
+    </ion-title>
+    <ion-buttons class="closeBtn" slot="end" (click)='closeModal()'>
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="imgContainer" *ngIf="capturedImage.length == 0"
+    style="display: flex;align-items: center;justify-content: center;">
+    <img style="zoom: 0.5" src="assets/imgs/JSB_logo.png">
+  </div>
+  <ion-slides #mySliderReference (ionSlideDidChange)="onSlideChanged($event)" *ngIf="capturedImage.length > 0">
+    <ion-slide *ngFor="let doc of capturedImage" style="display: flex; flex-flow: column;">
+      <div class="imgContainer">
+        <!-- <img src="{{doc}}"> -->
+        <img src="{{'data:image/jpeg;base64,'+doc.path}}">
+      </div>
+      <div>{{doc.size}}.KB</div>
+    </ion-slide>
+  </ion-slides>
+
+  <div style="display: flex; justify-content: center;" *ngIf="capturedImage.length > 0">
+    <div class="imgCount">{{currentSlide}}</div>
+  </div>
+
+  <ion-item style="margin: 0 auto;">
+    <div style="margin: 0 auto;">
+      <ion-button class="buttons" outline icon-left (click)="clickCamera()">
+        <ion-icon name="camera"></ion-icon>Capture
+      </ion-button>
+      <ion-button class="savebutton" *ngIf='saved' outline icon-left (click)="save()" [disabled]='capturedImage.length == 0'>
+        save
+      </ion-button>
+      <ion-button class="savebutton" *ngIf='!saved' outline icon-left (click)="convertToWebPBase64()" [disabled]='capturedImage.length == 0'>
+        Upload
+      </ion-button>
+      <ion-button class="buttons" outline icon-left (click)="deleteDoc()">
+        <ion-icon name="trash"></ion-icon>Delete
+      </ion-button>
+    </div>
+  </ion-item>
+
+
+  <div *ngIf="convertedImg.length > 0">
+    <ion-title style="width: 100%; text-align: center; text-decoration: solid;">Converted WebP Images</ion-title>
+    <ion-slides #convertedSlide (ionSlideDidChange)="onConvertedSlideChanged($event)" *ngIf="convertedImg.length > 0">
+      <ion-slide *ngFor="let doc of convertedImg" style="display: flex; flex-flow: column;">
+        <div class="imgContainer">
+          <!-- <img src="{{doc}}"> -->
+          <img src="{{'data:image/jpeg;base64,'+doc.path}}">
+        </div>
+        <div>{{doc.size}}.KB</div>
+      </ion-slide>
+    </ion-slides>
+
+    <div style="display: flex; justify-content: center;" *ngIf="convertedImg.length > 0">
+      <div class="imgCount">{{convertedCurrentSlide}}</div>
+    </div>
+  </div>
+
+  <!-- <ion-item>
+    <ion-button class="buttons" outline icon-left (click)="convertToWebP()">
+      <ion-icon name="trash"></ion-icon>test
+    </ion-button>
+    <ion-button class="buttons" outline icon-left (click)="convertToWebPBase64()">
+      <ion-icon name="trash"></ion-icon>test-directly
+    </ion-button>
+  </ion-item>
+
+  <div style="width: 80%;">
+    <ion-item>
+      <div class="imgContainer">
+        <img src="{{'data:image/jpeg;base64,'+convertedImg}}">
+      </div>
+      <div>{{size}}.KB</div>
+    </ion-item>
+  </div> -->
+</ion-content>

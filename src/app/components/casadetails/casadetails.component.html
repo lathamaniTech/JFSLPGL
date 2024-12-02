@@ -1,0 +1,110 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Current/Saving Account Fields</ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header> -->
+<div style="width: 98vw; margin: 0 auto;">
+  <form [formGroup]="accDetails" (ngSubmit)="accDetailsSave(accDetails.value)">
+    <ion-list style="margin:0px;">
+      <ion-radio-group formControlName="janaAcc" [disabled]="submitDisable" (ionChange)="getJanaAccDetails($event)">
+        <ion-row no-padding style="margin-top:10px; min-height: 4.4rem; line-height:normal">
+          <ion-col size="6">
+            <ion-label class='w_space'>
+              Do you want create Jana savings account
+              <span class="mandatory">*</span>
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item [disabled]="submitDisable">
+              <ion-label class='r_space'>Yes</ion-label>
+              <ion-radio value="Y"></ion-radio>
+            </ion-item>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item [disabled]="submitDisable">
+              <ion-label class='r_space'>No</ion-label>
+              <ion-radio value="N"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-list>
+    <ion-list style="margin:0px;">
+      <ion-radio-group formControlName="nomAvail" (ionChange)="getNomineeDetails($event)" [disabled]="submitDisable">
+        <ion-row no-padding style="margin-top:10px; min-height: 4.4rem; line-height:normal">
+          <ion-col size="6">
+            <ion-label class='w_space'>
+              Nomination Facility To Be Availed
+              <span class="mandatory">*</span>
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item [disabled]="submitDisable || javaAccCheck">
+              <ion-label class='r_space'>Yes</ion-label>
+              <ion-radio value="Y"></ion-radio>
+            </ion-item>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item [disabled]="submitDisable || javaAccCheck">
+              <ion-label class='r_space'>No</ion-label>
+              <ion-radio value="N"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-list>
+    <ion-list>
+      <ion-radio-group formControlName="guaAvail" (ionChange)="getGuarantorDetails($event)" [disabled]="submitDisable">
+        <ion-row no-padding style="margin-top:10px; min-height: 4.4rem; line-height:normal" style="margin:0px;"
+          *ngIf="showGuaran && coAppFlag == 'Y'">
+          <ion-col size="6">
+            <ion-label class='w_space' style="display: block;">
+              <span *ngIf="coAppFlag == 'Y' && guaFlag=='Y'">Co-Applicant/Guarantor</span>
+              <span *ngIf="coAppFlag == 'Y' && guaFlag=='N'">Co-Applicant</span>
+              <span *ngIf="coAppFlag == 'N' && guaFlag=='Y'">Guarantor</span>
+              to be made as Nominee?
+              <span class="mandatory">*</span>
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item [disabled]="submitDisable || javaAccCheck">
+              <ion-label class='r_space'>Yes</ion-label>
+              <ion-radio value="Y"></ion-radio>
+            </ion-item>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item [disabled]="submitDisable || javaAccCheck">
+              <ion-label class='r_space'>No</ion-label>
+              <ion-radio value="N"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-list>
+    <ion-list *ngIf="nomShow">
+      <ion-radio-group formControlName="nomList" style="margin:0px;" (ionChange)="fetchNomineeDetails($event)" [disabled]="submitDisable" *ngIf="nomShow">
+        <ion-row no-padding class="nomName">
+          <ion-col size="5">
+            <ion-label class='w_space'>
+              Nominee
+              <span class="mandatory">*</span>
+            </ion-label>
+          </ion-col>
+          <ion-col size="7" style="display: flex; justify-content: end;">
+            <ion-item *ngFor="let gua of guaList;let i=index" [disabled]="submitDisable || javaAccCheck">
+              <ion-radio value="{{gua.id}}"></ion-radio>
+              <ion-label class='r_space'>{{ gua.userType }} - {{ gua.firstname }}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-list>
+    <ion-button class="proceedbtn" shape="round" type="submit" [disabled]="(accDetails.invalid) || submitDisable">
+      Save
+    </ion-button>
+  </form>
+</div>

@@ -1,0 +1,231 @@
+<!--
+  Generated template for the PosidexCheckPage page.
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Posidex Check
+      <span (click)="homePage()">
+        <ion-icon name="home" style="float:right;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="segment03 top10">
+    <ion-segment [(ngModel)]="custType" (ionChange)="tabChanges()">
+      <ion-segment-button value="Promoter" style="margin-right: -4px;" (click)="loadAllApplicantDetails()">Applicant
+      </ion-segment-button>
+      <ion-segment-button value="CoApplicant" style="margin-right: -4px;" (click)="loadCoappDetails()"
+        [disabled]="coAppDisable">Co-Applicant</ion-segment-button>
+    </ion-segment>
+  </div>
+  <div *ngIf="custType == 'Promoter'">
+    <div *ngIf="applicantDetails">
+      <ion-card>
+        <ion-grid>
+          <ion-row size="12" class="lead">
+            <ion-col size="6"><span class="labeltext">Applicant Name</span>
+              <div class="labelcontent">{{applicantDetails[0].firstname ? applicantDetails[0].firstname : ""}}</div>
+            </ion-col>
+            <ion-col size="6"><span class="labeltext">Application Number</span>
+              <div class="labelcontent">{{applicantDetails[0].applicationNumber ? applicantDetails[0].applicationNumber
+                : ""}}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row size="12" class="lead" *ngIf="posidexInfo.length>0">
+            <ion-col size="6" *ngIf="posidexInfo[0].amlCheck =='Y'">
+              <span class="labeltext">AML: <ion-badge class="badge">{{posidexInfo[0].amlStatus}}</ion-badge></span>
+            </ion-col>
+            <ion-col size="6" *ngIf="showCbs || posidexInfo[0].cbsCheck =='Y'">
+              <span class="labeltext">AML: <ion-badge class="badge">Not needed</ion-badge></span>
+            </ion-col>
+            <ion-col size="6" *ngIf="posidexInfo[0].verified =='Y'"><span class="labeltext">URN Number</span>
+              <div class="labelcontent">{{posidexInfo[0].urnNo}}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row style="text-align: center;">
+            <ion-col>
+              <ion-button shape="round" class="proceedbtn" [disabled]="showNewCust || showEixtCust"
+                (click)="fetchPosidex()">
+                Check
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="custType == 'CoApplicant'">
+    <div class="NoDataContent" *ngIf='coapplicantsList.length == 0'>
+      <h2>No Co-Applicant(s) data found!</h2>
+    </div>
+    <div *ngIf="coapplicantsList.length>0">
+      <ion-item class="field">
+        <ion-label position="floating">CoApplicant
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" (ionChange)="onCoAppChange($event)">
+          <ion-select-option *ngFor="let coApp of coapplicantsList;let i=index" value={{coApp.id}}>{{coApp.firstname}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="showCoApp">
+      <ion-card *ngFor="let coapp of coapplicant;let i=index">
+        <ion-grid>
+          <ion-row size="12" class="lead">
+            <ion-col size="6"><span class="labeltext">Applicant Name</span>
+              <div class="labelcontent">{{coapp.firstname}}</div>
+            </ion-col>
+            <ion-col size="6"><span class="labeltext">Mobile Number</span>
+              <div class="labelcontent">{{this.globFunc.basicDec(coapp.mobNum)}}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="lead" *ngIf="posidexInfo.length>0">
+            <ion-col size="6" *ngIf="posidexInfo[0].amlCheck =='Y'">
+              <span class="labeltext">AML: <ion-badge class="badge">{{posidexInfo[0].amlStatus}}</ion-badge></span>
+            </ion-col>
+            <ion-col size="6" *ngIf="showCbs || posidexInfo[0].cbsCheck =='Y'">
+              <span class="labeltext">AML: <ion-badge class="badge">Not needed</ion-badge></span>
+            </ion-col>
+            <ion-col size="6" *ngIf="posidexInfo[0].verified =='Y'"><span class="labeltext">URN Number</span>
+              <div class="labelcontent">{{posidexInfo[0].urnNo}}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row style="text-align: center;">
+            <ion-col>
+              <ion-button class="proceedbtn" shape="round" [disabled]="showNewCust || showEixtCust"
+                (click)="fetchPosidex(coapp)">
+                Check
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="showNewCust">
+    <div class="newExistCard">New Customer</div>
+
+    <div>
+      <ion-list>
+        <ion-radio-group (ionChange)="existChange($event)">
+          <ion-item>
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="centerRadio1">
+                    <ion-radio value="Y" checked=true></ion-radio>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-list>
+                      <ion-row size="12" class="lead">
+                        <ion-col size="6"><span class="labeltext">URN Number</span>
+                          <div class="labelcontent1">{{newCustomerUrn}}</div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row *ngIf="storedRemarks">
+                        <ion-col><span class="labeltext">Remarks</span>
+                          <div class="labelcontent2">{{storedRemarks}}</div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <div style="text-align: center;">
+                <ion-button class="proceedbtn" shape="round" [disabled]="showAml || showCbs" (click)="verifyPosidex($event)">
+                  Verify Posidex
+                </ion-button>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div *ngIf="showEixtCust">
+    <div class="newExistCard">Existing Customer</div>
+    <div class="NoDataContent" *ngIf='existingCustomer.length == 0'>
+      <h2>No existingCustomer(s) data found!</h2>
+    </div>
+
+    <div>
+      <ion-list *ngIf='existingCustomer.length>0'>
+        <ion-radio-group (ionChange)="existChange($event)">
+          <ion-item *ngFor="let item of existingCustomer; let i = index" [disabled]="showAml || showCbs">
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="centerRadio">
+                    <ion-radio value={{i}}></ion-radio>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-list>
+                      <ion-row size="12" class="lead" *ngIf="item.newCust && this.leadUserType != 'E'">
+                        <ion-col size="12"><span
+                            style="font-size: 15px !important;font-weight: bold;">{{item.newCust}}</span>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row size="12" class="lead" *ngIf="!item.newCust">
+                        <ion-col size="4"><span class="labeltext">Matched URN</span>
+                          <div class="labelcontent">{{item.MatchedCRN}}</div>
+                        </ion-col>
+                        <ion-col size="6"><span class="labeltext">Match Reason</span>
+                          <div class="labelcontent">{{item.MatchReason}}</div>
+                        </ion-col>
+                        <ion-col size="2" no-padding class="remarksTop">
+                          <div style="margin-right: 10px;" (click)="view360(item)">
+                            <img src="assets/imgs/360view.png">
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row *ngIf="storedRemarks">
+                        <ion-col><span class="labeltext">Remarks</span>
+                          <div class="labelcontent2">{{storedRemarks}}</div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+      <!-- <div style="text-align: center;" *ngIf='existingCustomer.length>0'>
+        <ion-button class="proceedbtn" shape="round" [disabled]="showAml || showCbs" (click)="verifyPosidex($event)">
+          Verify Posidex
+        </ion-button>
+      </div> -->
+    </div>
+  </div>
+</ion-content>
+<ion-footer *ngIf='existingCustomer.length>0'>
+  <div class="buttspace roundbtn" style="  margin-top: 5px; margin-bottom: 5px;">
+    <ion-button class="proceedbtn" shape="round" [disabled]="showAml || showCbs" (click)="verifyPosidex($event)">
+      Verify Posidex
+    </ion-button>
+  </div>
+</ion-footer>
+<ion-footer *ngIf="showAml || showCbs" style="--background: white;">
+  <div class="buttspace roundbtn" style="  margin-top: 5px; margin-bottom: 5px;">
+    <ion-button class="proceedbtn" shape="round" *ngIf="showAml" (click)="fetchAml()"
+      [disabled]="posidexInfo.length>0 && (posidexInfo[0].amlStatus =='No Match' || posidexInfo[0].amlStatus =='AML Approved' || posidexInfo[0].amlStatus =='AML Rejected')">
+      Check AML
+    </ion-button>
+    <ion-button class="proceedbtn" shape="round" *ngIf="showCbs" (click)="fetchCbs()"
+      [disabled]="posidexInfo.length>0 && (posidexInfo[0].cbsStatus =='Approved' || posidexInfo[0].cbsStatus =='rejected')">
+      Check CBS
+    </ion-button>
+  </div>
+</ion-footer>

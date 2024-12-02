@@ -1,0 +1,663 @@
+<div class="container">
+  <h2 class="headtitel">
+    <span *ngIf="customerType == '2' && userType == 'A'">Promoter</span>
+    <span *ngIf="customerType == '1' && userType == 'A'">Applicant</span>
+    <span *ngIf="userType !== 'A'">Co-Applicant</span> Details
+  </h2>
+  <div style="clear: both;">
+    <form [formGroup]="applicantDetails" (ngSubmit)="personalSaveCheck(applicantDetails.value)">
+      <ion-row>
+        <ion-item class="field" size="3" [disabled]="submitDisable">
+          <ion-label position="floating">Title
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="genTitle"
+            (ionChange)="genderChange('title')">
+            <ion-select-option *ngFor="let tit of titles;let i=index" [value]="tit.CODE">{{ tit.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="field" size="9" [disabled]="submitDisable || exCNameDisable || firstNameDisable">
+          <ion-label position="floating">Customer First Name
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="firstname" [value]="firstname"></ion-input>
+        </ion-item>
+      </ion-row>
+      <span *ngIf="!applicantDetails.controls.genTitle.valid && (applicantDetails.controls.genTitle.touched)">
+        <span class="errText">Must Select Title.</span>
+      </span>
+      <div *ngIf="applicantDetails.controls.firstname.invalid && (applicantDetails.controls.firstname.touched)">
+        <span *ngIf="applicantDetails.controls.firstname.errors.required">
+          <span class="errText">Must enter First name.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.firstname.errors.pattern">
+          <span class="errText">Enter Valid First name.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" *ngIf="isNameAsPerEkyc" [disabled]="true">
+        <ion-label position="floating">Name as per EKYC</ion-label>
+        <ion-input type="text" formControlName="nameEkyc">
+        </ion-input>
+      </ion-item>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Customer Middle Name</ion-label>
+        <ion-input type="text" formControlName="middlename" [value]="middlename">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="applicantDetails.controls.middlename.invalid && (applicantDetails.controls.middlename.touched)">
+        <span *ngIf="applicantDetails.controls.middlename.errors.required">
+          <span class="errText">Must enter Middle name.</span>
+        </span>
+        <span
+          *ngIf="applicantDetails.controls.middlename.errors.pattern || applicantDetails.controls.middlename.errors.maxLength">
+          <span class="errText">Enter Valid Middle Name.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable || exCLNameDisable || lastNameDisable">
+        <ion-label position="floating">Customer Last Name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="lastname" [value]="lastname"></ion-input>
+      </ion-item>
+      <div *ngIf="applicantDetails.controls.lastname.invalid && (applicantDetails.controls.lastname.touched)">
+        <span *ngIf="applicantDetails.controls.lastname.errors.required">
+          <span class="errText">Must enter Last name.</span>
+        </span>
+        <span
+          *ngIf="applicantDetails.controls.lastname.errors.pattern || applicantDetails.controls.lastname.errors.maxLength">
+          <span class="errText">Enter Valid Name.</span>
+        </span>
+      </div>
+
+
+      <ion-item class="field" [disabled]="submitDisable || disableFatherName">
+        <ion-label position="floating">Father's Name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="fathername" [value]="fathername">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="applicantDetails.controls.fathername.invalid && (applicantDetails.controls.fathername.touched)">
+        <span *ngIf="applicantDetails.controls.fathername.errors.required">
+          <span class="errText">Must enter Father name.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.fathername.errors.pattern">
+          <span class="errText">Enter Valid name.</span>
+        </span>
+      </div>
+      
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Mother's Maiden Name
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="mothername">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="applicantDetails.controls.mothername.invalid && (applicantDetails.controls.mothername.touched)">
+        <span *ngIf="applicantDetails.controls.mothername.errors.required">
+          <span class="errText">Must enter Mother name.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.mothername.errors.pattern">
+          <span class="errText">Enter Valid name.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.mothername.errors?.maxlength">
+          <span class="errText">Maximum of 30 characters.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.mothername.errors?.minlength">
+          <span class="errText">Minimum of 3 characters.</span>
+        </span>
+      </div>
+
+
+      <div class="newdate" *ngIf="ShowAadharDob">
+        <ion-item class="field">
+          <ion-label position="floating">DOB from Aadhar
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="dobAadhar" [disabled]="submitDisable || disableAadharDOB"></ion-input>
+        </ion-item>
+      </div>
+      <span *ngIf="applicantDetails.controls.dobAadhar.invalid && (applicantDetails.controls.dobAadhar.touched)">
+        <span class="errText">Enter Valid DOB from Aadhar.</span>
+      </span>
+
+      <div class="newdate" *ngIf="ShowAadharDob">
+        <ion-item class="field">
+          <ion-label position="floating">DOB Document
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="dobDocument"
+            [disabled]="submitDisable">
+            <ion-select-option *ngFor="let prf of aadharIdProofTypes; let i = index" [value]="prf.code">{{ prf.name
+              }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </div>
+      <span *ngIf="applicantDetails.controls.dobDocument.invalid && (applicantDetails.controls.dobDocument.touched)">
+        <span class="errText">Must Select DOB Document.</span>
+      </span>
+
+
+      <ion-item class="field" [disabled]="submitDisable || dobDisable">
+        <ion-label position="floating">Date of Birth<span class="mandatory">*</span></ion-label>
+        <ion-input type="date" formControlName="dob" [min]="maxAge" [max]="minAge">
+        </ion-input>
+      </ion-item>
+      <span *ngIf="applicantDetails.controls.dob.invalid && (applicantDetails.controls.dob.touched)">
+        <span class="errText">Must Select Date of Birth.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Marital Status
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="marital"
+          (ionChange)="maritalStatus($event)">
+          <ion-select-option *ngFor="let mari of mari_master;let i=index" [value]="mari.CODE">{{ mari.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.marital.valid && (applicantDetails.controls.marital.touched)">
+        <span class="errText">Must select Marital status.</span>
+      </span>
+
+      <div class="field" *ngIf="isMarried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Spouse's Name
+            <!-- <span class="mandatory">*</span> -->
+          </ion-label>
+          <ion-input type="text" formControlName="spouseName"></ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.spouseName.invalid && (applicantDetails.controls.spouseName.touched)">
+          <span *ngIf="applicantDetails.controls.spouseName.errors.required">
+            <span class="errText">Must enter Spouse Name .</span>
+          </span>
+          <span
+            *ngIf="applicantDetails.controls.spouseName.errors.pattern || applicantDetails.controls.spouseName.errors.maxLength">
+            <span class="errText">Enter Valid Name.</span>
+          </span>
+        </div>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable || disableGender">
+        <ion-label position="floating">Gender
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="gender">
+          <ion-select-option *ngFor="let gen of genderList;let i=index" [value]="gen.CODE">{{ gen.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.gender.valid && (applicantDetails.controls.gender.touched)">
+        <span class="errText">Must Select Gender.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Mobile Number
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input numberonly type="tel" maxlength="10" formControlName="mobNum"
+          (ionChange)="mobNumValidation()"></ion-input>
+      </ion-item>
+      <div *ngIf="applicantDetails.controls.mobNum.invalid && (applicantDetails.controls.mobNum.touched)">
+        <span *ngIf="applicantDetails.controls.mobNum.errors.required">
+          <span class="errText">Must enter Mobile number.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.mobNum.errors.pattern">
+          <span class="errText">Enter Valid Mobile number.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Alternate Mobile Number
+          <!-- <span class="mandatory">*</span> -->
+        </ion-label>
+        <ion-input numberonly type="tel" maxlength="10" formControlName="altMobNum"
+          (ionChange)="mobNumValidation()"></ion-input>
+      </ion-item>
+      <div *ngIf="applicantDetails.controls.altMobNum.invalid && (applicantDetails.controls.altMobNum.touched)">
+        <span *ngIf="applicantDetails.controls.altMobNum.errors.required">
+          <span class="errText">Must enter Mobile number.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.altMobNum.errors.pattern">
+          <span class="errText">Enter Valid Mobile number.</span>
+        </span>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable || disablePan">
+        <ion-label position="floating">PAN Availability
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="panAvailable"
+          (ionChange)="panAvailabilityChecking($event)">
+          <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.panAvailable.valid && (applicantDetails.controls.panAvailable.touched)">
+        <span class="errText">Must select PAN Availability.</span>
+      </span>
+
+      <div class="field" *ngIf="applicantDetails.controls.panAvailable.value == 'Y'">
+        <ion-item [disabled]="submitDisable || disablePan">
+          <ion-label position="floating">PAN No.
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input formControlName="panNum" [(ngModel)]="panNumber" type="text"
+            (ionChange)="setFilteredItems(panNumber)"></ion-input>
+        </ion-item>
+        <span *ngIf="!applicantDetails.controls.panNum.valid && (applicantDetails.controls.panNum.touched)">
+          <span class="errText">Must enter the valid PAN Number.</span>
+        </span>
+      </div>
+
+      <div class="field" *ngIf="applicantDetails.controls.panAvailable.value == 'N'">
+        <ion-item [disabled]="true">
+          <ion-label position="floating">Form 60.
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input formControlName="form60" autocapitalize="characters" type="text">
+          </ion-input>
+        </ion-item>
+        <span *ngIf="!applicantDetails.controls.form60.valid && (applicantDetails.controls.form60.touched)">
+          <span class="errText">Must enter valid Form 60.</span>
+        </span>
+      </div>
+
+      <div class="field" *ngIf="userType != 'C'">
+        <div class="mobileverify">
+          <ion-item>
+            <ion-label position="floating">Virtual Payment Address (VPA)</ion-label>
+            <ion-input type="text" formControlName="upiNo" [disabled]="submitDisable">
+            </ion-input>
+          </ion-item>
+          <ion-button *ngIf="!upiVerify" shape="round" type="button" class="btn"
+            [disabled]="applicantDetails.controls.upiNo.invalid || submitDisable" (click)="fetchUPIDetails()">Verify</ion-button>
+          <ion-button *ngIf="upiVerify" shape="round" type="button" [disabled]="submitDisable" style="--background: green">Verified</ion-button>
+        </div>
+        <div *ngIf="applicantDetails.controls.upiNo.invalid && (applicantDetails.controls.upiNo.touched)">
+          <span *ngIf="applicantDetails.controls.upiNo.errors.pattern">
+            <span class="errText">Enter valid UPI Id</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="upiVerify && userType != 'C'">
+        <ion-item  [disabled]="true">
+          <ion-label position="floating">Name as per UPI</ion-label>
+          <ion-input type="text" formControlName="nameupi">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Occupation Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="employment"
+          (ionChange)="empStatusCheck($event)">
+          <ion-select-option *ngFor="let emp of emp_master;let i=index" [value]="emp.CODE">{{ emp.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.employment.valid && (applicantDetails.controls.employment.touched)">
+        <span class="errText">Must select Occupation Type.</span>
+      </span>
+
+      <!-- <div class="field" *ngIf="userType != 'C'">
+        <ion-item [disabled]="submitDisable || disableCoApp">
+          <ion-label position="floating">Is Co-Applicant Needed?
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="coAppFlag">
+            <ion-select-option *ngFor="let emp of coAppNeedList;let i=index" [value]="emp.CODE">{{ emp.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span *ngIf="!applicantDetails.controls.coAppFlag.valid && (applicantDetails.controls.coAppFlag.touched)">
+          <span class="errText">Must select Is Co-Applicant Needed?</span>
+        </span>
+      </div> -->
+
+      <div class="field" *ngIf="isSalaried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Employer Name
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input textonly type="text" formControlName="employerName">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.employerName.invalid && (applicantDetails.controls.employerName.touched)">
+          <span *ngIf="applicantDetails.controls.employerName.errors.required">
+            <span class="errText">Must enter Employer name.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.employerName.errors.pattern">
+            <span class="errText">Enter Valid name.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSalaried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Employee ID
+            <!-- <span class="mandatory">*</span> -->
+          </ion-label>
+          <ion-input alphanumeric-space type="text" formControlName="employeeId">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.employeeId.invalid && (applicantDetails.controls.employeeId.touched)">
+          <span *ngIf="applicantDetails.controls.employeeId.errors.required">
+            <span class="errText">Must enter Employer Id.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.employeeId.errors.pattern">
+            <span class="errText">Enter Valid ID.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSalaried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Designation
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input textonly type="text" formControlName="designation">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.designation.invalid && (applicantDetails.controls.designation.touched)">
+          <span *ngIf="applicantDetails.controls.designation.errors.required">
+            <span class="errText">Must enter designation.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.designation.errors.pattern">
+            <span class="errText">Enter Valid designation.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSalaried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Date of Joining
+            <span class="mandatory">*</span>
+          </ion-label>
+          <!-- set max to current date -->
+          <!-- <ion-datetime displayFormat="DD-MM-YYYY" min="{{mindate}}" max="{{maxdate}}" formControlName="joinDate"
+            pickerFormat="DD MMM YYYY" [disabled]="submitDisable"></ion-datetime> -->
+          <ion-input type="date" formControlName="joinDate" [min]="mindate" [max]="maxdate">
+          </ion-input>
+        </ion-item>
+      </div>
+      <span *ngIf="applicantDetails.controls.joinDate.invalid && (applicantDetails.controls.joinDate.touched)">
+        <span class="errText">Must Select Date of Joining.</span>
+      </span>
+
+      <div class="field" *ngIf="isSalaried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Experience in Years
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input decimals type="number" formControlName="experience" decimals></ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.experience.invalid && (applicantDetails.controls.experience.touched)">
+          <span *ngIf="applicantDetails.controls.experience.errors.required">
+            <span class="errText">Must enter Experience.</span>
+          </span>
+          <!-- <span *ngIf="applicantDetails.controls.experience.errors.pattern">
+            <span class="errText">Enter Valid Experience (Only Numerics are allowed).</span>
+          </span> -->
+          <span *ngIf="applicantDetails.controls.experience.errors.max">
+            <span class="errText">Enter Value between 1 - {{ageExperiance}}.</span>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="field" *ngIf="isSalaried">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Monthly Salary
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input numberonly type="tel" maxLength="10" formControlName="monthSalary">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.monthSalary.invalid && (applicantDetails.controls.monthSalary.touched)">
+          <span *ngIf="applicantDetails.controls.monthSalary.errors.required">
+            <span class="errText">Must enter Monthly Salary.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.monthSalary.errors.pattern">
+            <span class="errText">Enter Valid Monthly Salary (Only Numerics are allowed).</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.monthSalary.errors.max">
+            <span class="errText">Enter Value between 1 to 10000000.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSalaried&&isJanaEmp">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Line Manager Name
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input textonly type="text" formControlName="lmName">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.lmName.invalid && (applicantDetails.controls.lmName.touched)">
+          <span *ngIf="applicantDetails.controls.lmName.errors.required">
+            <span class="errText">Must enter Line manager name.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.lmName.errors.pattern">
+            <span class="errText">Enter Valid name.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSalaried&&isJanaEmp">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Line Manager Email ID
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="lmEmail"></ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.lmEmail.invalid && (applicantDetails.controls.lmEmail.touched)">
+          <span *ngIf="applicantDetails.controls.lmEmail.errors.required">
+            <span class="errText">Must enter Email ID.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.lmEmail.errors.pattern">
+            <span class="errText">Enter Valid Email ID.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSelfEmp">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Name Of Services/Business
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="bussName">
+            <ion-select-option *ngFor="let mari of dummyBussiness;let i=index" [value]="mari.CODE">{{ mari.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span *ngIf="applicantDetails.controls.bussName.invalid && (applicantDetails.controls.bussName.touched)">
+          <span class="errText">Must select Services/Business.</span>
+        </span>
+      </div>
+
+      <div class="field" *ngIf="isSelfEmp">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Details Of Activity
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input textonly type="text" formControlName="actDetail">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.actDetail.invalid && (applicantDetails.controls.actDetail.touched)">
+          <span *ngIf="applicantDetails.controls.actDetail.errors.required">
+            <span class="errText">Must enter Details Of Activity.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.actDetail.errors.pattern">
+            <span class="errText">Enter Details Of Activity.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSelfEmp">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Monthly Income
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input numberonly type="tel" maxLength="10" formControlName="monthIncome">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="applicantDetails.controls.monthIncome.invalid && (applicantDetails.controls.monthIncome.touched)">
+          <span *ngIf="applicantDetails.controls.monthIncome.errors.required">
+            <span class="errText">Must enter Income.</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.monthIncome.errors.pattern">
+            <span class="errText">Enter Valid Income (Only Numerics are allowed).</span>
+          </span>
+          <span *ngIf="applicantDetails.controls.monthIncome.errors.max">
+            <span class="errText">Enter Value between 1 to 10000000.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="isSelfEmp">
+        <ion-item [disabled]="submitDisable">
+          <ion-label position="floating">Vintage Of Service/Business
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="vinOfServ">
+            <ion-select-option *ngFor="let mari of vinOfServMaster;let i=index" [value]="mari.CODE">{{ mari.NAME }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span *ngIf="applicantDetails.controls.vinOfServ.invalid && (applicantDetails.controls.vinOfServ.touched)">
+          <span class="errText">Must select Vintage Of Service/Business.</span>
+        </span>
+      </div>
+
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Annual Income
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="annualIncome">
+          <ion-select-option *ngFor="let ann of annualIncomeMaster;let i=index" [value]="ann.CODE">{{ ann.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.annualIncome.valid && (applicantDetails.controls.annualIncome.touched)">
+        <span class="errText">Must Select Annual Income.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Caste
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="caste">
+          <ion-select-option *ngFor="let caste of caste_master;let i=index" [value]="caste.CODE">{{ caste.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.caste.valid && (applicantDetails.controls.caste.touched)">
+        <span class="errText">Must enter Caste.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Religion
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="religion">
+          <ion-select-option *ngFor="let rel of rel_master;let i=index" [value]="rel.CODE">{{ rel.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.religion.valid && (applicantDetails.controls.religion.touched)">
+        <span class="errText">Must select Religion.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Language
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="languages">
+          <ion-select-option *ngFor="let rel of dummyLangMaster;let i=index" [value]="rel.CODE">{{ rel.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.languages.valid && (applicantDetails.controls.languages.touched)">
+        <span class="errText">Must select Language.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Residence Status
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="resciStatus">
+          <ion-select-option *ngFor="let res of residenceStatus;let i=index" [value]="res.CODE">{{ res.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.resciStatus.valid && (applicantDetails.controls.resciStatus.touched)">
+        <span class="errText">Must select Residence Status.</span>
+      </span>
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Education
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="action-sheet" [interfaceOptions]="customPopoverOptions" formControlName="education">
+          <ion-select-option *ngFor="let edu of edu_master;let i=index" [value]="edu.CODE">{{ edu.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!applicantDetails.controls.education.valid && (applicantDetails.controls.education.touched)">
+        <span class="errText">Must select Education.</span>
+      </span>
+
+      <!-- <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Virtual Payment Address (VPA) 
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="vpa"></ion-input>
+      </ion-item>
+      <div *ngIf="!applicantDetails.controls.vpa.valid && (applicantDetails.controls.vpa.touched)">
+        <span *ngIf="applicantDetails.controls.vpa.errors.required">
+          <span class="errText">Must enter VPA details.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.email.errors.pattern">
+          <span class="errText">Enter Valid VPA details.</span>
+        </span>
+      </div> -->
+
+      <ion-item class="field" [disabled]="submitDisable">
+        <ion-label position="floating">Email ID
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="!applicantDetails.controls.email.valid && (applicantDetails.controls.email.touched)">
+        <span *ngIf="applicantDetails.controls.email.errors.required">
+          <span class="errText">Must enter Email ID.</span>
+        </span>
+        <span *ngIf="applicantDetails.controls.email.errors.pattern">
+          <span class="errText">Enter Valid Email ID.</span>
+        </span>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <!-- <button ion-button round type="submit" color="jsfgoald"
+              [disabled]="(applicantDetails.invalid) || submitDisable">Save</button> -->
+            <ion-button class="proceedbtn" shape="round" type="submit"
+              [disabled]="(applicantDetails.invalid) || submitDisable">Save</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</div>

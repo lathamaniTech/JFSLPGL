@@ -1,0 +1,26 @@
+<ion-content class="ion-padding" class="showImage">
+  <ion-card style="box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);">
+    <!-- <ion-item>    
+      <h2>{{applicant.applicant_fname}} {{applicant.applicant_last_name}}</h2>
+    </ion-item> -->
+    <!-- <span class="profileName" *ngIf="applicant.fname"><h1><b style="color: #00518f;">{{applicant.fname}}</b></h1></span> -->
+    <img src="{{applicant}}" class="height650" *ngIf="showImage">
+    <img src="assets/imgs/noImgs.png" class="height650" *ngIf="!showImage">
+    <div class="imgSizeContainer" *ngIf="showImage">
+      <p class="imgSize">Before Size : {{picSize[0].PPBS}}.KB</p>
+      <p class="imgSize">After Size : {{picSize[0].PPAS}}.KB</p>
+    </div>
+    <ion-row style="background-color: #488aff;text-align: center;" *ngIf="showImage">
+      <ion-col no-padding>
+        <!-- <button ion-button icon-left clear large no-padding no-margin style="color: #fff;" (click)="updateimage()">
+          Update <ion-icon name="ios-checkmark-circle-outline"></ion-icon> -->
+        <!--<div>12 Likes</div>-->
+        <!-- </button> -->
+        <ion-button fill="clear" size="large" style="color: #fff;" (click)="updateimage()">
+          Update
+          <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

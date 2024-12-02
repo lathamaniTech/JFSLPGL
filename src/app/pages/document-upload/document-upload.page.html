@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Document Upload
+      <span (click)="homepage()">
+        <ion-icon name="home" style="float:right;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+  <div class="segment03 top10" *ngIf="coAppFlag == 'Y'">
+    <ion-segment [(ngModel)]="custType">
+      <ion-segment-button value="Promoter" style="margin-right: -4px;"
+        (click)="getApplicantDocument()">Applicant</ion-segment-button>
+      <ion-segment-button value="CoApplicant" style="margin-right: -4px;"
+        (click)="getCoApplicantDocument()">Co-Applicant</ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div *ngIf="custType === 'Promoter'">
+
+    <ion-list *ngFor="let item of items;let i=index">
+      <ion-item>
+        <ion-row style="padding-left: 5px; width: 100%;display: flex !important;align-items: center !important;">
+          <ion-col size="1" style="padding-top:5px !important">
+            <ion-icon style="color: #DA107E;" name="person" class="icon-zoom"></ion-icon>
+          </ion-col>
+          <ion-col size="8" style="padding: 14px !important;">
+            <h3 class="applName">{{ item.firstname || item.enterName }}</h3>
+          </ion-col>
+          <ion-col size="2" style="padding-top: 10px !important;text-align: center;">
+            <ion-button style="--background: #DA107E;padding: 0 !important;" (click)="viewIdProof(item)">
+              <ion-icon name="attach"></ion-icon>
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  <div *ngIf="custType === 'CoApplicant'">
+    <div class="NoDataContent" *ngIf='coapplicants.length == 0'>
+      <h2>No Co-Applicant(s) data found!</h2>
+    </div>
+
+    <div *ngIf="coapplicants.length != 0">
+      <div *ngFor="let coapp of coapplicants;let i=index">
+
+        <ion-list>
+          <ion-item>
+            <ion-row style="padding-left: 5px; width: 100%;display: flex;align-items: center;">
+              <ion-col size="1" style="padding-top:5px !important">
+                <ion-icon style="color: #DA107E;" name="person" class="icon-zoom"></ion-icon>
+              </ion-col>
+              <ion-col size="8" style="padding: 14px !important;">
+                <h3 class="applName">{{ coapp.firstname }}</h3>
+              </ion-col>
+              <ion-col size="2" style="padding-top: 10px !important;text-align: center;">
+                <ion-button style="--background: #DA107E;padding: 0 !important;" (click)="viewIdProof(coapp)">
+                  <ion-icon name="attach"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+

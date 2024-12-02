@@ -1,0 +1,122 @@
+// verify-otp {
+    ion-title{
+        position: absolute !important;
+        width: 100% !important;
+        min-height: 56px;
+        text-align: center !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+    .ccardkyc{
+        color:white;        
+        padding: 2px;
+        margin-top:12px;
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .ccardkyc .paddingadd{padding: 0 !important;}
+
+    .buttspace{
+        margin-top:4%;
+        clear: both !important;
+        margin: 0 auto;
+    }
+    .roundbtn{
+        margin-top:20px;
+        margin-bottom:20px;
+    }
+    .janalogo{
+        margin: auto;
+    }
+    .takepic{
+        text-align: center; margin: auto; width: 160px;
+    }
+    .userimg {
+        width: 160px;
+        height: 160px;
+        padding: 5px;
+    }
+    .pinkround{
+      background-color: #da107e;
+       color: #ffffff;
+       font-weight: bold;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      border-radius: 50%;
+      padding-top: 20px;
+//      float: left;
+      margin: 6px;
+      display: inline-block;
+    }
+    .greenround{
+        background-color: #3ad03a;
+        color: #ffffff;
+        font-weight: bold;
+       width: 60px;
+       height: 60px;
+       text-align: center;
+       border-radius: 50%;
+       padding-top: 20px;
+     //  float: left;
+       margin: 6px;
+       display: inline-block;
+    }
+    .hrclass {
+       width: 100%;
+    border-top: 1px solid #000000;
+       
+    }
+    .lefthand{
+        display: block;
+    }
+    .centerfing{
+        margin: auto;
+        width: 75%;
+        display: block;
+    }
+    .statusBar{
+        height: 25px;
+        background-color: #fba41d;
+    }
+    .statusBar ion-col{
+        padding:2px 0px 0px 0px !important;
+    }
+    .statusBar ion-grid{
+        padding-left: 10px !important;
+    }
+
+    .scroll-content{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+        margin-bottom: auto !important;
+    }
+    ol{
+        margin: 0px;
+    }
+        li{
+        margin: 10px 16px 10px 0px;
+        line-height: 120%;
+        text-align: justify;
+    }
+    p.stylepara{
+        white-space: normal;
+        line-height: 120%;
+        color: #000000;
+        text-align: justify;
+    }
+
+    .getOtp{
+        background: #fba41d;
+        color: #FFF;
+        /* padding: 5px !important; */
+        font-size: 10px;
+        height: 50%;
+        border-radius: 50px;
+    }
+
+// }

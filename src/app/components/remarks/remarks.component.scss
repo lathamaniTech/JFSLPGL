@@ -1,0 +1,47 @@
+// remarks{
+    .backDropProgress
+    {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      padding: -10;
+      background: rgba(170, 165, 165, 0.32);
+      top: 0;
+      margin: 0px 0px 0px -16px;
+      padding: 0;
+      z-index: 0;
+    }
+  
+    .container{
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: auto;
+        z-index: 999;
+    }
+    
+    .btn{
+        width: 75px;
+        height: 30px;
+        background: #FBA41D;
+    }
+    
+    .item-inner {
+        box-shadow: none !important;
+    }
+    ion-textarea{
+        border: 1px solid #ccc;
+        border-radius: 10px; 
+        padding-left: 5px;
+    }
+    
+    ion-label{
+        padding-left: 10px;
+    }
+    
+    
+    // }
+    

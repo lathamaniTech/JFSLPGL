@@ -1,0 +1,21 @@
+<div class="backDropProgress" style="width: 105vw;"></div>
+<div class="container">
+  <ion-item-divider style="color: white;--background: #DA107E;">
+    <h1>{{urn.MatchedCRN ? urn.MatchedCRN : urn}}</h1>
+  </ion-item-divider>
+  <div style="background: white;">
+
+    <ion-item class="field" lines="none">
+      <ion-label position="floating">Remarks
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-textarea type="text" [(ngModel)]="remarks"></ion-textarea>
+    </ion-item>
+
+    <div class="buttspace roundbtn ion-text-center">
+      <ion-button class="proceedbtn" shape="round" (click)="onClose()">
+        OK
+      </ion-button>
+    </div>
+  </div>
+</div>

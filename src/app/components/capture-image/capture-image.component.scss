@@ -1,0 +1,33 @@
+ion-content {
+  height: 100vh;
+  width: 100vw;
+}
+.imgContainer{
+  background: transparent;
+  height: 25vh;
+  margin-top: 15px;
+}
+
+.buttons {
+  --background: #f81976;
+}
+
+.savebutton {
+  --background: #4bc73b;
+}
+
+.closeBtn{
+  color: white;
+  zoom: 1.5;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+.imgCount{
+  width: 5%;
+  border: 2px solid #da107e;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  margin: 7px;
+}

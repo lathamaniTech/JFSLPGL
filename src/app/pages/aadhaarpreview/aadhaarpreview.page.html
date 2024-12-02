@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Aadhaar Details</ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <fieldset>
+    <legend>Personal Details</legend>
+    <ion-row>
+      <ion-col size="5">
+        <p class="profile-img"><img src="assets/imgs/profile-img.png"></p>
+      </ion-col>
+      <ion-col size="4">
+        <p class="label">Name</p>
+        <p class="fieldName">Rajasekar.T</p>
+        <p class="label">RRN</p>
+        <p class="fieldName">744548782578754</p>
+        <p class="label">Transaction ID</p>
+        <p class="fieldName">UKC 2025628</p>
+      </ion-col>
+      <ion-col size="3">
+        <p class="label">Date</p>
+        <p class="fieldName">05/09/2018</p>
+        <p class="label">Gender</p>
+        <p class="fieldName">Male</p>
+        <p class="label">Phone</p>
+        <p class="fieldName">XXXXXXXXXX</p>
+      </ion-col>
+    </ion-row>
+  </fieldset>
+
+  <fieldset>
+    <legend>Address Details</legend>
+    <ion-row>
+      <ion-col size="3">
+        <p class="label">Door No.</p>
+        <p class="fieldName">05/1A</p>
+      </ion-col>
+      <ion-col size="9">
+        <p class="label">Street</p>
+        <p class="fieldName">Thiruvalluvar nagar 3rd Street</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <p class="label">State</p>
+        <p class="fieldName">Tamil Nadu</p>
+      </ion-col>
+      <ion-col size="4">
+        <p class="label">City/District</p>
+        <p class="fieldName">Chennai</p>
+      </ion-col>
+      <ion-col size="4">
+        <p class="label">Pincode</p>
+        <p class="fieldName">600032</p>
+      </ion-col>
+    </ion-row>
+  </fieldset>
+
+</ion-content>
+
+<ion-footer>
+  <div class="buttspace roundbtn" style="text-align:center">
+    Would you like to use Aadhaar Data in Lead Process?
+    <!--<button ion-button round (click)="presentLoadingCustom()" color="jsfgoald">Proceed</button>-->
+  </div>
+  <ion-row>
+    <ion-col size="6" style="text-align: center;">
+      <ion-button shape="round" (click)="presentLoadingCustomNo()" style="--background: #FBA41D;">No</ion-button>
+    </ion-col>
+    <ion-col size="6" style="text-align: center;">
+      <ion-button shape="round" (click)="presentLoadingCustomYes()" style="--background: #FBA41D;">Yes</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

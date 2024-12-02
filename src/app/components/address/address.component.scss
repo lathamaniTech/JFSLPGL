@@ -1,0 +1,134 @@
+// address {
+
+.readonly-style {
+    pointer-events: none;
+    color: #999;
+}
+
+.top10 {
+    margin-top: 16px !important;
+}
+
+.extraSpace {
+    display: none;
+}
+
+.custom-popover::part(content) {
+    width: auto !important;
+    right: 20px !important;
+    left: auto !important;
+    transform-origin: right top !important;
+    max-width: 90% !important;
+    white-space: pre-line !important;
+}
+
+.item-container {
+    margin: 0;
+    padding: 0;
+    background: #da107e;
+    color: #FFF;
+    font-size: 80%;
+}
+
+.barcode {
+    float: right;
+    background-color: #fba41d;
+    padding: 2px 2px 0px 2px;
+    position: absolute;
+    right: 30px;
+    border-radius: 2px;
+}
+
+.barcode img {
+    height: 20px;
+}
+
+.segment002 ion-segment {
+    width: 100% !important;
+    //  display: block !important;
+}
+
+.segment002 ion-segment-button {
+    font-size: 13px;
+    // width: 32.5% !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    --background: #da107e;
+    --color: #ffffff;
+    --background-checked: #fba41d !important;
+    ;
+    --color-checked: white;
+    --indicator-color: transparent !important;
+    --indicator-box-shadow: transparent !important;
+}
+
+@media only screen and (min-height: 900px) {
+    .extraSpace {
+        display: block;
+        margin: 2px;
+        padding: 0px;
+    }
+}
+
+// @media screen and (max-width: 480px) {
+
+//     .segment001 .Aadhaar.segment-button, .segment001 .Perm.segment-button {
+//         font-size: 11px !important;
+//         color: #ffffff !important;
+//         width: 24.9% !important;
+//         display: inline-block !important;
+//         background-color: #da107e;
+//         opacity: 1 !important;
+//     }
+//     .segment001 .Entity.segment-button {
+//         font-size: 11px !important;
+//         color: #ffffff !important;
+//         width: 20% !important;
+//         display: inline-block !important;
+//         background-color: #da107e;
+//         opacity: 1 !important;
+//     }
+//     .segment001 .VID.segment-button {
+//         font-size: 11px !important;
+//         color: #ffffff !important;
+//         width: 31.1% !important;
+//         display: inline-block !important;
+//         background-color: #da107e;
+//         opacity: 1 !important;
+//     }
+//     .segment001 .Perm.segment-button.segment-activated, .segment001 .Aadhaar.segment-button.segment-activated, .segment001 .VID.segment-button.segment-activated {
+//         font-size: 11px !important;
+//         color: #ffffff !important;
+//         width: 24.9% !important;
+//         display: inline-block !important;
+//         font-weight: bold;
+//         background-color: #fba41d;
+//     }
+//     .segment001 .Entity.segment-button.segment-activated {
+//         font-size: 11px !important;
+//         color: #ffffff !important;
+//         width: 20% !important;
+//         display: inline-block !important;
+//         font-weight: bold;
+//         background-color: #fba41d;
+//     }
+//     .segment001 .VID.segment-button.segment-activated {
+//         font-size: 11px !important;
+//         color: #ffffff !important;
+//         width: 31.1% !important;
+//         display: inline-block !important;
+//         font-weight: bold;
+//         background-color: #fba41d;
+//     }
+//   }
+
+
+@media only screen and (min-height: 900px) {
+    .extraSpace {
+        display: block;
+        margin: 2px;
+        padding: 0px;
+    }
+}
+
+// }

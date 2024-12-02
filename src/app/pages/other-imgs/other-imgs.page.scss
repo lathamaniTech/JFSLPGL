@@ -1,0 +1,90 @@
+// page-other-imgs {
+    .showImage{
+        position: absolute;
+     overflow: hidden;
+    //  max-width: 320px;
+     border-radius: 10px;
+     width: 100%;
+     height: 100% !important;
+     top: 20%;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     margin: auto;
+     border: 0;
+     //box-shadow: 0 16px 20px rgba(0,0,0,.4);
+     background-color: #fafafa;
+     background: transparent
+     }
+
+
+     .profileName{
+        background-color: #e6e3e3;
+        width: 100%;
+        display: block;
+        height: 35px;
+        padding: 4px;
+        text-align: center;
+        text-shadow: 1px 1px 0 #444;
+        opacity: 1;
+     }
+
+.height650{
+        height: 650px;
+     }
+    
+     @media screen and (max-width: 480px) {
+        .height650{
+            height: 90vh;
+         }
+         .showImage {
+            position: absolute;
+            overflow: hidden;
+            border-radius: 10px;
+            width: 100%;
+            height: 100% !important;
+            top: 0%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border: 0;
+            background-color: #fafafa;
+            background: transparent;
+        }
+        .scroll-content {
+            padding: 0px !important;
+        }
+        .card-md {
+            margin: 0px;
+            border-radius: 0px;
+            width: 100%;
+        }
+    }
+
+    @media only screen and (min-width: 700px) {
+        .height650{
+            height: 41vh !important;
+         }
+         .scroll-content {
+            padding: 0px !important;
+        }
+        .showImage {
+            position: absolute;
+            overflow: hidden;
+            border-radius: 10px;
+            width: 100%;
+            height: 100% !important;
+            top: 0%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border: 0;
+            background-color: #fafafa;
+            background: transparent;
+        }
+    }  
+
+
+// }

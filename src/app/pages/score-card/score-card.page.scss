@@ -1,0 +1,117 @@
+// page-score-card {
+.scoreCardTitle {
+    text-align: center;
+}
+
+.content {
+    margin-top: 10px;
+}
+
+.tickIcon {
+    zoom: 1.3;
+    color: green;
+}
+
+.inner {
+    padding: 5px;
+    margin: 10px;
+}
+
+.custom-popover::part(content) {
+    width: auto !important;
+    right: 20px !important;
+    left: auto !important;
+    transform-origin: right top !important;
+    max-width: 90% !important;
+    white-space: pre-line !important;
+}
+
+.questions {
+    margin-top: 3px;
+    font-size: 13px;
+}
+
+.badge {
+    background: #da107e;
+    color: #fff;
+    padding: 5px 10px;
+    margin-left: 15px;
+    width: 50px;
+}
+
+.NoDataContent {
+    height: 50px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+}
+
+.NoDataContent h2 {
+    color: darkgray;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#displayDiv {
+    text-align: center;
+    font-size: 3.5rem;
+    color: grey;
+    font-family: serif;
+}
+
+.pointer {
+    fill: rgb(58, 57, 57);
+}
+
+.badge1 {
+    background: #da107e;
+    color: #fff;
+    padding: 5px 10px;
+    margin-left: 15px;
+    float: right;
+
+}
+
+.scoreResult {
+    margin: 10px auto;
+    text-align: center;
+}
+
+.scoreResult span {
+    color: #da107e;
+    font-weight: bold;
+
+}
+
+
+.showAmt {
+    margin: 0;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.existPlaceholder {
+    height: 50px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+}
+
+.existPlaceholder h2 {
+    color: darkgray;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+// }

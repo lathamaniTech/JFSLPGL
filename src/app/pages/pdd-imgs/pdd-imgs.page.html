@@ -1,0 +1,38 @@
+<ion-content class="ion-padding">
+  <div class="content">
+
+    <div class="bgColor">
+      <div style="text-align: center;">
+        <ion-slides #Slides *ngIf="!docImg">
+          <ion-slide>
+            <img src="assets/imgs/noImgs.png" class="proofModal" />
+          </ion-slide>
+        </ion-slides>
+        <ion-slides *ngIf="docImg" pager>
+          <ion-slide *ngFor="let addProofDoc of addProofDocs; let i = index">
+            <p class="imgdelete" *ngIf="fieldDisable">
+              <ion-icon name="trash" (click)="proofImgRemove(addProofDoc)"></ion-icon>
+            </p>
+            <img *ngIf="addProofDoc.type == 'image'" src="{{addProofDoc.imgpath}}" class="proofModal" />
+            <img *ngIf="addProofDoc.type != 'image'" class="proofModal" src="assets/imgs/files2.jpg" data-name={{addProofDoc.DocName}}>
+
+          </ion-slide>
+        </ion-slides>
+      </div>
+      
+      <div class="iconpart">
+        <ion-grid color="headpart">
+          <ion-row class="iconlist">
+            <ion-col size="6" class="ion-text-center" (click)="closeProofModal()">
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-col>
+            <ion-col size="6" class="ion-text-center" (click)="takeProofImg()">
+              <ion-icon name="camera"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

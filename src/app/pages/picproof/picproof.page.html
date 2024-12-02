@@ -1,0 +1,70 @@
+<ion-content class="ion-padding">
+  <div class="content">
+
+    <div class="bgColor">
+      <div style="text-align: center;">
+        <ion-slides #Slides *ngIf="!docImg">
+          <ion-slide>
+            <img src="assets/imgs/noImgs.png" class="proofModal" />
+          </ion-slide>
+        </ion-slides>
+        <ion-slides #Slides *ngIf="docImg" pager style="height: calc(100vh - 54px) ;background: gray;">
+          <ion-slide *ngFor="let addProofDoc of addProofDocs; let i = index"
+            style="display: flex; flex-direction: column;">
+            <p class="imgdelete" *ngIf="fieldDisable">
+              <ion-icon name="trash" (click)="proofImgRemove(addProofDoc)"></ion-icon>
+            </p>
+            <div *ngIf="postSancDoc || fromFieldInvestigation">
+              <img *ngIf="addProofDoc.fileType == 'image'" src="{{addProofDoc.imgpath}}" class="proofModal" />
+              <ion-icon *ngIf="addProofDoc.fileType == 'file'" style="zoom: 10; color: #000;display: block;"
+                name="folder"></ion-icon>
+              <span *ngIf="addProofDoc.fileType == 'file'" class="proofModal span_file"
+                (click)="fileOpen(addProofDoc)">{{addProofDoc.fileName}}</span>
+            </div>
+            <div *ngIf="!postSancDoc && !fromFieldInvestigation">
+              <img src="{{addProofDoc.imgpath}}" class="proofModal" />
+            </div>
+            <div class="imgSizeContainer" *ngIf="addProofDoc.BS && addProofDoc.AS">
+              <p class="imgSize">Before Size : {{addProofDoc.BS}}.KB</p>
+              <p class="imgSize">After Size : {{addProofDoc.AS}}.KB</p>
+            </div>
+          </ion-slide>
+
+        </ion-slides>
+
+      </div>
+
+      <div class="iconpart">
+        <ion-grid color="headpart">
+          <ion-row class="iconlist">
+            <ion-col style="text-align: center;" (click)="closeProofModal()">
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-col>
+            <ion-col (click)="takeProofImg()" *ngIf="fieldDisable" style="text-align: center;">
+              <ion-icon name="camera"></ion-icon>
+            </ion-col>
+            <ion-col (click)="openfile()" *ngIf="postSancDoc" style="text-align: center;">
+              <input #fileref [hidden]="true" type="file" (change)="onFileSelect($event)" />
+              <ion-icon name="folder"></ion-icon>
+            </ion-col>
+
+
+            <!-- <ng-container *ngIf="postSancDoc || fromFieldInvestigation">
+              <ion-col (click)="openfile()" *ngIf="fieldDisable" style="text-align: center;">
+                <input #fileref [hidden]="true" type="file" (change)="onFileSelect($event)" />
+                <ion-icon name="folder"></ion-icon>
+              </ion-col>
+            </ng-container> -->
+
+            <!-- <ion-col (click)="openProofGallery()" *ngIf="fieldDisable" text-center>
+              <ion-icon ios="ios-folder" md="md-folder"></ion-icon>
+            </ion-col> -->
+          </ion-row>
+
+        </ion-grid>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

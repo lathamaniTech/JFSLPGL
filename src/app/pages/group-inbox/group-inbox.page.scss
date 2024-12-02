@@ -1,0 +1,118 @@
+ ion-title {
+        position: absolute !important;
+        width: 100% !important;
+        min-height: 56px;
+        text-align: center !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+
+    .NoDataContent{
+        height:50px;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:auto;
+        position: absolute;
+    }
+    .NoDataContent h2{
+        color: darkgray;
+        font-weight: bold;
+        text-align: center;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .labeltext {
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+    .groupListContainer {
+        border: 1px solid #da1072;
+        border-radius: 10px;
+        margin-top: 10px;
+        padding:5px;
+      }
+
+    .labelcontent {
+        font-size: 0.8rem;  
+      }
+
+    .icons {
+        margin-top: 5px;
+        color: #da107e;
+        // font-size: 2.8rem;
+        font-size: 1.5rem;
+      }
+
+    .forwadIcon {
+        // margin-top: 5px;
+        color: #da107e;
+        // font-size:3.7rem;
+        font-size: 2.5rem;
+        display: flex;
+        justify-content: center;
+    } 
+    
+    .forwadIcon:hover { 
+        color: green;
+        cursor: pointer;
+    }
+
+    .paginationTab{
+      font-size: 10px;
+      color: black !important;
+      width: 100% !important;
+      display: inline-block !important;
+      opacity: 1 !important;
+      border: 1.5px solid #da1072;
+      border-radius: 10px;
+      font: unset;
+    }
+
+    .countCol{
+      display: flex;
+      justify-content: center;
+      font-size: large;
+      align-items: center;
+      font-family: fantasy;
+      font: unset;
+    }
+
+    .backCol{
+      display: flex;
+      align-items: center;
+      border-right: 2px solid #da1072;
+      border-radius: 7px;
+    }
+
+    .nextCol{
+      display: flex;
+      align-items: center;
+      border-left: 2px solid #da1072;
+      border-radius: 7px;
+    }
+
+    .rowHight{
+      height: 3rem;
+      ion-col{
+        height: 3rem;
+      }
+    }
+
+
+    .paginator {
+      .ngx-pagination {
+          padding: 0;
+          li:not(.current, .pagination-next, .pagination-previous) {
+              background: rgba(235, 235, 235, 1);
+          }
+    
+          a,
+          .current {
+              padding: 1rem 1.5rem;
+          }
+      }
+    }

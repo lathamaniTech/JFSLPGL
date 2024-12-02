@@ -1,0 +1,91 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+
+        <!-- <div class="menu-header-bg"></div> -->
+        <div class="header-content">
+          <img src="../assets/imgs/userpro.png" alt="">
+          <ion-label>
+            <h2 style="text-align: center;">{{fname}}</h2>
+            <span style="width: 100%;display: flex;justify-content: center;margin: -10px 0px 15px 0px;">({{usersGroupsName}})</span>
+            <h4>{{myDate | date: 'short'}}</h4>
+          </ion-label>
+        </div>
+
+        <ion-list class="menu-items" lines="none" *ngFor="let page of pages">
+          <ion-menu-toggle>
+            <ion-item [routerLink]="page.component" routerLinkActive="active" routerDirection="root" skipLocationChange
+              replaceUrl (click)="openPage(page)">
+              <ion-icon [name]="page.icon" slot="start"></ion-icon>
+              {{page.title}}
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer style="box-shadow: 0 5px 5px 5px #333;" (click)="logout()">
+        <ion-toolbar style="--background: #fba41d !important;">
+          <ion-menu-toggle>
+            <div class="containerMenu">
+              <div style='text-align: center;margin: 0 auto;margin-top: 10px; border-radius: 40px ; color :"white"'>LOG
+                OUT</div>
+            </div>
+          </ion-menu-toggle>
+        </ion-toolbar>
+      </ion-footer>
+
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
+
+
+
+
+
+
+
+
+<!-- <ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu side="start" contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar style="--background: #da107e;">
+          <ion-title>User Profile</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div style="background-color:#191d1a;padding-bottom:10px;box-shadow: 0 2px 2px 2px #333;">
+          <div class="userdet">
+
+            <ion-avatar style="margin-left:30%;zoom: 1.7;">
+              <img src="assets/imgs/userpro.png" width="120" height="120">
+            </ion-avatar>
+
+            <h2 style="line-height:0;color:#ffffff;text-align: center;font-size: 2.0rem;">{{fname}}</h2>
+            <p style="line-height: 0;color: #ffffff;text-align: center;font-size: 16px;">({{usersGroupsName}})</p>
+            <div style="padding-top:3%;" class="timedet">
+              {{myDate | date: 'short'}}
+            </div>
+          </div>
+        </div>
+        <ion-list class="menuTogglerow" lines="none">
+          <ion-menu-toggle>
+            <ion-item *ngFor="let p of pages" (click)="openPage(p)">
+              {{p.title}}
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+      <ion-footer style="box-shadow: 0 5px 5px 5px #333;">
+        <ion-toolbar (click)="logout()" style="--background: #fba41d !important;">
+          <ion-title class="profiletitle">Logout
+            <ion-icon name="exit-outline" style="float:right;"></ion-icon>
+          </ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app> -->

@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar color="jsfpink">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="text-center">IMD Details</ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="imdDetails" (ngSubmit)="imdDetailsSave(imdDetails.value)">
+
+    <ion-item>
+      <ion-label position="floating">Payment Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="imdPayType" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let pay of payments;let i=index" [value]="pay.CODE">{{ pay.NAME }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="imdDetails.controls.imdPayType.invalid && (imdDetails.controls.imdPayType.touched)">
+      <span *ngIf="imdDetails.controls.imdPayType.errors.required">
+        <span class="errText">Must Select cheque collected details.</span>
+      </span>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Instrument Details
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="imdInstrument" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+    <div *ngIf="imdDetails.controls.imdInstrument.invalid && (imdDetails.controls.imdInstrument.touched)">
+      <span *ngIf="imdDetails.controls.imdInstrument.errors.required">
+        <span class="errText">Must enter Instrument Details.</span>
+      </span>
+      <span *ngIf="imdDetails.controls.imdInstrument.errors.pattern">
+        <span class="errText">Enter Valid Instrument Details.</span>
+      </span>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Account Holder Name
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="imdACName" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+    <div *ngIf="imdDetails.controls.imdACName.invalid && (imdDetails.controls.imdACName.touched)">
+      <span *ngIf="imdDetails.controls.imdACName.errors.required">
+        <span class="errText">Must enter Account Holder Name.</span>
+      </span>
+      <span *ngIf="imdDetails.controls.imdACName.errors.pattern">
+        <span class="errText">Enter Valid Account Holder Name.</span>
+      </span>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Account Number
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="tel" maxlength="18" formControlName="imdACNumber" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+    <div *ngIf="imdDetails.controls.imdACNumber.invalid && (imdDetails.controls.imdACNumber.touched)">
+      <span *ngIf="imdDetails.controls.imdACNumber.errors.required">
+        <span class="errText">Must enter Account Number.</span>
+      </span>
+      <span *ngIf="imdDetails.controls.imdACNumber.errors.pattern">
+        <span class="errText">Enter Valid Account Number.</span>
+      </span>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Amount
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="tel" maxlength="10" formControlName="imdAmount" [disabled]="submitDisable"></ion-input>
+    </ion-item>
+
+    <div *ngIf="imdDetails.controls.imdAmount.invalid && (imdDetails.controls.imdAmount.touched)">
+      <span *ngIf="imdDetails.controls.imdAmount.errors.required">
+        <span class="errText">Must enter Amount.</span>
+      </span>
+      <span *ngIf="imdDetails.controls.imdAmount.errors.pattern">
+        <span class="errText">Enter Valid Amount.</span>
+      </span>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Bank Name
+        <span class="mandatory">*</span>
+      </ion-label>
+
+      <ionic-selectable formControlName="imdBName" [(ngModel)]="imdBName" item-content [items]="bankNames"
+        itemValueField="CODE" itemTextField="NAME" [canSearch]="true" [isEnabled]="!submitDisable">
+      </ionic-selectable>
+
+    </ion-item>
+    <div *ngIf="imdDetails.controls.imdBName.invalid && (imdDetails.controls.imdBName.touched)">
+      <span *ngIf="imdDetails.controls.imdBName.errors.required">
+        <span class="errText">Must enter Bank Name.</span>
+      </span>
+      <span *ngIf="imdDetails.controls.imdBName.errors.pattern">
+        <span class="errText">Enter Valid Bank Name.</span>
+      </span>
+    </div>
+
+    <div class="newdate">
+      <ion-item>
+        <ion-label position="floating">Instrument Date
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-datetime displayFormat="DD-MM-YYYY" min="1900-01-01" formControlName="imdDate" [max]="mindate"
+          pickerFormat="DD MMM YYYY" [disabled]="submitDisable"></ion-datetime>
+      </ion-item>
+    </div>
+
+    <span *ngIf="imdDetails.controls.imdDate.invalid && (imdDetails.controls.imdDate.touched)">
+      <span class="errText">Must Select Date.</span>
+    </span>
+
+    <ion-row class="marginTop">
+      <ion-col>
+        <ion-fab vertical="bottom" horizontal="end">
+          <div class="fabBadge">{{imdImglen}}</div>
+          <ion-fab-button color="warning" type="button" (click)="showpicmaodal('imdcheque')">
+            <ion-icon name="paper"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <div class="buttspace roundbtn ion-text-center">
+          <ion-button shape="round" type="submit" color="warning"
+            [disabled]="(imdDetails.invalid) || submitDisable">Save</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
+  </form>
+
+</ion-content>

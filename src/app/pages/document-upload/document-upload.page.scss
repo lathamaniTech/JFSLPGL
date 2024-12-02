@@ -1,0 +1,238 @@
+// page-document-upload {
+
+    .toolbar-background-md{
+        --background: #da107e !important;
+    }
+    .card-header-md{
+        --background: #fba41d;
+        color:white;
+        text-align: center;
+    }
+    .toolbar-title-md{
+        color: white;
+        text-align: center;
+    }
+    .bar-button-default-md{
+        color: white;
+    }
+    .statusBar{
+        height: 25px;
+        --background: #fba41d;
+    }
+
+    .statusBar ion-col{
+        padding:2px 0px 0px 0px !important;
+    }
+    .statusBar ion-grid{
+        padding-left: 10px !important;
+    }
+    .cardOne{
+        --background: #fba41d;
+        color:white;
+    }
+    .rowInfo{
+        text-align: center;
+        --background: white;
+        color: black;
+    }
+    .cibilIcons{
+        color: #da107e;
+        zoom: 3.0;
+    }
+    .proceedBTN_1{
+        --background: green;
+        color: white;
+    }
+    .proceedBTN_2{
+        --background: #f14a0d;
+        color: white;
+    }
+    .proceedBTN_3{
+        --background: red;
+        color: white;
+    }
+    .buttspace{
+        margin-top:4%;
+        clear: both !important;
+        margin: 0 auto;
+    }
+    .roundbtn{
+        margin-top:20px;
+        margin-bottom:20px;
+    }
+    .buttons{
+        text-align: center;
+        margin-top: 150px;
+        border: 1px solid green;
+        margin-left: auto;
+        margin-right: auto;
+        width: calc(100% - 20px);
+        }
+    .btnCheckmark{
+        padding: 2px;
+        margin-right: 10px;
+    }
+    .center{
+        text-align: center;
+    }
+    .veryGood{
+        padding: 30px 25px;
+        // --background: green;
+        color: white;
+    }
+    // .cibilVG{
+    //     margin: 20px;
+    // }
+    .stars{
+        color: #fba41d;
+    }
+    .cibilcontent{
+        padding: 23px 13px;
+        // --background: #fba41d;
+    }
+    .contentIcon{
+        zoom: 2.0;
+        // color: #da107e;
+    }
+    .footer{
+        text-align: center;
+        padding: 15px;
+        // height: 30px;
+        --background: #fba41d;
+        color: white;
+    }
+    .btnText{
+        font-size: 16px;
+
+    }
+    .btnIcon{
+        zoom: 1.7;
+        margin-right: 5px;
+    }
+
+        .existLead{
+        --background: #fba41d;
+        color: #FFFFFF;
+    }
+
+ .icon-zoom{
+     zoom: 3.0;
+ }
+ h3.applName{
+     font-size: 120%;
+     font-weight: bold;
+     margin-top: .1em !important;
+     padding-left: 8px;
+     text-transform: capitalize;
+ }
+ h4.applAmount{
+     font-size: 140%;
+     font-weight: bold;
+     margin-top: .1em !important;
+     padding-left: 8px;
+ }
+p.applLeadNum, p.applLoanType, p.applDate{
+    margin-top: .6em;
+    padding-left: 8px;
+ }
+ p.seeAppl{
+     padding-right: 20px;
+    text-align: right !important;
+ }
+
+ .scroll-content {
+     padding: 0px !important;
+ }
+
+    .segment03 ion-segment{
+     width: 100% !important;
+    }
+ 
+    .segment03 ion-segment-button {
+     font-size:13px;
+     width: 49% !important;
+     display: inline-block !important;
+     opacity: 1 !important;
+     --background:#da107e;
+     --color:#ffffff;
+     --background-checked: #fba41d !important;;
+     --color-checked: white;
+     --indicator-color : transparent!important; 
+     --indicator-box-shadow: transparent!important;
+    }
+
+.top10{
+    margin-top: 16px !important;
+    margin-left: 1% !important;
+}
+.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+    opacity: 1;
+    border-color: #ffffff;
+    border-width: 0 !important;
+}
+
+.pinkcolor{
+    color:#da107e;
+}
+.message{
+   font-weight: bold;
+//    margin-top:-51px;
+}
+.thumb{
+    font-size: 120%;
+}
+.grid, .col{
+    padding: 0px !important;
+}
+
+.NoDataContent{
+    height:50px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    position: absolute;
+}
+.NoDataContent h2{
+    color: darkgray;font-weight: bold;text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.himark{
+    border: #000000;
+    padding: 5px;
+}
+
+@media screen and (max-width: 480px) {
+    .icon-zoom{
+        zoom: 2.0 !important;
+    }
+    .pinkcolor{
+        font-size: .9rem !important;
+    }
+    .message {
+        font-size: 1.2rem;
+    }
+    .cibiltext {
+        font-size: 1.2rem;
+    }
+ 
+}
+
+// .himark{
+//    .message{
+//        margin-top:-59px !important;
+//    }
+// }
+
+.count{
+    position: absolute;
+    border-radius: 50% !important;
+    top: 10px;
+    right: 0px;
+}
+
+
+
+// }

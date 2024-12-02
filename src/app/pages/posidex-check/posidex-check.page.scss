@@ -1,0 +1,121 @@
+// page-posidex-check {
+    .segment03 ion-segment{
+        width: 100% !important;
+        display: block !important;
+        }
+        .segment03 ion-segment-button {
+            font-size:13px;
+            width: 49% !important;
+            display: inline-block !important;
+            opacity: 1 !important;
+            --background:#da107e;
+            --color:#ffffff;
+            --background-checked: #fba41d !important;;
+            --color-checked: white;
+            --indicator-color : transparent!important; 
+            --indicator-box-shadow: transparent!important;
+           }
+
+
+           
+
+    .lead ion-col{
+        width: 50%;
+      }
+
+      .labelcontent {
+        // font-size: 12px;
+        // white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 140px;
+        white-space: normal;
+         
+      }
+      .labelcontent2 {
+        // font-size: 12px;
+        // white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // max-width: 140px;
+         
+      }
+      .labelcontent1 {
+        // font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        // text-overflow: ellipsis;
+        max-width: 140px;
+         
+      }
+      .labeltext {
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .centerRadio{
+        text-align: center;
+        padding-top: 20px;
+      }
+      .centerRadio1{
+        text-align: center;
+        margin-top: 15px;
+      }
+.newtop {
+    padding-top: 77px !important;
+}
+.remarktext {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}
+
+.remarksTop{
+    padding-left: 10px;
+    margin-top: 5px;
+}
+
+.NoDataContent{
+    height:50px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    position: absolute;
+}
+.NoDataContent h2{
+    color: darkgray;font-weight: bold;text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.badge{
+  background: #da107e;
+  position: absolute;
+  top: 0px;
+}
+
+.custom-popover::part(content) {
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  max-width: 90% !important;
+  white-space: pre-line !important;
+}
+
+.newExistCard{
+  width: 100%;
+  background: #da107e;
+  color: white;
+  height: 50px;
+  text-align: center;
+  padding: 10px;
+  font-size: 24px;
+}
+
+.modalCss{
+  background: rgba(0,0,0,0.75);
+}
+
+
+// }

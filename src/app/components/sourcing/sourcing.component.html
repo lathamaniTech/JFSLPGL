@@ -1,0 +1,173 @@
+<div class="container">
+
+  <form [formGroup]="sourcingData" (ngSubmit)="sourcingSave(sourcingData.value)">
+    <h2 class="headtitel">Sourcing Details</h2>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Jana Employee<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="janaEmployee"
+        (ionChange)="empSelect($event)">
+        <ion-select-option *ngFor="let emp of janaEmpl;let i=index" [value]="emp.code">{{ emp.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.janaEmployee.valid && (sourcingData.controls.janaEmployee.dirty || sourcingData.controls.janaEmployee.touched)">
+      <span class="errText">Must select Jana Employee.</span>
+    </span>
+
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Sourcing Channel<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="sourChannel"
+        (ionChange)="sourChannelChng($event, 'chng')">
+        <ion-select-option *ngFor="let src of sourcing;let i=index" [value]="src.CODE">{{ src.NAME }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.sourChannel.valid && (sourcingData.controls.sourChannel.dirty || sourcingData.controls.sourChannel.touched)">
+      <span class="errText">Must select the Sourcing Channel.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="submitDisable"
+      *ngIf="sourcingData.controls.sourChannel.value == '5' || sourcingData.controls.sourChannel.value == '7' || sourcingData.controls.sourChannel.value == '8'">
+      <ion-label position="floating">Source Id Name<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="sourIdName">
+        <ion-select-option *ngFor="let src of sourcingIdNameList;let i=index" [value]="src.userId">{{ src.userName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.sourIdName.valid && (sourcingData.controls.sourIdName.dirty || sourcingData.controls.sourIdName.touched)">
+      <span class="errText">Must select the Source Id Name.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="submitDisable"
+      *ngIf="sourcingData.controls.sourChannel.value == '2' || sourcingData.controls.sourChannel.value == '3'">
+      <ion-label position="floating">
+        <span *ngIf="sourcingData.controls.sourChannel.value == '2'">Contact Centre number</span>
+        <span *ngIf="sourcingData.controls.sourChannel.value == '3'">Employee Referral ID</span>
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="sourIdName1" uppercase></ion-input>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.sourIdName1.valid && (sourcingData.controls.sourIdName1.dirty || sourcingData.controls.sourIdName1.touched)">
+      <span class="errText">Must enter valid <span *ngIf="sourcingData.controls.sourChannel.value == '2'">Contact
+          Centre number</span><span *ngIf="sourcingData.controls.sourChannel.value == '3'">Employee Referral
+          ID</span>.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Lead Processor ID<span class="mandatory">*</span></ion-label>
+      <ion-input type="text" formControlName="leadId"></ion-input>
+    </ion-item>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Balance Transfer<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="balTrans"
+        [disabled]="submitDisable">
+        <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.balTrans.valid && (sourcingData.controls.balTrans.dirty || sourcingData.controls.balTrans.touched)">
+      <span class="errText">Must select the Balance Transfer.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Branch Name<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="branchName">
+        <ion-select-option *ngFor="let branch of branch_master;let i=index" [value]="branch.OrgBranchCode">{{
+          branch.OrgName
+          }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Branch State<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="branchState">
+        <ion-select-option *ngFor="let branch of state_master;let i=index" [value]="branch.stateCode">{{
+          branch.stateName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Login Branch Code<span class="mandatory">*</span></ion-label>
+      <ion-input formControlName="loginBranch" type="tel" maxlength="10"></ion-input>
+    </ion-item>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Application Date<span class="mandatory">*</span></ion-label>
+      <ion-input type="text" formControlName="applDate"></ion-input>
+    </ion-item>
+
+
+<!-- 
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Applicant Type<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="applicType">
+        <ion-select-option *ngFor="let appl of applicantType;let i=index" [value]="appl.CODE">{{ appl.NAME }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.applicType.valid && (sourcingData.controls.applicType.dirty || sourcingData.controls.applicType.touched)">
+      <span class="errText">Must select Applicant Type.</span>
+    </span>
+
+    <ion-item class="field" [disabled]="submitDisable">
+      <ion-label position="floating">Occupation<span class="mandatory">*</span></ion-label>
+      <ionic-selectable formControlName="busiDesc" [items]="busiDescMaster" itemValueField="CODE" itemTextField="NAME"
+        [canSearch]="true" [shouldStoreItemValue]="true">
+      </ionic-selectable>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.busiDesc.valid && (sourcingData.controls.busiDesc.dirty || sourcingData.controls.busiDesc.touched)">
+      <span class="errText">Must select Occupation.</span>
+    </span>
+
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">LEAD ID<span class="mandatory">*</span></ion-label>
+      <ion-input type="text" formControlName="leadId"></ion-input>
+    </ion-item>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">Type of Case<span class="mandatory">*</span></ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="typeCase"
+        [disabled]="submitDisable">
+        <ion-select-option *ngFor="let tc of typeCase;let i=index" [value]="tc.CODE">{{ tc.NAME }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span
+      *ngIf="!sourcingData.controls.typeCase.valid && (sourcingData.controls.typeCase.dirty || sourcingData.controls.typeCase.touched)">
+      <span class="errText">Must select the Type of Case.</span>
+    </span>
+
+
+
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">CRES Name<span class="mandatory">*</span></ion-label>
+      <ion-input formControlName="roName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item class="field" [disabled]="true">
+      <ion-label position="floating">CRES Code<span class="mandatory">*</span></ion-label>
+      <ion-input formControlName="roCode" type="text"></ion-input>
+    </ion-item> -->
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn">
+          <ion-button class="proceedbtn" shape="round" type="submit"
+            [disabled]="(sourcingData.invalid) || submitDisable">Save</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</div>

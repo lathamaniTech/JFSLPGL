@@ -1,0 +1,205 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Preview Details</ion-title>
+  </ion-toolbar>
+  <app-status></app-status>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item-group>
+    <ion-item-divider style="--background: #FBA41D;text-align: center;" sticky><b>Loan Facilities</b> <span style="float:right" *ngIf="!basicEdit"><ion-icon name="create" (click)="basicEnable()"></ion-icon></span>
+      <span
+        style="float:right" *ngIf="basicEdit">
+        <ion-icon name="checkmark"></ion-icon>
+        </span>
+    </ion-item-divider>
+    <ion-item class="field">
+      <ion-label position="floating">Lead Status</ion-label>
+      <ion-input type="text" [disabled]="!basicEdit" value="Draft"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Jana Center</ion-label>
+      <ion-input type="text" [disabled]="!basicEdit" value="K B SANDRA"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Area Name</ion-label>
+      <ion-input type="text" [disabled]="!basicEdit" value="Central"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Product</ion-label>
+      <ion-input type="text" [disabled]="!basicEdit" value="(816) Jana Gold Agri)"></ion-input>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider style="--background: #FBA41D;text-align: center;" sticky><b>Personal Details</b> <span style="float:right" *ngIf="!personalEdit"><ion-icon name="create" (click)="personalEnable()"></ion-icon></span>
+      <span
+        style="float:right" *ngIf="personalEdit">
+        <ion-icon name="checkmark"></ion-icon>
+        </span>
+    </ion-item-divider>
+    <ion-item class="field">
+      <ion-input type="text" [disabled]="!personalEdit" value="Mr. Raj Mohan"></ion-input>
+    </ion-item>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="field">
+            <ion-label>Gender</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="field">
+            <ion-input type="text" [disabled]="!personalEdit" value="M"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="field">
+            <ion-label>Customer Type</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="field">
+            <ion-input type="text" [disabled]="!personalEdit" value="Applicant"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="field">
+            <ion-label>DOB</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="field">
+            <ion-input type="text" [disabled]="!personalEdit" value="12/4/1988"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item class="field">
+      <ion-label position="floating">Father</ion-label>
+      <ion-input type="text" [disabled]="!personalEdit" value="James"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Mother Maiden Name</ion-label>
+      <ion-input type="text" [disabled]="!personalEdit" value="Sarojini"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Mobile Number</ion-label>
+      <ion-input type="text" [disabled]="!personalEdit" value="9655780111"></ion-input>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider style="--background: #FBA41D;text-align: center;" sticky><b>ID Proofs</b> <span style="float:right" *ngIf="!idProofEdit"><ion-icon name="create" (click)="idProofEnable()"></ion-icon></span>
+      <span
+        style="float:right" *ngIf="idProofEdit">
+        <ion-icon name="checkmark"></ion-icon>
+        </span>
+    </ion-item-divider>
+    <ion-item class="field">
+      <ion-label position="floating">Adhar</ion-label>
+      <ion-input type="text" [disabled]="!idProofEdit" value="XXXXXX"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Adhar Number</ion-label>
+      <ion-input type="text" [disabled]="!idProofEdit" value="9632 1236 456"></ion-input>
+    </ion-item>
+    <ion-item class="field">
+      <ion-label position="floating">Passport</ion-label>
+      <ion-input type="text" [disabled]="!idProofEdit" value="D32456987"></ion-input>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider style="--background: #FBA41D;text-align: center;" sticky><b>Address Details</b> <span style="float:right" *ngIf="!addressEdit"><ion-icon name="create" (click)="addressEnable()"></ion-icon></span>
+      <span
+        style="float:right" *ngIf="addressEdit">
+        <ion-icon name="checkmark"></ion-icon>
+        </span>
+    </ion-item-divider>
+
+    <ion-segment [(ngModel)]="address" class="addressSeg">
+      <ion-segment-button value="residential" (click)="addressDisable()">
+        Residential Address
+      </ion-segment-button>
+      <ion-segment-button value="business" (click)="addressDisable()">
+        Business Address
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="address">
+      <ion-list *ngSwitchCase="'residential'">
+        <ion-item class="field">
+          <ion-label position="floating">Door Number</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="10f3/216"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">Street</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="kp cross street"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">city/District</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="Chennai"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">State</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="Tamil Nadu"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">Pincode</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="629224"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'business'">
+        <ion-item class="field">
+          <ion-label position="floating">Door Number</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="111BD/256"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">Street</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="Balaji 4th main Street"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">city/District</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="Chengalpattu"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">State</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="Tamil Nadu"></ion-input>
+        </ion-item>
+        <ion-item class="field">
+          <ion-label position="floating">Pincode</ion-label>
+          <ion-input type="text" [disabled]="!addressEdit" value="629245"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider style="--background: #FBA41D;" sticky text-center><b>Proof Details</b> <span style="float:right" *ngIf="!imgproof"><ion-icon name="create"></ion-icon></span><span style="float:right"
+        *ngIf="imgproof"><ion-icon name="checkmark"></ion-icon></span></ion-item-divider>
+    <ion-row>
+      <ion-col size="4" (click)="PreviewModal()"><img src="assets/imgs/profile-img.png"></ion-col>
+      <ion-col size="4" (click)="PreviewModal()"><img src="assets/imgs/profile1.png"></ion-col>
+      <ion-col size="4" (click)="PreviewModal()"><img src="assets/imgs/profile2.png"></ion-col>
+    </ion-row>
+  </ion-item-group>
+
+
+</ion-content>
+
+<ion-footer>
+    <ion-button expand="full" (click)="adharPage()" style="--background:#DA107E;">
+      <ion-icon name="cloud-upload"></ion-icon>&nbsp;&nbsp;Submit Lead Details
+    </ion-button>
+</ion-footer>

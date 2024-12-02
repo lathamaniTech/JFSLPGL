@@ -1,0 +1,531 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+ion-menu-button {
+  color: white;
+  --color: white !important;
+}
+
+ion-toolbar {
+  --background: #DA107E !important;
+
+  ion-title {
+    --color: white !important;
+    text-align: center;
+  }
+}
+
+ion-item.item-has-focus ion-select,
+ion-item.item-has-value ion-select,
+
+// .custom-popover::part(content) {
+//   width: auto !important;
+//   right: 20px !important;
+//   left: auto !important;
+//   transform-origin: right top !important;
+//   // max-width: 90% !important;
+//   white-space: pre-line !important;
+// }
+
+
+// .ionic-selectable-label-floating{
+//   padding-left: 10px !important;
+// }
+// .toolbar-title{
+//   width: 80% !important;
+// }
+.custom-popover::part(content) {
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  // max-width: 90% !important;
+  white-space: pre-line !important;
+}
+
+.custom-popover2::part(content) {
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  max-width: 92% !important;
+  white-space: pre-line !important;
+}
+
+ion-label {
+  //color: var(--ion-label-color);
+  color: #38A5FF !important;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.headtitel {
+  margin-bottom: 0px;
+}
+
+.field {
+  background: none;
+  margin-bottom: 10px;
+  //  padding: 0px 10px !important;
+}
+
+div.item {
+  margin-top: 10px !important;
+  width: 100% !important;
+  margin: 0 auto;
+  text-align: center;
+  // margin-left: 12px !important;
+  overflow: hidden;
+}
+
+.mandatory {
+  color: red;
+  padding-left: 5px;
+}
+
+.errText {
+  color: red !important;
+  font-size: 14px !important;
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px 0px 0px 10px;
+}
+
+.item-disabled {
+  opacity: 0.5;
+}
+
+.item-interactive-disabled:not(.item-multiple-inputs) .sc-ion-label-md-h {
+  opacity: 1;
+}
+
+.item .item-md.item-block .item-inner {
+  border: none !important;
+}
+
+.card-alert ion-label {
+  margin-left: 12px;
+}
+
+.container {
+
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    --color: none !important;
+    color: var(--ion-app-label) !important;
+  }
+
+  .item-input-has-focus .label-md[floating],
+  .input-has-focus .label-md[floating],
+  .item-input-has-value .label-md[floating],
+  .input-has-value .label-md[floating] {
+    color: var(--ion-app-label);
+  }
+}
+
+.buttspace {
+  margin-top: 4%;
+  clear: both !important;
+  margin: 0 auto;
+  padding: 10px 0px 3px 0px;
+}
+
+.buttspace button:hover {
+  --background: #FBA41D;
+}
+
+.proceedbtn {
+  --background: #FBA41D;
+  color: white;
+}
+
+.roundbtn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.navIcon {
+  text-align: center;
+  --border-radius: 100%;
+  height: 60px;
+  width: 60px;
+}
+
+.navIcon ion-icon {
+  zoom: 1.5;
+}
+
+.gray-text {
+  color: gray;
+}
+
+.alert-radio-label.sc-ion-alert-md {
+  // padding-left: 52px;
+  // padding-right: 26px;
+  // padding-top: 13px;
+  // padding-bottom: 13px;
+  // -ms-flex: 1;
+  // flex: 1;
+  // color: var(--ion-color-step-850, #262626);
+  // font-size: 16px;
+  font-size: 12px !important;
+  // text-overflow: ellipsis;
+  white-space: normal !important;
+  // overflow: hidden;
+}
+
+.cropper-container {
+  direction: ltr;
+  font-size: 0;
+  line-height: 0;
+  position: relative;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
+
+.cropper-container img {
+  display: block;
+  height: 100%;
+  image-orientation: 0deg;
+  max-height: none !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  width: 100%
+}
+
+.cropper-canvas,
+.cropper-crop-box,
+.cropper-drag-box,
+.cropper-modal,
+.cropper-wrap-box {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0
+}
+
+.cropper-canvas,
+.cropper-wrap-box {
+  overflow: hidden
+}
+
+.cropper-drag-box {
+  background-color: #fff;
+  opacity: 0
+}
+
+.cropper-modal {
+  background-color: #000;
+  opacity: .5
+}
+
+.cropper-view-box {
+  display: block;
+  height: 100%;
+  outline: 1px solid #39f;
+  outline-color: rgba(51, 153, 255, .75);
+  overflow: hidden;
+  width: 100%
+}
+
+.cropper-dashed {
+  border: 0 dashed #eee;
+  display: block;
+  opacity: .5;
+  position: absolute
+}
+
+.cropper-dashed.dashed-h {
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  height: 33.33333%;
+  left: 0;
+  top: 33.33333%;
+  width: 100%
+}
+
+.cropper-dashed.dashed-v {
+  border-left-width: 1px;
+  border-right-width: 1px;
+  height: 100%;
+  left: 33.33333%;
+  top: 0;
+  width: 33.33333%
+}
+
+.cropper-center {
+  display: block;
+  height: 0;
+  left: 50%;
+  opacity: .75;
+  position: absolute;
+  top: 50%;
+  width: 0
+}
+
+.cropper-center:after,
+.cropper-center:before {
+  background-color: #eee;
+  content: " ";
+  display: block;
+  position: absolute
+}
+
+.cropper-center:before {
+  height: 1px;
+  left: -3px;
+  top: 0;
+  width: 7px
+}
+
+.cropper-center:after {
+  height: 7px;
+  left: 0;
+  top: -3px;
+  width: 1px
+}
+
+.cropper-face,
+.cropper-line,
+.cropper-point {
+  display: block;
+  height: 100%;
+  opacity: .1;
+  position: absolute;
+  width: 100%
+}
+
+.cropper-face {
+  background-color: #fff;
+  left: 0;
+  top: 0
+}
+
+.cropper-line {
+  background-color: #39f
+}
+
+.cropper-line.line-e {
+  cursor: ew-resize;
+  right: -3px;
+  top: 0;
+  width: 5px
+}
+
+.cropper-line.line-n {
+  cursor: ns-resize;
+  height: 5px;
+  left: 0;
+  top: -3px
+}
+
+.cropper-line.line-w {
+  cursor: ew-resize;
+  left: -3px;
+  top: 0;
+  width: 5px
+}
+
+.cropper-line.line-s {
+  bottom: -3px;
+  cursor: ns-resize;
+  height: 5px;
+  left: 0
+}
+
+.cropper-point {
+  background-color: #39f;
+  height: 5px;
+  opacity: .75;
+  width: 5px
+}
+
+.cropper-point.point-e {
+  cursor: ew-resize;
+  margin-top: -3px;
+  right: -3px;
+  top: 50%
+}
+
+.cropper-point.point-n {
+  cursor: ns-resize;
+  left: 50%;
+  margin-left: -3px;
+  top: -3px
+}
+
+.cropper-point.point-w {
+  cursor: ew-resize;
+  left: -3px;
+  margin-top: -3px;
+  top: 50%
+}
+
+.cropper-point.point-s {
+  bottom: -3px;
+  cursor: s-resize;
+  left: 50%;
+  margin-left: -3px
+}
+
+.cropper-point.point-ne {
+  cursor: nesw-resize;
+  right: -3px;
+  top: -3px
+}
+
+.cropper-point.point-nw {
+  cursor: nwse-resize;
+  left: -3px;
+  top: -3px
+}
+
+.cropper-point.point-sw {
+  bottom: -3px;
+  cursor: nesw-resize;
+  left: -3px
+}
+
+.cropper-point.point-se {
+  bottom: -3px;
+  cursor: nwse-resize;
+  height: 20px;
+  opacity: 1;
+  right: -3px;
+  width: 20px
+}
+
+@media (min-width:768px) {
+  .cropper-point.point-se {
+    height: 15px;
+    width: 15px
+  }
+}
+
+@media (min-width:992px) {
+  .cropper-point.point-se {
+    height: 10px;
+    width: 10px
+  }
+}
+
+@media (min-width:1200px) {
+  .cropper-point.point-se {
+    height: 5px;
+    opacity: .75;
+    width: 5px
+  }
+}
+
+.cropper-point.point-se:before {
+  background-color: #39f;
+  bottom: -50%;
+  content: " ";
+  display: block;
+  height: 200%;
+  opacity: 0;
+  position: absolute;
+  right: -50%;
+  width: 200%
+}
+
+.cropper-invisible {
+  opacity: 0
+}
+
+.cropper-bg {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC")
+}
+
+.cropper-hide {
+  display: block;
+  height: 0;
+  position: absolute;
+  width: 0
+}
+
+.cropper-hidden {
+  display: none !important
+}
+
+.cropper-move {
+  cursor: move
+}
+
+.cropper-crop {
+  cursor: crosshair
+}
+
+.cropper-disabled .cropper-drag-box,
+.cropper-disabled .cropper-face,
+.cropper-disabled .cropper-line,
+.cropper-disabled .cropper-point {
+  cursor: not-allowed
+}
+
+
+.mobileverify {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
+.mobileverify ion-item {
+  flex: 80%;
+}
+.mobileverify button {
+  flex: 20%;
+  margin-top: 20px;
+}      
+.btn{
+  --background: var(--JFS-color-gold);
+  color: whitesmoke;
+}
+
+.existPlaceholder {
+  height: 50px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  position: absolute;
+}
+
+.existPlaceholder h2 {
+  color: darkgray;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

@@ -1,0 +1,363 @@
+<!--
+  Generated template for the ScoreModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>scoreModal</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar hideBackButton="true">
+    <ion-title>
+      <span>SCORE CARD PARAMETERS</span>
+      <span>
+        <ion-icon name="close-circle" style="float:right;" (click)="closeModal('c')"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="scoreCardParams" (ngSubmit)="scoreCardSave(scoreCardParams.value)">
+
+    <ion-item class="field">
+      <ion-label position="floating">Age
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="age" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.age.invalid && (scoreCardParams.controls.age.touched)">
+      <span *ngIf="scoreCardParams.controls.age.errors.required">
+        <span class="errText">Must enter Age.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.age.errors.pattern">
+        <span class="errText">Enter Age.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating" style="color: black !important;">Advance
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="advance" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let yn of yesOrNo;let i=index" [value]="yn.code">{{ yn.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.advance.invalid && (scoreCardParams.controls.advance.touched)">
+      <span *ngIf="scoreCardParams.controls.advance.errors.required">
+        <span class="errText">Must Select Advance.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Down Payment
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="downPayment"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.downPayment.invalid && (scoreCardParams.controls.downPayment.touched)">
+      <span *ngIf="scoreCardParams.controls.downPayment.errors.required">
+        <span class="errText">Must enter Down Payment.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.downPayment.errors.pattern">
+        <span class="errText">Enter Down Payment.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Asset Category(CC)
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="assetCategory" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.assetCategory.invalid && (scoreCardParams.controls.assetCategory.touched)">
+      <span *ngIf="scoreCardParams.controls.assetCategory.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.assetCategory.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div>
+
+    <!-- <ion-item class="field">
+      <ion-label position="floating">Qualification
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="qualification" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.qualification.invalid && (scoreCardParams.controls.qualification.touched)">
+      <span *ngIf="scoreCardParams.controls.qualification.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.qualification.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div> -->
+
+    <ion-item class="field">
+      <ion-label position="floating">Asset Cost
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="assetCost" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.assetCost.invalid && (scoreCardParams.controls.assetCost.touched)">
+      <span *ngIf="scoreCardParams.controls.assetCost.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.assetCost.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">State
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="stateGroup" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.stateGroup.invalid && (scoreCardParams.controls.stateGroup.touched)">
+      <span *ngIf="scoreCardParams.controls.stateGroup.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.stateGroup.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Monthly Income
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="monthlyIncome"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.monthlyIncome.invalid && (scoreCardParams.controls.monthlyIncome.touched)">
+      <span *ngIf="scoreCardParams.controls.monthlyIncome.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.monthlyIncome.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Residense Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="residenseType" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let yn of dummy_masterResidence;let i=index" [value]="yn.code">{{ yn.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.residenseType.invalid && (scoreCardParams.controls.residenseType.touched)">
+      <span *ngIf="scoreCardParams.controls.residenseType.errors.required">
+        <span class="errText">Must Select Dealer Name.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Employment Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="empType" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.empType.invalid && (scoreCardParams.controls.empType.touched)">
+      <span *ngIf="scoreCardParams.controls.empType.errors.required">
+        <span class="errText">Must Select Dealer Name.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Residing Years
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="residingYears" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.residingYears.invalid && (scoreCardParams.controls.residingYears.touched)">
+      <span *ngIf="scoreCardParams.controls.residingYears.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.residingYears.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Total Experience
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="totalExp" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.totalExp.invalid && (scoreCardParams.controls.totalExp.touched)">
+      <span *ngIf="scoreCardParams.controls.totalExp.errors.required">
+        <span class="errText">Must enter Dealer Code.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.totalExp.errors.pattern">
+        <span class="errText">Enter Dealer Code.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Sourcing Channel
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select formControlName="sourcing" [disabled]="submitDisable">
+        <ion-select-option *ngFor="let yn of dummySource;let i=index" [value]="yn.name">{{ yn.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.sourcing.invalid && (scoreCardParams.controls.sourcing.touched)">
+      <span *ngIf="scoreCardParams.controls.sourcing.errors.required">
+        <span class="errText">Must Select Dealer Name.</span>
+      </span>
+    </div>
+
+
+    <ion-item class="field">
+      <ion-label position="floating">Major state groupings
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="majorState" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.majorState.invalid && (scoreCardParams.controls.majorState.touched)">
+      <span *ngIf="scoreCardParams.controls.majorState.errors.required">
+        <span class="errText">Must enter Major state groupings.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.majorState.errors.pattern">
+        <span class="errText">Enter Major state groupings.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Downpayment %
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="downpayment" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.downpayment.invalid && (scoreCardParams.controls.downpayment.touched)">
+      <span *ngIf="scoreCardParams.controls.downpayment.errors.required">
+        <span class="errText">Must enter Downpayment %.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.downpayment.errors.pattern">
+        <span class="errText">Enter Downpayment %.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Asset Category
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="assetCat" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.assetCat.invalid && (scoreCardParams.controls.assetCat.touched)">
+      <span *ngIf="scoreCardParams.controls.assetCat.errors.required">
+        <span class="errText">Must enter Asset Category.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.assetCat.errors.pattern">
+        <span class="errText">Enter Asset Category.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Monthly Income of the customer
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="monthIncome" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.monthIncome.invalid && (scoreCardParams.controls.monthIncome.touched)">
+      <span *ngIf="scoreCardParams.controls.monthIncome.errors.required">
+        <span class="errText">Must enter Monthly Income of the customer.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.monthIncome.errors.pattern">
+        <span class="errText">Enter Monthly Income of the customer.</span>
+      </span>
+    </div>
+    <ion-item class="field">
+
+      <ion-label position="floating">Cost of the Vehicle
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="costVehicle" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.costVehicle.invalid && (scoreCardParams.controls.costVehicle.touched)">
+      <span *ngIf="scoreCardParams.controls.costVehicle.errors.required">
+        <span class="errText">Must enter Cost of the Vehicle.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.costVehicle.errors.pattern">
+        <span class="errText">Enter Cost of the Vehicle.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Age of Customer
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="custAge" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.custAge.invalid && (scoreCardParams.controls.custAge.touched)">
+      <span *ngIf="scoreCardParams.controls.custAge.errors.required">
+        <span class="errText">Must enter Age of Customer.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.custAge.errors.pattern">
+        <span class="errText">Enter Age of Customer.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Residence Type & No of Years at residence
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="yearsResidence" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.yearsResidence.invalid && (scoreCardParams.controls.yearsResidence.touched)">
+      <span *ngIf="scoreCardParams.controls.yearsResidence.errors.required">
+        <span class="errText">Must enter Residence Type & No of Years at residence.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.yearsResidence.errors.pattern">
+        <span class="errText">Enter Residence Type & No of Years at residence.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Advance installment paid
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="installment" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.installment.invalid && (scoreCardParams.controls.installment.touched)">
+      <span *ngIf="scoreCardParams.controls.installment.errors.required">
+        <span class="errText">Must enter Advance installment paid.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.installment.errors.pattern">
+        <span class="errText">Enter Major Advance installment paid.</span>
+      </span>
+    </div>
+
+    <ion-item class="field">
+      <ion-label position="floating">Educational Qualification of Customer
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="text" formControlName="qualification" [disabled]="true"></ion-input>
+    </ion-item>
+    <div *ngIf="scoreCardParams.controls.qualification.invalid && (scoreCardParams.controls.qualification.touched)">
+      <span *ngIf="scoreCardParams.controls.qualification.errors.required">
+        <span class="errText">Must enter Educational Qualification of Customer.</span>
+      </span>
+      <span *ngIf="scoreCardParams.controls.qualification.errors.pattern">
+        <span class="errText">Enter Educational Qualification of Customer.</span>
+      </span>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <div class="buttspace roundbtn" text-center>
+          <ion-button proceedbtn shape="round" type="submit" [disabled]="scoreCardParams.invalid">
+            Proceed to Score Card
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>
