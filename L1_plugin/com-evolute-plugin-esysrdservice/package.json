@@ -1,0 +1,11 @@
+{
+  "name": "com-evolute-plugin-esysrdservice",
+  "version": "0.0.5",
+  "description": "Cordova Plugin for Android to use RDService App",
+  "cordova": {
+    "id": "com-evolute-plugin-esysrdservice",
+    "platforms": [
+      "android"
+    ]
+  }
+}

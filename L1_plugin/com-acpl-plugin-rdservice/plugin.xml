@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com-acpl-plugin-rdservice"
+        version="0.0.1">
+
+   <name>RDService</name>
+   <description>A cordova plugin to call RDService.</description>
+   
+   <!-- cordova -->
+   <engines>
+      <engine name="cordova" version=">=9.0.0" />
+   </engines>
+
+   <js-module src="www/RDService.js" name="RDService">
+      <clobbers target="RDService" />
+   </js-module>
+  
+
+   <!-- android -->
+   <platform name="android">
+      <config-file target="res/xml/config.xml" parent="/*">
+         <feature name="RDService">
+            <param name="android-package" value="com.evolute.rdservice.RDService"/>
+         </feature>
+      </config-file>
+	 
+      <config-file target="AndroidManifest.xml" parent="/*">
+         <uses-permission android:name="android.permission.BLUETOOTH" />
+		  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+		  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+      </config-file>
+
+      <source-file src="src/android/RDService.java" target-dir="src/com/evolute/rdservice" />
+	  <source-file src="src/android/libs/RDServiceAppSupportV0.10.jar" target-dir="libs" />
+   </platform>
+</plugin>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">JFS-GL</string>
+    <string name="title_activity_main">JFS-GL</string>
+    <string name="package_name">com.jfs.GLUAT</string>
+    <string name="custom_url_scheme">com.jfs.GLUAT</string>
+</resources>

@@ -1,0 +1,13 @@
+{
+    "name": "com-acpl-plugin-rdservice",
+    "version": "0.0.5",
+    "description": "Cordova Plugin for Android to use RDService App",
+    "author": "SysArc/Hariharasudhan",
+    "cordova": {
+      "id": "com-acpl-plugin-rdservice",
+      "platforms": [
+        "android"
+      ]
+    }
+  }
+  
