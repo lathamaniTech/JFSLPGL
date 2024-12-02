@@ -1,0 +1,15 @@
+{
+	"appId": "com.jfs.GLUAT",
+	"appName": "JFS-GL",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+		  "launchShowDuration": 3000,
+		  "launchAutoHide": true,
+		  "androidScaleType": "CENTER_CROP",
+		  "splashFullScreen": true,
+		  "splashImmersive": true
+		}
+	  }
+  }
