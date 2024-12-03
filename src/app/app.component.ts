@@ -2,7 +2,7 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { StatusBar} from '@capacitor/status-bar'
+import { StatusBar } from '@capacitor/status-bar';
 import {
   AlertController,
   IonRouterOutlet,
@@ -47,7 +47,7 @@ export class AppComponent {
     public sqliteProvider: SqliteService,
     public sqliteSuportProvider: SquliteSupportProviderService,
     public platform: Platform,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
   ) {
     this.pages = [
       { title: 'Home Page', component: '/JsfhomePage', icon: 'home' },
@@ -78,8 +78,8 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       StatusBar.setBackgroundColor({
-        color : '#DA107E'
-      })
+        color: '#DA107E',
+      });
       setTimeout(() => {
         SplashScreen.hide();
       }, 13000);
@@ -291,8 +291,10 @@ export class AppComponent {
               skipLocationChange: true,
               replaceUrl: true,
             });
-          }else if(this.router.url.includes('/secondKycPage') ||
-          this.router.url == '/secondKycPage'){
+          } else if (
+            this.router.url.includes('/secondKycPage') ||
+            this.router.url == '/secondKycPage'
+          ) {
             return new Promise(async (resolve, reject) => {
               let alert = await this.alertCtrl.create({
                 header: 'Alert!',
@@ -301,14 +303,17 @@ export class AppComponent {
                   {
                     text: 'No',
                     role: 'cancel',
-                    handler: () => {
-                    }
+                    handler: () => {},
                   },
                   {
                     text: 'Yes',
                     handler: () => {
-                      this.sqliteSuportProvider.removeEkycData(this.globalData.getLeadId());
-                      this.sqliteSuportProvider.removeKarzaData(this.globalData.getLeadId());
+                      this.sqliteSuportProvider.removeEkycData(
+                        this.globalData.getLeadId(),
+                      );
+                      this.sqliteSuportProvider.removeKarzaData(
+                        this.globalData.getLeadId(),
+                      );
                       this.router.navigate(['/ExistApplicationsPage'], {
                         skipLocationChange: true,
                         replaceUrl: true,
@@ -332,7 +337,10 @@ export class AppComponent {
                     text: 'OK',
                     handler: () => {
                       let refId = this.globFunc.getScoreCardChecked();
-                      this.sqliteProvider.updateScoreCardinPostsanctionWhileQuit('N', refId);
+                      this.sqliteProvider.updateScoreCardinPostsanctionWhileQuit(
+                        'N',
+                        refId,
+                      );
                       this.router.navigate(['/ExistApplicationsPage'], {
                         skipLocationChange: true,
                         replaceUrl: true,
@@ -466,7 +474,7 @@ export class AppComponent {
         } else {
           this.globalData.showAlert(
             'Alert!',
-            'This user is allowed to view lead!'
+            'This user is allowed to view lead!',
           );
           this.router.navigate(['/JsfhomePage'], {
             skipLocationChange: true,
@@ -498,7 +506,7 @@ export class AppComponent {
           // p_this.global.presentAlert(this.alertErrorLabel.AlertLabels.USB_Debugging_Enabled, this.alertErrorLabel.AlertLabels.Application_Not_Working_this_Environment);
           p_this.globFunc.showAlert(
             'USB Debugging Enabled!',
-            'Application will not be working on this environment.'
+            'Application will not be working on this environment.',
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -510,7 +518,7 @@ export class AppComponent {
       function (error) {
         console.log('error ===>' + error);
         navigator['app'].exitApp();
-      }
+      },
     );
 
     cordova.plugins.pdfmake.checkPdfFshow('netstat', function (res) {
@@ -520,7 +528,7 @@ export class AppComponent {
           // p_this.global.presentAlert(this.alertErrorLabel.AlertLabels.Frida_Detected, this.alertErrorLabel.AlertLabels.Application_Not_Working_this_Environment);
           p_this.globFunc.showAlert(
             'Frida Detected!',
-            'Application will not be working on this environment.'
+            'Application will not be working on this environment.',
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -543,7 +551,7 @@ export class AppComponent {
         if (val == true) {
           p_this.globFunc.showAlert(
             'Virtual Device!',
-            'Application will not be working on this environment.'
+            'Application will not be working on this environment.',
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -552,7 +560,7 @@ export class AppComponent {
       },
       function (error) {
         navigator['app'].exitApp();
-      }
+      },
     );
   }
 }
