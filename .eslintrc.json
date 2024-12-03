@@ -13,6 +13,16 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "max-lines":["error",{
+          "max":750,
+          "skipBlankLines":true,
+          "skipComments":true
+        }],
+        "max-lines-per-function": ["error", {
+          "max":50,
+          "skipBlankLines":true,
+          "skipComments":true
+        }],
         "@angular-eslint/component-class-suffix": [
           "error",
           {

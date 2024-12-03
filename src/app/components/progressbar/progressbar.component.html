@@ -25,8 +25,8 @@
         </svg>
     </div>
 
-    <div *ngIf="sucess && sucessMsg != 'Failed'" class="sucessMsg"><b>{{sucessMsg}}</b></div>
-    <div *ngIf="sucess && sucessMsg == 'Failed'" class="sucessMsgRed"><b>{{sucessMsg}}</b></div>
+    <div *ngIf="sucess && sucessMsg !== 'Failed'" class="sucessMsg"><b>{{sucessMsg}}</b></div>
+    <div *ngIf="sucess && sucessMsg === 'Failed'" class="sucessMsgRed"><b>{{sucessMsg}}</b></div>
     <!-- <br>
     <div class="outerDiv">
         <div class="innerDiv" #progressbar></div>

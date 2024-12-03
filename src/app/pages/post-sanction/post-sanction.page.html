@@ -45,7 +45,7 @@
     </ion-segment>
   </div>
   <!-- Sanction Form -->
-  <div *ngIf="custType == 'sanctionForm'">
+  <div *ngIf="custType === 'sanctionForm'">
     <div *ngIf="!showManualUser">
       <ion-item class="field" [disabled]="submitDisable || disableModify">
         <ion-label position="floating">Would you like to modify sanction details?
@@ -58,7 +58,7 @@
         </ion-select>
       </ion-item>
 
-      <form [formGroup]="postsanction" *ngIf="sanctionModify == '1'">
+      <form [formGroup]="postsanction" *ngIf="sanctionModify === '1'">
 
         <ion-grid>
           <ion-row>
@@ -106,7 +106,7 @@
           </ion-input>
         </ion-item>
         <div
-          *ngIf="postsanction.controls.loanAmount.value != '' && postsanction.controls.loanAmount.value != undefined && postsanction.controls.loanAmount.value != null"
+          *ngIf="postsanction.controls.loanAmount.value !== '' && postsanction.controls.loanAmount.value != undefined && postsanction.controls.loanAmount.value != null"
           class="message">
           <ion-row>
             <ion-col text-left>Loan amount between
@@ -195,7 +195,7 @@
             <ion-select-option *ngFor="let model of makeApiList;let i=index" [value]="model">{{ model }}
             </ion-select-option>
           </ion-select>
-          <ion-input type="text" *ngIf='makeApiList.length == 0' formControlName="brandName" [disabled]="submitDisable">
+          <ion-input type="text" *ngIf='makeApiList.length === 0' formControlName="brandName" [disabled]="submitDisable">
           </ion-input>
         </ion-item>
         <div *ngIf="postsanction.controls.brandName.invalid && (postsanction.controls.brandName.touched)">
@@ -214,7 +214,7 @@
             <ion-select-option *ngFor="let model of modelApiList;let i=index" [value]="model">{{ model }}
             </ion-select-option>
           </ion-select>
-          <ion-input type="text" *ngIf='modelApiList.length == 0' formControlName="model" [disabled]="submitDisable">
+          <ion-input type="text" *ngIf='modelApiList.length === 0' formControlName="model" [disabled]="submitDisable">
           </ion-input>
         </ion-item>
         <div *ngIf="postsanction.controls.model.invalid && (postsanction.controls.model.touched)">
@@ -252,18 +252,18 @@
             <span class="mandatory">*</span>
           </ion-label>
           <ion-select *ngIf='varientApiList.length > 0' interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="variant"
-            (ionChange)="this.vehicleType == 'N' ? this.orpAuthFetch('ORP') : postsanction.controls.kmDriven.setValue('')">
+            (ionChange)="this.vehicleType === 'N' ? this.orpAuthFetch('ORP') : postsanction.controls.kmDriven.setValue('')">
             <ion-select-option *ngFor="let model of varientApiList;let i=index" [value]="model">
               {{model}}
             </ion-select-option>
           </ion-select>
-          <ion-input type="text" *ngIf='varientApiList.length == 0' formControlName="variant" [disabled]="submitDisable"
-          (ionBlur)="this.vehicleType == 'N' ? this.orpAuthFetch('ORP') : postsanction.controls.kmDriven.setValue('')"></ion-input>
+          <ion-input type="text" *ngIf='varientApiList.length === 0' formControlName="variant" [disabled]="submitDisable"
+          (ionBlur)="this.vehicleType === 'N' ? this.orpAuthFetch('ORP') : postsanction.controls.kmDriven.setValue('')"></ion-input>
         </ion-item>
         <div *ngIf="postsanction.controls.variant.invalid && (postsanction.controls.variant.touched)">
           <span *ngIf="postsanction.controls.variant.errors.required">
             <span *ngIf='varientApiList.length > 0' class="errText">Must Select Vehicle Variant.</span>
-            <span *ngIf='varientApiList.length == 0' class="errText">Must Enter Vehicle Variant.</span>
+            <span *ngIf='varientApiList.length === 0' class="errText">Must Enter Vehicle Variant.</span>
           </span>
         </div>
 
@@ -573,27 +573,27 @@
       <ion-row>
         <ion-col>
           <div style="text-align: center;">
-            <ion-button class="proceedbtn" *ngIf="sanctionModify == '2'" shape="round"
+            <ion-button class="proceedbtn" *ngIf="sanctionModify === '2'" shape="round"
               (click)="postsanctionSave(postsanction.value)">Save</ion-button>
             <!-- <ion-button class="proceedbtn" *ngIf="sanctionModify == '1' && scoreCardRerun =='Y'" shape="round" (click)="editPostSanction()" [disabled]="disableEditBtn">Edit</ion-button> -->
             <ion-button class="proceedbtn"
-              *ngIf="sanctionModify == '1' && postSancModified =='Y' && showAutoApproval && disableAutoApprovalBtn"
+              *ngIf="sanctionModify === '1' && postSancModified ==='Y' && showAutoApproval && disableAutoApprovalBtn"
               shape="round" (click)="editPostSanction()" [disabled]="disableEditBtn">Edit</ion-button>
             <ion-button class="proceedbtn"
-              *ngIf="submitDisable && !showAutoApproval && !disableAutoApprovalBtn && scoreCardRerun !='Y'"
+              *ngIf="submitDisable && !showAutoApproval && !disableAutoApprovalBtn && scoreCardRerun !=='Y'"
               shape="round" (click)="editPostSanctionAfterSubmit()">Edit</ion-button>
             <ion-button class="proceedbtn"
-              *ngIf="psmSubmitted ? psmSubmitted : (sanctionModify == '1' && postSancModified !='Y' && !psmSubmitted)"
+              *ngIf="psmSubmitted ? psmSubmitted : (sanctionModify === '1' && postSancModified !=='Y' && !psmSubmitted)"
               shape="round" (click)="postsanctionSave(postsanction.value)">Submit</ion-button>
             <!--[disabled]="psmSubmitted"-->
             <ion-button class="proceedbtn" [disabled]="showAutoApproval || showFieldInvestigation"
-              *ngIf="sanctionModify == '1' && postSancModified=='Y' && scoreCardRerun =='Y'" shape="round"
+              *ngIf="sanctionModify === '1' && postSancModified==='Y' && scoreCardRerun ==='Y'" shape="round"
               (click)="scoreCardReRun()">Score card Rerun</ion-button>
             <ion-button class="proceedbtn" [disabled]="disableAutoApprovalBtn"
-              *ngIf="sanctionModify == '1' && postSancModified =='Y' && showAutoApproval" shape="round"
+              *ngIf="sanctionModify == '1' && postSancModified ==='Y' && showAutoApproval" shape="round"
               (click)="autoApprovalserviceCall()">Submit for auto approval</ion-button>
             <ion-button class="proceedbtn" [disabled]="disableFISubmitBtn"
-              *ngIf="sanctionModify == '1' && postSancModified =='Y' && showFieldInvestigation" shape="round"
+              *ngIf="sanctionModify == '1' && postSancModified ==='Y' && showFieldInvestigation" shape="round"
               (click)="undoProposalServiceCall('fi')">Submit for FI</ion-button>
             <!-- fieldInvestigationCall-->
           </div>
@@ -617,7 +617,7 @@
     </div>
   </div>
   <!-- Casa Data-->
-  <div *ngIf="custType == 'casaData'">
+  <div *ngIf="custType === 'casaData'">
 
     <div class="segment03" style="margin-top: 10px;">
       <ion-segment [(ngModel)]="casaType">
@@ -627,11 +627,11 @@
       </ion-segment>
     </div>
 
-    <div *ngIf="casaType == 'nachDetails'">
+    <div *ngIf="casaType === 'nachDetails'">
       <app-nach [sanctionModify]="sanctionModify"></app-nach>
     </div>
 
-    <div *ngIf="casaType == 'casaDetails'">
+    <div *ngIf="casaType === 'casaDetails'">
       <ion-list>
         <ion-radio-group [(ngModel)]="casaData" (ionChange)="getJanaAccDetails($event)">
           <ion-row>
@@ -699,7 +699,7 @@
           <ion-input numberonly type="tel" formControlName="accountNo"></ion-input>
         </ion-item>
 
-        <ion-item class="field" [disabled]="casaData == 'Y' ? instaKitEnable : true">
+        <ion-item class="field" [disabled]="casaData === 'Y' ? instaKitEnable : true">
           <ion-label position="floating">Instakit Number
             <span class="mandatory">*</span>
           </ion-label>
@@ -722,10 +722,10 @@
           creation</ion-button>
         <!-- <ion-button class="proceedbtn" shape="round" (click)="casaAccountCreation()" [disabled]="cbsCustomerEnable ? (cbsAccountEnable ? cbsAccountEnable : (!cbsAccountEnable && casaData == 'Y') ? false : true) : true">Account Creation</ion-button> -->
         <ion-button class="proceedbtn" shape="round" (click)="casaAccountCreation()"
-          [disabled]="cbsCustomerEnable ? ((cbsCustomerEnable && cbsAccountEnable) ? true : ((!cbsAccountEnable && casaData == 'Y') ? false : true)) : true">Account
+          [disabled]="cbsCustomerEnable ? ((cbsCustomerEnable && cbsAccountEnable) ? true : ((!cbsAccountEnable && casaData === 'Y') ? false : true)) : true">Account
           Creation</ion-button>
         <ion-button class="proceedbtn" shape="round" (click)="instakitCreation()"
-          [disabled]="(casaData == 'Y') ? ((cbsCustomerEnable && cbsAccountEnable) ? instaKitEnable : true) : true">Instakit
+          [disabled]="(casaData === 'Y') ? ((cbsCustomerEnable && cbsAccountEnable) ? instaKitEnable : true) : true">Instakit
           Creation</ion-button><br /><br />
         <span (click)="getCBSButtonEnable()" *ngIf="cbsButtonServiceCheck">
           <ion-icon style="font-size: 40px" name="refresh-circle"></ion-icon>
@@ -737,7 +737,7 @@
     </div>
   </div>
   <!-- PSL -->
-  <div *ngIf="custType == 'psl'">
+  <div *ngIf="custType === 'psl'">
     <!-- PSL
     Loan purpose
     Agri. Proof Submitted
@@ -1052,7 +1052,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="this.purpose=='4'">
+    <ion-row *ngIf="this.purpose==='4'">
       <ion-col>
         <div style="text-align: center;">
           <ion-button class="proceedbtn" shape="round" (click)="pslBusSave(pslBusForm.value)">Save</ion-button>
@@ -1061,7 +1061,7 @@
     </ion-row>
   </div>
   <!-- Document -->
-  <div *ngIf="custType == 'sanctionDoc'">
+  <div *ngIf="custType === 'sanctionDoc'">
 
     <ion-list *ngFor="let doc of documents;let i=index">
       <ion-item class="field">

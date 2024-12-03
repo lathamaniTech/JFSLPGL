@@ -15,10 +15,10 @@
               <ion-icon name="trash" (click)="proofImgRemove(addProofDoc)"></ion-icon>
             </p>
             <div *ngIf="postSancDoc || fromFieldInvestigation">
-              <img *ngIf="addProofDoc.fileType == 'image'" src="{{addProofDoc.imgpath}}" class="proofModal" />
-              <ion-icon *ngIf="addProofDoc.fileType == 'file'" style="zoom: 10; color: #000;display: block;"
+              <img *ngIf="addProofDoc.fileType === 'image'" src="{{addProofDoc.imgpath}}" class="proofModal" />
+              <ion-icon *ngIf="addProofDoc.fileType === 'file'" style="zoom: 10; color: #000;display: block;"
                 name="folder"></ion-icon>
-              <span *ngIf="addProofDoc.fileType == 'file'" class="proofModal span_file"
+              <span *ngIf="addProofDoc.fileType === 'file'" class="proofModal span_file"
                 (click)="fileOpen(addProofDoc)">{{addProofDoc.fileName}}</span>
             </div>
             <div *ngIf="!postSancDoc && !fromFieldInvestigation">

@@ -13,8 +13,8 @@
             <p class="imgdelete" *ngIf="fieldDisable">
               <ion-icon name="trash" (click)="proofImgRemove(addProofDoc)"></ion-icon>
             </p>
-            <img *ngIf="addProofDoc.type == 'image'" src="{{addProofDoc.imgpath}}" class="proofModal" />
-            <img *ngIf="addProofDoc.type != 'image'" class="proofModal" src="assets/imgs/files2.jpg" data-name={{addProofDoc.DocName}}>
+            <img *ngIf="addProofDoc.type === 'image'" src="{{addProofDoc.imgpath}}" class="proofModal" />
+            <img *ngIf="addProofDoc.type !== 'image'" class="proofModal" src="assets/imgs/files2.jpg" data-name={{addProofDoc.DocName}}>
 
           </ion-slide>
         </ion-slides>

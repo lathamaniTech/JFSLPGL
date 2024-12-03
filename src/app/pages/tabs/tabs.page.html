@@ -3,9 +3,9 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title *ngIf="tabs == 'casa'">Current/Saving Account Fields</ion-title>
-    <ion-title *ngIf="tabs == 'nominee'">Nominee Details</ion-title>
-    <ion-title *ngIf="tabs == 'service'">Service Requested Details</ion-title>
+    <ion-title *ngIf="tabs === 'casa'">Current/Saving Account Fields</ion-title>
+    <ion-title *ngIf="tabs === 'nominee'">Nominee Details</ion-title>
+    <ion-title *ngIf="tabs === 'service'">Service Requested Details</ion-title>
   </ion-toolbar>
   <app-status></app-status>
 </ion-header>

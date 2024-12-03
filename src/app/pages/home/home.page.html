@@ -36,15 +36,15 @@
             <span *ngIf="!idProofForm.controls['idType'].valid && (idProofForm.controls['idType'].touched)">
               <span class="errText">Must Select ID Proof Type.</span>
             </span>
-            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value == 'aadhar'">
+            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value === 'aadhar'">
               <ion-label position="floating">Aadhar<span class="mandatory">*</span></ion-label>
               <ion-input [type]="textType" formControlName="aadhar" maxlength="12" [disabled]="exisAadhar"
                 (ionChange)="restrictMaxlength($event, '12')" numberonly>
               </ion-input>
               <a slot="end" style="color:#da107e !important" ion-button item-right clear>
-                <ion-icon style="font-size: 28px;" name="eye" *ngIf="textType == 'password'"
+                <ion-icon style="font-size: 28px;" name="eye" *ngIf="textType === 'password'"
                   (click)="viewAadhar()"></ion-icon>
-                <ion-icon style="font-size: 28px;" name="eye-off" *ngIf="textType == 'tel'"
+                <ion-icon style="font-size: 28px;" name="eye-off" *ngIf="textType === 'tel'"
                   (click)="viewAadhar()"></ion-icon>
               </a>
             </ion-item>
@@ -52,7 +52,7 @@
               <span class="errText">Please enter Valid Aadhar.</span>
             </span>
 
-            <ion-item class="field" *ngIf="idProofForm.controls.idType.value == 'aadhar'">
+            <ion-item class="field" *ngIf="idProofForm.controls.idType.value === 'aadhar'">
               <ion-label position="floating">AEPS
                 <span class="mandatory">*</span>
               </ion-label>
@@ -66,7 +66,7 @@
               <span class="errText">Must Select AEPS Flag.</span>
             </span>
 
-            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value == 'pan'">
+            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value === 'pan'">
               <ion-label position="floating">PAN<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="pan" maxlength="10" alphanumbericonly
                 (ionChange)="restrictMaxlength($event, '10')" uppercase></ion-input>
@@ -77,7 +77,7 @@
 
 
 
-            <ion-item class="field" *ngIf="idProofForm.controls.idType.value == 'pan'">
+            <ion-item class="field" *ngIf="idProofForm.controls.idType.value === 'pan'">
               <ion-label position="floating">First Name<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="firstName" autoCapitalize="characters" class="alpha"></ion-input>
             </ion-item>
@@ -86,7 +86,7 @@
               <span class="errText">Please enter Valid First Name.</span>
             </span>
 
-            <ion-item class="field" *ngIf="idProofForm.controls.idType.value == 'pan'">
+            <ion-item class="field" *ngIf="idProofForm.controls.idType.value === 'pan'">
               <ion-label position="floating">Middle Name</ion-label>
               <ion-input type="text" formControlName="middleName" autoCapitalize="characters" class="alpha"></ion-input>
             </ion-item>
@@ -95,7 +95,7 @@
               <span class="errText">Please enter Valid Middle Name.</span>
             </span>
 
-            <ion-item class="field" *ngIf="idProofForm.controls.idType.value == 'pan'">
+            <ion-item class="field" *ngIf="idProofForm.controls.idType.value === 'pan'">
               <ion-label position="floating">Last Name<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="lastName" autocapitalize="characters" class="alpha"></ion-input>
             </ion-item>
@@ -104,7 +104,7 @@
               <span class="errText">Please enter Valid Last Name.</span>
             </span>
 
-            <ion-item class="field" *ngIf="idProofForm.controls.idType.value == 'pan'">
+            <ion-item class="field" *ngIf="idProofForm.controls.idType.value === 'pan'">
               <ion-label position="floating">Name as per PAN<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="namePan" autocapitalize="characters" class="alpha"></ion-input>
             </ion-item>
@@ -123,7 +123,7 @@
             </span> -->
 
 
-            <ion-item class="field" *ngIf="idProofForm.controls.idType.value == 'pan'">
+            <ion-item class="field" *ngIf="idProofForm.controls.idType.value === 'pan'">
               <ion-label position="floating">DOB as per PAN
                 <span class="mandatory">*</span>
               </ion-label>
@@ -138,7 +138,7 @@
             </span>
 
 
-            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value == 'voterid'">
+            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value === 'voterid'">
               <ion-label position="floating">Voter ID<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="voter" maxlength="16" alphanumbericonly
                 (ionChange)="restrictMaxlength($event, '16')" uppercase></ion-input>
@@ -146,7 +146,7 @@
             <span *ngIf="!idProofForm.controls['voter'].valid && (idProofForm.controls['voter'].touched)">
               <span class="errText">Please enter Valid Voter ID.</span>
             </span>
-            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value == 'passport'">
+            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value === 'passport'">
               <ion-label position="floating">Passport<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="passport" maxlength="8" alphanumbericonly
                 (ionChange)="restrictMaxlength($event, '8')" uppercase></ion-input>
@@ -154,7 +154,7 @@
             <span *ngIf="!idProofForm.controls['passport'].valid && (idProofForm.controls['passport'].touched)">
               <span class="errText">Please enter Valid Passport.</span>
             </span>
-            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value == 'drivingLicence'">
+            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value === 'drivingLicence'">
               <ion-label position="floating">Driving License<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="license" maxlength="20" alphanumbericonly
                 (ionChange)="restrictMaxlength($event, '20')" uppercase></ion-input>
@@ -163,7 +163,7 @@
               <span class="errText">Please enter Valid Driving License.</span>
             </span>
             <ion-item class="field"
-              *ngIf="idProofForm.controls['idType'].value == 'gst' || idProofForm.controls['idType'].value == 'tan'|| idProofForm.controls['idType'].value == 'cin'">
+              *ngIf="idProofForm.controls['idType'].value === 'gst' || idProofForm.controls['idType'].value === 'tan'|| idProofForm.controls['idType'].value === 'cin'">
               <ion-label position="floating">Id number<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="entityNum" value="29AAFPP3679P2ZO" alphanumbericonly>
               </ion-input>
@@ -171,7 +171,7 @@
             <span *ngIf="!idProofForm.controls['entityNum'].valid && (idProofForm.controls['entityNum'].touched)">
               <span class="errText">Please enter Valid Number.</span>
             </span>
-            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value == 'bpan'">
+            <ion-item class="field" *ngIf="idProofForm.controls['idType'].value === 'bpan'">
               <ion-label position="floating">PAN<span class="mandatory">*</span></ion-label>
               <ion-input type="text" formControlName="bpan" maxlength="10" alphanumbericonly
                 (ionChange)="restrictMaxlength($event, '10')" uppercase></ion-input>

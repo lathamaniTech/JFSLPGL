@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
 
-  <div *ngIf="idType == 'passport' && !dldata">
+  <div *ngIf="idType === 'passport' && !dldata">
     <form [formGroup]="passportForm" (ngSubmit)="passportKarza(passportForm.value)">
       <ion-item class="field">
         <ion-label position="floating">Enter Name as per Passport
@@ -115,7 +115,7 @@
     </form>
   </div>
 
-  <div *ngIf="idType == 'drivingLicence' && !dldata">
+  <div *ngIf="idType === 'drivingLicence' && !dldata">
     <form [formGroup]="dlForm" (ngSubmit)="dlKarza(dlForm.value)">
       <div class="newdate">
         <ion-item class="field">
@@ -153,7 +153,7 @@
     </form>
   </div>
 
-  <div *ngIf="idType == 'pan' || idType == 'voterid' || idType == 'aadhar'|| dldata">
+  <div *ngIf="idType === 'pan' || idType === 'voterid' || idType === 'aadhar'|| dldata">
     <form [formGroup]="dlDataForm" (ngSubmit)="dlDataFormPopulate(dlDataForm.value)">
 
       <ion-item class="field">

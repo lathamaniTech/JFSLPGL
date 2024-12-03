@@ -26,13 +26,13 @@
       <ion-item *ngIf="nouserdata && (item.firstname)" lines="none">
         <ion-label style="color: black !important;">
           <div
-            [ngClass]="{'readonly-style' : (item.workFlowStatus=='N' || item.underFI=='Y' || item.underManual=='Y' || item.underPostSanction=='Y' || item.disbursementCheck == 'Y') }">
-            <div class="showStatus" *ngIf="item.workFlowStatus=='N'">Under credit Review</div>
+            [ngClass]="{'readonly-style' : (item.workFlowStatus==='N' || item.underFI==='Y' || item.underManual==='Y' || item.underPostSanction==='Y' || item.disbursementCheck === 'Y') }">
+            <div class="showStatus" *ngIf="item.workFlowStatus==='N'">Under credit Review</div>
             <!-- <div class="showStatus">Under credit review</div> -->
-            <div class="showStatus" *ngIf="item.underFI=='Y'">Under FI Review</div>
-            <div class="showStatus" style="font-size: 1.5rem !important" *ngIf="item.disbursementCheck=='Y'">Under
+            <div class="showStatus" *ngIf="item.underFI==='Y'">Under FI Review</div>
+            <div class="showStatus" style="font-size: 1.5rem !important" *ngIf="item.disbursementCheck==='Y'">Under
               Disbursement Activities</div>
-            <div class="showStatus" *ngIf="item.underManual=='Y'">Under Manual Approval<br></div>
+            <div class="showStatus" *ngIf="item.underManual==='Y'">Under Manual Approval<br></div>
             <ion-row>
               <ion-col size="1">
                 <ion-icon style="color: #DA107E;" name="person" class="icon-zoom"></ion-icon>
@@ -103,48 +103,48 @@
             <div class="expand-card">
               <ion-row class="cibil-icons-container">
                 <ion-col class="coIcon" (click)="checkPosidex(item)"
-                  [ngClass]="{'readonly-style' : item.fromGroupInbox=='Y' }">
+                  [ngClass]="{'readonly-style' : item.fromGroupInbox==='Y' }">
                   <ion-icon name="timer" class="cibilIcons"></ion-icon>
                   <p class="cibilText">POSIDEX
                     <br>CHECK
                   </p>
                 </ion-col>
                 <ion-col class="coIcon" (click)="creditCheck(item)"
-                  [ngClass]="{'readonly-style' : item.fromGroupInbox=='Y' }">
+                  [ngClass]="{'readonly-style' : item.fromGroupInbox==='Y' }">
                   <ion-icon name="pricetags" class="cibilIcons"></ion-icon>
                   <p class="cibilText">CREDIT<br />CHECK
                   </p>
                 </ion-col>
                 <ion-col class="coIcon" (click)="scoreCard(item)"
-                  [ngClass]="{'readonly-style' : (item.fromGroupInbox=='Y' && item.fieldInvestigation == 'Y') }">
+                  [ngClass]="{'readonly-style' : (item.fromGroupInbox==='Y' && item.fieldInvestigation === 'Y') }">
                   <ion-icon name="speedometer" class="cibilIcons"></ion-icon>
                   <p class="cibilText">SCORE
                     <br>CARD
                   </p>
                 </ion-col>
                 <ion-col class="coIcon" (click)="fieldInspect(item)"
-                  [ngClass]="{'readonly-style' : (item.fromGroupInbox=='Y' && item.postSanction == '1') }"
-                  *ngIf="item.fieldInvestigation == 'Y'">
+                  [ngClass]="{'readonly-style' : (item.fromGroupInbox==='Y' && item.postSanction == '1') }"
+                  *ngIf="item.fieldInvestigation === 'Y'">
                   <ion-icon name="create" class="cibilIcons"></ion-icon>
                   <p class="cibilText">FIELD
                     <br>INVESTIGATION
                   </p>
                 </ion-col>
                 <ion-col class="coIcon" (click)="postSanction(item)" *ngIf="item.postSanction == '1'"
-                  [ngClass]="{'readonly-style' : (item.fromGroupInbox=='Y' && item.enablePDDDoc == 'Y') }">
+                  [ngClass]="{'readonly-style' : (item.fromGroupInbox==='Y' && item.enablePDDDoc === 'Y') }">
                   <ion-icon name="bicycle" class="cibilIcons"></ion-icon>
                   <p class="cibilText">POST
                     <br>SANCTION
                   </p>
                 </ion-col>
-                <ion-col class="coIcon" (click)="PDDSubmit(item)" *ngIf="item.enablePDDDoc == 'Y'">
+                <ion-col class="coIcon" (click)="PDDSubmit(item)" *ngIf="item.enablePDDDoc === 'Y'">
                   <ion-icon name="people" class="cibilIcons"></ion-icon>
                   <p class="cibilText">PDD
                     <br>SUBMIT
                   </p>
                 </ion-col>
                 <ion-col class="coIcon" (click)="item.enabled = !item.enabled" *ngIf="item.enablePDDDoc !== 'Y'"
-                  [ngClass]="{'readonly-style' : item.fromGroupInbox=='Y' && item.enablePDDDoc == 'Y'}">
+                  [ngClass]="{'readonly-style' : item.fromGroupInbox==='Y' && item.enablePDDDoc === 'Y'}">
                   <ion-icon *ngIf="!item.enabled" name="eye" class="cibilIcons"></ion-icon>
                   <ion-icon *ngIf="item.enabled" name="close" class="cibilIcons"></ion-icon>
                   <p class="cibilText">VIEW
@@ -156,7 +156,7 @@
 
             <div class="expand-card" *ngIf="item.enabled">
               <ion-row class="cibil-icons-container">
-                <ion-col class="coIcon" (click)="passCoAppDetails(item)" *ngIf="item.coAppFlag =='Y'">
+                <ion-col class="coIcon" (click)="passCoAppDetails(item)" *ngIf="item.coAppFlag ==='Y'">
                   <ion-icon name="people" class="cibilIcons"></ion-icon>
                   <p class="cibilText">Co-APPLICANT</p>
                 </ion-col>

@@ -37,7 +37,7 @@
       </ion-input>
     </ion-item>
     <div
-      *ngIf="basicData.controls.loanAmount.value != '' && basicData.controls.loanAmount.value != undefined && basicData.controls.loanAmount.value != null"
+      *ngIf="basicData.controls.loanAmount.value !== '' && basicData.controls.loanAmount.value != undefined && basicData.controls.loanAmount.value != null"
       class="message">
       <ion-row>
         <ion-col text-left>Loan amount between
@@ -57,7 +57,7 @@
       </ion-input>
     </ion-item>
     <div
-      *ngIf="basicData.controls.tenure.value != '' && basicData.controls.tenure.value != undefined && basicData.controls.tenure.value != null"
+      *ngIf="basicData.controls.tenure.value !== '' && basicData.controls.tenure.value != undefined && basicData.controls.tenure.value != null"
       class="message">
       <ion-row>
         <ion-col class="errorText">Tenure period between

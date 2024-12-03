@@ -60,12 +60,12 @@
     <ion-list>
       <ion-radio-group formControlName="guaAvail" (ionChange)="getGuarantorDetails($event)" [disabled]="submitDisable">
         <ion-row no-padding style="margin-top:10px; min-height: 4.4rem; line-height:normal" style="margin:0px;"
-          *ngIf="showGuaran && coAppFlag == 'Y'">
+          *ngIf="showGuaran && coAppFlag === 'Y'">
           <ion-col size="6">
             <ion-label class='w_space' style="display: block;">
-              <span *ngIf="coAppFlag == 'Y' && guaFlag=='Y'">Co-Applicant/Guarantor</span>
-              <span *ngIf="coAppFlag == 'Y' && guaFlag=='N'">Co-Applicant</span>
-              <span *ngIf="coAppFlag == 'N' && guaFlag=='Y'">Guarantor</span>
+              <span *ngIf="coAppFlag === 'Y' && guaFlag==='Y'">Co-Applicant/Guarantor</span>
+              <span *ngIf="coAppFlag === 'Y' && guaFlag==='N'">Co-Applicant</span>
+              <span *ngIf="coAppFlag === 'N' && guaFlag==='Y'">Guarantor</span>
               to be made as Nominee?
               <span class="mandatory">*</span>
             </ion-label>

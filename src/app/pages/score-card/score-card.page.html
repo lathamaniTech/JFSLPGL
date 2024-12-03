@@ -14,7 +14,7 @@
 
 
 <ion-content class="content">
-  <div class="existPlaceholder" *ngIf="sanctionedAmt == 0 && emi == 0">
+  <div class="existPlaceholder" *ngIf="sanctionedAmt === 0 && emi === 0">
     <h2>Please Check Score Card!</h2>
   </div>
   <div class="showAmt">
@@ -27,20 +27,20 @@
   </div>
 </ion-content>
 <ion-footer *ngIf="!showManualUser" style="background: white;">
-  <div *ngIf="this.checked=='N'" style="text-align: center;">
+  <div *ngIf="this.checked==='N'" style="text-align: center;">
     <ion-button class="proceedbtn" (click)="checkScoreCard()">Check Score Card</ion-button>
   </div>
-  <div *ngIf="this.checked=='Y' && this.isAutoApprovalFlag == false"
+  <div *ngIf="this.checked==='Y' && this.isAutoApprovalFlag === false"
     style="text-align: center;">
     <ion-button class="proceedbtn" expand="full" (click)="fieldInvestigation()">Submit For Field
       Investigation</ion-button>
   </div>
-  <div *ngIf="this.checked=='Y' && this.isAutoApprovalFlag && this.autoAppStat=='0'"
+  <div *ngIf="this.checked==='Y' && this.isAutoApprovalFlag && this.autoAppStat==='0'"
     style="text-align: center;">
     <ion-button class="proceedbtn" expand="full" (click)="autoApproval()">Submit For Auto Approval</ion-button>
   </div>
-  <div *ngIf="this.checked=='Y' && this.autoAppStat=='1'" style="text-align: center;">
-    <ion-button class="proceedbtn" expand="full" (click)="postSubmission()" [disabled]="this.postSanctionStat == '1'">
+  <div *ngIf="this.checked==='Y' && this.autoAppStat==='1'" style="text-align: center;">
+    <ion-button class="proceedbtn" expand="full" (click)="postSubmission()" [disabled]="this.postSanctionStat === '1'">
       Proceed to Post Sanction
     </ion-button>
   </div>

@@ -12,7 +12,7 @@
   <!-- PERMANENT ADDRESS TAB -->
   <div *ngIf="addressType==='Permanent'">
 
-    <div *ngIf="userType != 'A'">
+    <div *ngIf="userType !== 'A'">
       <ion-item class="field" [disabled]="submitDisable">
         <ion-label>Same as Applicant Permanent Address</ion-label>
         <ion-checkbox checked="false" color="jsfpink" [(ngModel)]="appSameCheck" (ionChange)="dataAppchanged($event)"

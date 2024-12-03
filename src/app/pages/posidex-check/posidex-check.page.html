@@ -26,7 +26,7 @@
         [disabled]="coAppDisable">Co-Applicant</ion-segment-button>
     </ion-segment>
   </div>
-  <div *ngIf="custType == 'Promoter'">
+  <div *ngIf="custType === 'Promoter'">
     <div *ngIf="applicantDetails">
       <ion-card>
         <ion-grid>
@@ -40,13 +40,13 @@
             </ion-col>
           </ion-row>
           <ion-row size="12" class="lead" *ngIf="posidexInfo.length>0">
-            <ion-col size="6" *ngIf="posidexInfo[0].amlCheck =='Y'">
+            <ion-col size="6" *ngIf="posidexInfo[0].amlCheck ==='Y'">
               <span class="labeltext">AML: <ion-badge class="badge">{{posidexInfo[0].amlStatus}}</ion-badge></span>
             </ion-col>
-            <ion-col size="6" *ngIf="showCbs || posidexInfo[0].cbsCheck =='Y'">
+            <ion-col size="6" *ngIf="showCbs || posidexInfo[0].cbsCheck ==='Y'">
               <span class="labeltext">AML: <ion-badge class="badge">Not needed</ion-badge></span>
             </ion-col>
-            <ion-col size="6" *ngIf="posidexInfo[0].verified =='Y'"><span class="labeltext">URN Number</span>
+            <ion-col size="6" *ngIf="posidexInfo[0].verified ==='Y'"><span class="labeltext">URN Number</span>
               <div class="labelcontent">{{posidexInfo[0].urnNo}}</div>
             </ion-col>
           </ion-row>
@@ -62,7 +62,7 @@
       </ion-card>
     </div>
   </div>
-  <div *ngIf="custType == 'CoApplicant'">
+  <div *ngIf="custType === 'CoApplicant'">
     <div class="NoDataContent" *ngIf='coapplicantsList.length == 0'>
       <h2>No Co-Applicant(s) data found!</h2>
     </div>
@@ -89,13 +89,13 @@
             </ion-col>
           </ion-row>
           <ion-row class="lead" *ngIf="posidexInfo.length>0">
-            <ion-col size="6" *ngIf="posidexInfo[0].amlCheck =='Y'">
+            <ion-col size="6" *ngIf="posidexInfo[0].amlCheck ==='Y'">
               <span class="labeltext">AML: <ion-badge class="badge">{{posidexInfo[0].amlStatus}}</ion-badge></span>
             </ion-col>
-            <ion-col size="6" *ngIf="showCbs || posidexInfo[0].cbsCheck =='Y'">
+            <ion-col size="6" *ngIf="showCbs || posidexInfo[0].cbsCheck ==='Y'">
               <span class="labeltext">AML: <ion-badge class="badge">Not needed</ion-badge></span>
             </ion-col>
-            <ion-col size="6" *ngIf="posidexInfo[0].verified =='Y'"><span class="labeltext">URN Number</span>
+            <ion-col size="6" *ngIf="posidexInfo[0].verified ==='Y'"><span class="labeltext">URN Number</span>
               <div class="labelcontent">{{posidexInfo[0].urnNo}}</div>
             </ion-col>
           </ion-row>
@@ -171,7 +171,7 @@
                   </ion-col>
                   <ion-col size="11">
                     <ion-list>
-                      <ion-row size="12" class="lead" *ngIf="item.newCust && this.leadUserType != 'E'">
+                      <ion-row size="12" class="lead" *ngIf="item.newCust && this.leadUserType !== 'E'">
                         <ion-col size="12"><span
                             style="font-size: 15px !important;font-weight: bold;">{{item.newCust}}</span>
                         </ion-col>
@@ -220,11 +220,11 @@
 <ion-footer *ngIf="showAml || showCbs" style="--background: white;">
   <div class="buttspace roundbtn" style="  margin-top: 5px; margin-bottom: 5px;">
     <ion-button class="proceedbtn" shape="round" *ngIf="showAml" (click)="fetchAml()"
-      [disabled]="posidexInfo.length>0 && (posidexInfo[0].amlStatus =='No Match' || posidexInfo[0].amlStatus =='AML Approved' || posidexInfo[0].amlStatus =='AML Rejected')">
+      [disabled]="posidexInfo.length>0 && (posidexInfo[0].amlStatus ==='No Match' || posidexInfo[0].amlStatus ==='AML Approved' || posidexInfo[0].amlStatus ==='AML Rejected')">
       Check AML
     </ion-button>
     <ion-button class="proceedbtn" shape="round" *ngIf="showCbs" (click)="fetchCbs()"
-      [disabled]="posidexInfo.length>0 && (posidexInfo[0].cbsStatus =='Approved' || posidexInfo[0].cbsStatus =='rejected')">
+      [disabled]="posidexInfo.length>0 && (posidexInfo[0].cbsStatus ==='Approved' || posidexInfo[0].cbsStatus ==='rejected')">
       Check CBS
     </ion-button>
   </div>

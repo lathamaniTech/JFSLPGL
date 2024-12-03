@@ -15,7 +15,7 @@
 
 <ion-content class="ion-padding">
 
-  <div class="segment03 top10" *ngIf="coAppFlag == 'Y'">
+  <div class="segment03 top10" *ngIf="coAppFlag === 'Y'">
     <ion-segment [(ngModel)]="custType">
       <ion-segment-button value="Promoter" style="margin-right: -4px;"
         (click)="getApplicantDocument()">Applicant</ion-segment-button>

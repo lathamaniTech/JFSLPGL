@@ -9,14 +9,14 @@
 </ion-header>
 
 <ion-content no-padding>
-  <div class="existPlaceholder" *ngIf="!nouserdata && applType == 'guaran'">
+  <div class="existPlaceholder" *ngIf="!nouserdata && applType === 'guaran'">
     <h2>To add New<br />
       Guarantor, tap
       <ion-icon name="add"></ion-icon> button <br /> at the bottom
     </h2>
   </div>
 
-  <div class="existPlaceholder" *ngIf="!noCoappData && applType == 'coapp'">
+  <div class="existPlaceholder" *ngIf="!noCoappData && applType === 'coapp'">
     <h2>To add New<br />
       Co-Applicant, tap
       <ion-icon name="add"></ion-icon> button <br /> at the bottom
@@ -40,26 +40,26 @@
     </ion-row>
   </ion-card>
 
-  <div class="segment002 top10" *ngIf="userInfo.coAppFlag == 'Y' && userInfo.guaFlag == 'Y'">
+  <div class="segment002 top10" *ngIf="userInfo.coAppFlag === 'Y' && userInfo.guaFlag === 'Y'">
     <ion-segment [(ngModel)]="applType">
       <ion-segment-button value="coapp" style="margin-right: -4px;">Co-Applicant</ion-segment-button>
       <ion-segment-button value="guaran" style="margin-right: -4px;">Guarantor</ion-segment-button>
     </ion-segment>
   </div>
 
-  <ion-card style="--background: #DA107E;" *ngIf="userInfo.coAppFlag == 'Y' && userInfo.guaFlag == 'N'">
+  <ion-card style="--background: #DA107E;" *ngIf="userInfo.coAppFlag === 'Y' && userInfo.guaFlag === 'N'">
     <h2 class="ion-text-center" style="color: white;">
       <b>Co-Applicant Details</b>
     </h2>
   </ion-card>
 
-  <ion-card style="--background: #DA107E;" *ngIf="userInfo.coAppFlag == 'N' && userInfo.guaFlag == 'Y'">
+  <ion-card style="--background: #DA107E;" *ngIf="userInfo.coAppFlag === 'N' && userInfo.guaFlag === 'Y'">
     <h2 class="ion-text-center" style="color: white;">
       <b>Guarantor Details</b>
     </h2>
   </ion-card>
 
-  <div *ngIf="applType == 'guaran'">
+  <div *ngIf="applType === 'guaran'">
     <ion-list class="swipeView" *ngFor="let gurantor of gurantors; let i=index">
       <ion-item-sliding class="slidingion" #coApplSwipe>
         <ion-item lines="none" class="coApplSwipe">
@@ -99,7 +99,7 @@
     </ion-fab>
   </div>
 
-  <div *ngIf="applType == 'coapp'">
+  <div *ngIf="applType === 'coapp'">
     <ion-list class="swipeView" *ngFor="let coapp of coapplicants; let i=index">
       <ion-item-sliding class="slidingion" #coApplSwipe>
         <ion-item lines="none" class="coApplSwipe">

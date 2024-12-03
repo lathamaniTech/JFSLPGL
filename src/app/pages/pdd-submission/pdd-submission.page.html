@@ -139,8 +139,8 @@
         <ion-row *ngFor="let pddArray of pddDetailsArray;let j=index">
           <ion-col size="3" style="height: 100px">
             <div *ngFor="let pddImg of pddArray.AllImages;let i=index">
-              <img *ngIf="pddImg.type == 'image'" class="image{{i+1}}" src="{{pddImg.imgpath}}">
-              <img *ngIf="pddImg.type != 'image'" class="image{{i+1}}" src="assets/imgs/files2.jpg">
+              <img *ngIf="pddImg.type === 'image'" class="image{{i+1}}" src="{{pddImg.imgpath}}">
+              <img *ngIf="pddImg.type !== 'image'" class="image{{i+1}}" src="assets/imgs/files2.jpg">
             </div>
             <div *ngIf="pddArray.AllImages.length == 0">
               <img class="image1" src="assets/imgs/noImgs.png">

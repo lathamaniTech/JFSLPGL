@@ -1,7 +1,7 @@
 <div class="container">
   <h2 class="headtitel">
-    <span *ngIf="customerType == '2' && userType == 'A'">Promoter</span>
-    <span *ngIf="customerType == '1' && userType == 'A'">Applicant</span>
+    <span *ngIf="customerType == '2' && userType === 'A'">Promoter</span>
+    <span *ngIf="customerType == '1' && userType === 'A'">Applicant</span>
     <span *ngIf="userType !== 'A'">Co-Applicant</span> Details
   </h2>
   <div style="clear: both;">
@@ -242,7 +242,7 @@
         <span class="errText">Must select PAN Availability.</span>
       </span>
 
-      <div class="field" *ngIf="applicantDetails.controls.panAvailable.value == 'Y'">
+      <div class="field" *ngIf="applicantDetails.controls.panAvailable.value === 'Y'">
         <ion-item [disabled]="submitDisable || disablePan">
           <ion-label position="floating">PAN No.
             <span class="mandatory">*</span>
@@ -255,7 +255,7 @@
         </span>
       </div>
 
-      <div class="field" *ngIf="applicantDetails.controls.panAvailable.value == 'N'">
+      <div class="field" *ngIf="applicantDetails.controls.panAvailable.value === 'N'">
         <ion-item [disabled]="true">
           <ion-label position="floating">Form 60.
             <span class="mandatory">*</span>
@@ -268,7 +268,7 @@
         </span>
       </div>
 
-      <div class="field" *ngIf="userType != 'C'">
+      <div class="field" *ngIf="userType !== 'C'">
         <div class="mobileverify">
           <ion-item>
             <ion-label position="floating">Virtual Payment Address (VPA)</ion-label>
@@ -286,7 +286,7 @@
         </div>
       </div>
 
-      <div class="field" *ngIf="upiVerify && userType != 'C'">
+      <div class="field" *ngIf="upiVerify && userType !== 'C'">
         <ion-item  [disabled]="true">
           <ion-label position="floating">Name as per UPI</ion-label>
           <ion-input type="text" formControlName="nameupi">

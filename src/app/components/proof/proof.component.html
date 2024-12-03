@@ -44,20 +44,20 @@
         (ionChange)="toUpperCase('proofData','promoIDRef');aadharValidation()"></ion-input>
 
       <div class="button-container">
-        <ion-button fill="clear" style="color:#da107e" *ngIf="aadhar && !vaultDisable && vaultStatus == 'N'"
+        <ion-button fill="clear" style="color:#da107e" *ngIf="aadhar && !vaultDisable && vaultStatus === 'N'"
           (click)="viewAadhar()">
-          <ion-icon style="font-size: 28px;" [name]="textType == 'password' ? 'eye' : 'eye-off'"></ion-icon>
+          <ion-icon style="font-size: 28px;" [name]="textType === 'password' ? 'eye' : 'eye-off'"></ion-icon>
         </ion-button>
 
-        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus == 'N'" (click)="aadhaarVaultInsert()">
+        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus === 'N'" (click)="aadhaarVaultInsert()">
           <span class="vault">Vault</span>
         </ion-button>
 
-        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus == 'Y'" (click)="aadhaarVaultRetrieve('janaId')">
+        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus === 'Y'" (click)="aadhaarVaultRetrieve('janaId')">
           <span class="vault">Retrieve</span>
         </ion-button>
 
-        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus == 'Y'" (click)="removeVault()">
+        <ion-button fill="clear" *ngIf="!submitDisable && vaultStatus === 'Y'" (click)="removeVault()">
           <span class="rvault">Remove</span>
         </ion-button>
       </div>
@@ -68,7 +68,7 @@
       <span class="errText">Must Enter the Valid ID Number.</span>
     </span>
 
-    <ion-item class="field" *ngIf="aadhar" [disabled]="submitDisable || vaultStatus == 'Y'">
+    <ion-item class="field" *ngIf="aadhar" [disabled]="submitDisable || vaultStatus === 'Y'">
       <ion-label position="floating">AEPS<span class="mandatory">*</span></ion-label>
       <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="aepsStatus">
         <ion-select-option *ngFor="let id of aepsTypes;let i=index" [value]="id.code">{{ id.name }}
