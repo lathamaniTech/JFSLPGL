@@ -1,0 +1,51 @@
+.customer-type-selection {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+}
+.line {
+  width: 85%;
+  border-bottom: 1px solid;
+  margin-top: 10%;
+  position: absolute;
+  z-index: -1;
+}
+.custType {
+  width: auto;
+  background: #da107e;
+  color: #fff;
+  height: 35px;
+  top: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 0px 15px;
+}
+
+.existPlaceholder {
+  height: 50px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  position: absolute;
+}
+
+.existPlaceholder h2 {
+  color: darkgray;
+  font-weight: bold;
+  text-align: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.sticky-div {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 100;
+  padding: 20px;
+}
