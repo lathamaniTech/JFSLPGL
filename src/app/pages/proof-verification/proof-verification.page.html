@@ -1,0 +1,216 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <span>Customer Type</span>
+      <span (click)="pageClose()">
+        <ion-icon name="close-circle" style="float:right;"></ion-icon>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-wrapper">
+
+  <!-- Customer Type Selection -->
+  <div class="customer-type-selection">
+    <ion-item class="field">
+      <ion-label position="floating">Choose Customer Type
+        <span class="mandatory">*</span>
+      </ion-label>
+      <ion-select [(ngModel)]="customerType" interface="popover" [interfaceOptions]="customPopoverOptions"
+        [selectOptions]="selectOptions" (ionChange)="onCustomerTypeChange()">
+        <ion-select-option value="new">New</ion-select-option>
+        <ion-select-option value="existing">Existing</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <div class="sticky-div" style="display: flex;justify-content: center;" *ngIf="customerType !== ''">
+    <div class="line"></div>
+    <p class="custType" *ngIf="customerType == 'new'">New Customer</p>
+    <p class="custType" *ngIf="customerType == 'existing'">Existing Customer</p>
+  </div>
+  <!-- KYC Form (Shown if New Customer is selected) -->
+  <div class="kyc-form-container" id="newBox" *ngIf="customerType == 'new'">
+    <form [formGroup]="idProofForm" (ngSubmit)="posidexCheck(idProofForm.value)">
+      <ion-item class="field">
+        <ion-label position="floating">Customer Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="custType"
+          [selectOptions]="selectOptions" (ionChange)="custTypeChng($event)">
+          <ion-select-option *ngFor="let cust of custTypes;let i=index" [value]="cust.CODE">{{ cust.NAME }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls['custType'].valid && (idProofForm.controls['custType'].touched)">
+        <span class="errText">Must Select Customer Type.</span>
+      </span>
+
+      <ion-item class="field">
+        <ion-label position="floating">ID Proof Type
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="idType"
+          [disabled]="exisAadharCheck" (ionChange)="proofTypeChng($event)">
+          <ion-select-option *ngFor="let id of idProofTypes;let i=index" [value]="id.code">{{ id.name
+            }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='aadhar'">
+        <ion-label position="floating">Aadhar<span class="mandatory">*</span></ion-label>
+        <ion-input [type]="textType" formControlName="aadhar" maxlength="12" [disabled]="exisAadhar"
+          (ionChange)="restrictMaxlength($event, '12')" numberonly>
+        </ion-input>
+        <a slot="end" style="color:#da107e !important" ion-button item-right clear>
+          <ion-icon style="font-size: 28px;" name="eye" *ngIf="textType == 'password'"
+            (click)="viewAadhar()"></ion-icon>
+          <ion-icon style="font-size: 28px;" name="eye-off" *ngIf="textType == 'tel'" (click)="viewAadhar()"></ion-icon>
+        </a>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls.aadhar.valid && (idProofForm.controls.aadhar.touched)">
+        <span class="errText">Please enter Valid Aadhar.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='aadhar'">
+        <ion-label position="floating">AEPS
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="aepsStatus"
+          [selectOptions]="selectOptions">
+          <ion-select-option *ngFor="let id of yesNo;let i=index" [value]="id.code">{{ id.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls['aepsStatus'].valid && (idProofForm.controls['aepsStatus'].touched)">
+        <span class="errText">Must Select AEPS Flag.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='pan'">
+        <ion-label position="floating">PAN<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="pan" maxlength="10" alphanumbericonly
+          (ionChange)="restrictMaxlength($event, '10')" uppercase></ion-input>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls.pan.valid && (idProofForm.controls.pan.touched)">
+        <span class="errText">Please enter Valid PAN.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='pan'">
+        <ion-label position="floating">First Name<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="firstName" autoCapitalize="characters" class="alpha"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!idProofForm.controls.firstName.valid && (idProofForm.controls.firstName.dirty || idProofForm.controls.firstName.touched)">
+        <span class="errText">Please enter Valid First Name.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='pan'">
+        <ion-label position="floating">Middle Name</ion-label>
+        <ion-input type="text" formControlName="middleName" autoCapitalize="characters" class="alpha"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!idProofForm.controls.middleName.valid && (idProofForm.controls.middleName.dirty || idProofForm.controls.middleName.touched)">
+        <span class="errText">Please enter Valid Middle Name.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='pan'">
+        <ion-label position="floating">Last Name<span class="mandatory" autocapitalize="characters">*</span></ion-label>
+        <ion-input type="text" formControlName="lastName" autoCapitalize="characters" class="alpha"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!idProofForm.controls.lastName.valid && (idProofForm.controls.lastName.dirty || idProofForm.controls.lastName.touched)">
+        <span class="errText">Please enter Valid Last Name.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='pan'">
+        <ion-label position="floating">Name as per PAN<span class="mandatory"
+            autocapitalize="characters">*</span></ion-label>
+        <ion-input type="text" formControlName="namePan" autoCapitalize="characters" class="alpha"></ion-input>
+      </ion-item>
+      <span
+        *ngIf="!idProofForm.controls.namePan.valid && (idProofForm.controls.namePan.dirty || idProofForm.controls.namePan.touched)">
+        <span class="errText">Please enter Valid Name as per PAN.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='pan'">
+        <ion-label position="floating">DOB as per PAN
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="date" formControlName="dobPan" [min]="maxDobAge" [max]="minDobAge">
+        </ion-input>
+      </ion-item>
+      <span
+        *ngIf="!idProofForm.controls.dobPan.valid && (idProofForm.controls.dobPan.dirty || idProofForm.controls.dobPan.touched)">
+        <span class="errText">Please enter Valid DOB as per PAN.</span>
+      </span>
+
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='voterid'">
+        <ion-label position="floating">Voter ID<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="voter" maxlength="16" alphanumbericonly
+          (ionChange)="restrictMaxlength($event, '16')" uppercase></ion-input>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls.voter.valid && (idProofForm.controls.voter.touched)">
+        <span class="errText">Please enter Valid Voter ID.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='passport'">
+        <ion-label position="floating">Passport<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="passport" maxlength="8" alphanumbericonly
+          (ionChange)="restrictMaxlength($event, '8')" uppercase></ion-input>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls.passport.valid && (idProofForm.controls.passport.touched)">
+        <span class="errText">Please enter Valid Passport.</span>
+      </span>
+
+      <ion-item class="field" *ngIf=" idProofForm.controls.idType.value=='drivingLicence'">
+        <ion-label position="floating">Driving License<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="license" maxlength="20" alphanumbericonly
+          (ionChange)="restrictMaxlength($event, '20')" uppercase></ion-input>
+      </ion-item>
+      <span *ngIf="!idProofForm.controls.license.valid && (idProofForm.controls.license.touched)">
+        <span class="errText">Please enter Valid Driving License.</span>
+      </span>
+
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <ion-button class="proceedbtn" type="submit" shape="round">Proceed
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+  <!-- KYC Form (Shown if Existing Customer is selected) -->
+  <div class="kyc-form-container" id="newBox" *ngIf="customerType == 'existing'">
+    <div class="existPlaceholder">
+      <h2>Existing Workflow not Configured. Please Proceed With New Customer!</h2>
+    </div>
+    <div *ngIf="notRequiredFun">
+      <form [formGroup]="cifDataForm" (ngSubmit)="cifData(cifDataForm.value)">
+        <div class="inner-container">
+          <div class="newcustomer">
+            <h2>Existing Customer</h2>
+          </div>
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-input type="tel" placeholder="Enter URN Number" formControlName="cifId">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="align-self-center">
+              <ion-button shape="round" type="submit" [disabled]="!cifDataForm.valid" color="warning" class="navIcon">
+                <ion-icon color="light" name="arrow-forward"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

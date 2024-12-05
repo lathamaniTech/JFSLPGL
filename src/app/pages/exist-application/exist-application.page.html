@@ -28,7 +28,6 @@
           <div
             [ngClass]="{'readonly-style' : (item.workFlowStatus==='N' || item.underFI==='Y' || item.underManual==='Y' || item.underPostSanction==='Y' || item.disbursementCheck === 'Y') }">
             <div class="showStatus" *ngIf="item.workFlowStatus==='N'">Under credit Review</div>
-            <!-- <div class="showStatus">Under credit review</div> -->
             <div class="showStatus" *ngIf="item.underFI==='Y'">Under FI Review</div>
             <div class="showStatus" style="font-size: 1.5rem !important" *ngIf="item.disbursementCheck==='Y'">Under
               Disbursement Activities</div>
@@ -40,10 +39,6 @@
               <ion-col size="5">
                 <h3 class="applName">{{ item.firstname || item.enterName }}</h3>
                 <p class="applLeadNum">{{ item.applicationNumber }}
-                  <!-- <span class="wifiIcon">
-                    <ion-icon class="online" name="wifi" *ngIf="leadStatus === 'online'"></ion-icon>
-                    <ion-icon class="offline" name="wifi" *ngIf="leadStatus === 'offline'"></ion-icon>
-                  </span> -->
                 </p>
               </ion-col>
               <ion-col size="1">
@@ -58,16 +53,6 @@
                 <p class="applDate">{{ item.inputDate }}</p>
               </ion-col>
             </ion-row>
-            <!-- <ion-row>
-              <ion-col size="4">
-                <ion-badge *ngIf="item.janaRefId" class="ekycstatus">Ekyc status<ion-icon
-                    style="color: forestgreen !important;" name="checkmark-circle" class="greentik"></ion-icon>
-                </ion-badge>
-              </ion-col>
-              <ion-col size="4"></ion-col>
-              <ion-col size="4">
-              </ion-col>
-            </ion-row> -->
             <ion-row style="padding-bottom: 10px !important;">
               <ion-col size="1">
                 <ion-icon style="color: #DA107E;" name="pin" class="icon-zoom"></ion-icon>
@@ -80,8 +65,8 @@
                 </ion-badge>
               </ion-col>
               <ion-col size="6">
-                <ion-badge (click)="appstatus(item)"
-                  style="right: 20px !important;bottom: 33px !important;" class="ekycstatus">
+                <ion-badge (click)="appstatus(item)" style="right: 20px !important;bottom: 33px !important;"
+                  class="ekycstatus">
                   Check Status
                   <ion-icon name="sync"></ion-icon>
                 </ion-badge>
@@ -190,178 +175,4 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-
-  <!-- <ion-list>
-    <ion-item-sliding #slidingItem *ngFor="let item of items;let i=index">
-      <ion-item *ngIf="nouserdata && (item.firstname)" lines="none">
-        <ion-label>
-          <ion-card
-            [ngClass]="(item.workFlowStatus=='N' || item.underFI=='Y' || item.underManual=='Y' || item.underPostSanction=='Y' || item.disbursementCheck == 'Y') ? 'inactive' : 'active'">
-            <div class="showStatus" *ngIf="item.workFlowStatus=='N'">Under credit review</div>
-            <div class="showStatus" *ngIf="item.underFI=='Y'">Under FI review</div>
-            <div class="showStatus" *ngIf="item.disbursementCheck=='Y'">Under Disbursement Activities</div>
-            <div class="showStatus" *ngIf="item.underManual=='Y'">Under Manual Approval<br></div>
-
-            <ion-row>
-              <ion-col size="1">
-                <ion-icon style="color: #DA107E;" name="person" class="icon-zoom"></ion-icon>
-              </ion-col>
-              <ion-col size="5">
-                <h3 class="applName">{{ item.firstname || item.enterName }}</h3>
-                <p class="applLeadNum">{{ item.applicationNumber }}</p>
-              </ion-col>
-              <ion-col size="1">
-                <ion-icon style="color: #DA107E;zoom: 2.5;" class="icon-zoom">₹</ion-icon>
-              </ion-col>
-              <ion-col size="5">
-                <div class="submitButton">
-                  <ion-icon name="checkmark-done-outline"></ion-icon>
-                  <div class="showSubmit">Submitted</div>
-                </div>
-                <h4 class="applAmount">{{ item.loanAmount }}</h4>
-                <p class="applDate">{{ item.inputDate }}</p>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="1">
-                <ion-icon style="color: #DA107E;" name="pin" class="icon-zoom"></ion-icon>
-              </ion-col>
-              <ion-col size="5">
-                <h4 class="applAmount1">{{ item.branch }}</h4>
-                <p class="applLoanType">{{ item.janaLoanName }}</p>
-                <ion-badge *ngIf="item.janaRefId" class="ekycstatus">Ekyc status<ion-icon
-                    style="top: 6px;color: forestgreen !important;" name="checkmark-circle" class="greentik"></ion-icon>
-                </ion-badge>
-              </ion-col>
-              <ion-col size="6">
-                <div class="viewStatus" (click)="appstatus(item)">
-                  <span>Check Status</span>
-                  <ion-icon style="color: #DA107E;" name="sync"></ion-icon>
-                </div>
-                <p class="seeAppl" *ngIf="!item.expanded" (click)="expandItem(item)">
-                  See Application
-                  <ion-icon style="color: #DA107E;" name="arrow-down-outline"></ion-icon>
-                </p>
-                <p class="seeAppl" *ngIf="item.expanded" (click)="expandItem(item)">
-                  Hide Application
-                  <ion-icon style="color: #DA107E;" name="arrow-up-outline"></ion-icon>
-                </p>
-              </ion-col>
-            </ion-row>
-          </ion-card>
-
-          <app-expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
-            <ion-card style="margin: 10px 0px;">
-
-              <div [class.checkout--active]='item.enabled' class="checkout" #overlaymenu id="menuContainer">
-                <div class="checkout__button">
-                  <span class="checkout__text" style="z-index: 5;" (click)="item.enabled = !item.enabled">
-
-                    <svg class="checkout__icon" width="20px" height="20px" viewBox="0 0 35 35">
-                      <path fill="#da107e"
-                        d="M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272  c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0  l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269  c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73  L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z" />
-                    </svg>
-                  </span>
-                  <ion-row class="viewdetails">
-
-                    <ion-col class="coIcon" (click)="passCoAppDetails(item)" *ngIf="item.coAppFlag =='Y'">
-                      <ion-icon name="people" class="cibilIcons"></ion-icon>
-                      <p class="cibilText">Co-Applicant<br>Details</p>
-                    </ion-col>
-                    <ion-col class="coIcon" (click)="viewDocuments(item)">
-                      <ion-icon name="card" class="cibilIcons"></ion-icon>
-                      <p class="cibilText">KYC<br />Documents
-                      </p>
-                    </ion-col>
-                    <ion-col class="coIcon" (click)="CASA(item)">
-                      <ion-icon name="card" class="cibilIcons"></ion-icon>
-                      <p class="cibilText">CASA
-                        <br>Details
-                      </p>
-                    </ion-col>
-                    <ion-col class="coIcon" (click)="vehicleDetails(item)">
-                      <ion-icon name="bicycle" class="cibilIcons"></ion-icon>
-                      <p class="cibilText">Vehicle
-                        <br>Details
-                      </p>
-                    </ion-col>
-                    <ion-col class="coIcon" (click)="referenceDetails(item)">
-                      <ion-icon name="people" class="cibilIcons"></ion-icon>
-                      <p>Reference
-                        <br>Details
-                      </p>
-                    </ion-col>
-                  </ion-row>
-                </div>
-
-
-                <div class="checkout__order">
-                  <div class="checkout__order-inner">
-                    <div class="checkout__summary">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <ion-row>
-                <ion-col class="coIcon" (click)="checkPosidex(item)"
-                  [ngClass]="item.fromGroupInbox=='Y' ? 'inactive' : 'active'">
-                  <ion-icon name="eye" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">Posidex<br>Check</p>
-                </ion-col>
-                <ion-col class="coIcon" (click)="creditCheck(item)"
-                  [ngClass]="item.fromGroupInbox=='Y' ? 'inactive' : 'active'">
-                  <ion-icon name="pricetags" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">Credit
-                    <br>Check
-                  </p>
-                </ion-col>
-                <ion-col class="coIcon" (click)="scoreCard(item)"
-                  [ngClass]="(item.fromGroupInbox=='Y' && item.fieldInvestigation == 'Y') ? 'inactive' : 'active'">
-                  <ion-icon name="speedometer" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">Score
-                    <br>Card
-                  </p>
-                </ion-col>
-
-                <ion-col class="coIcon" (click)="fieldInspect(item)"
-                  [ngClass]="(item.fromGroupInbox=='Y' && item.postSanction == '1') ? 'inactive' : 'active'"
-                  *ngIf="item.fieldInvestigation == 'Y'">
-                  <ion-icon name="create" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">Field
-                    <br>Investigation
-                  </p>
-                </ion-col>
-                <ion-col class="coIcon" (click)="postSanction(item)" *ngIf="item.postSanction == '1'"
-                  [ngClass]="(item.fromGroupInbox=='Y' && item.enablePDDDoc == 'Y') ? 'inactive' : 'active'">
-                  <ion-icon name="folder" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">Post
-                    <br>Sanction
-                  </p>
-                </ion-col>
-                <ion-col class="coIcon" (click)="PDDSubmit(item)" *ngIf="item.enablePDDDoc == 'Y'">
-                  <ion-icon name="document" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">PDD
-                    <br>Submit
-                  </p>
-                </ion-col>
-                <ion-col class="coIcon" (click)="item.enabled = !item.enabled">
-                  <ion-icon name="eye" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">View<br>Details</p>
-                </ion-col>
-
-              </ion-row>
-            </ion-card>
-          </app-expandable>
-        </ion-label>
-      </ion-item>
-
-      <ion-item-options side="start" *ngIf="!item.expanded">
-        <ion-button (click)="passdetails(item)" style="height: auto;">
-          <ion-icon name="eye" class="icon-size"></ion-icon>View<br>Applicant<br>Details
-        </ion-button>
-      </ion-item-options>
-    </ion-item-sliding>
-
-  </ion-list> -->
 </ion-content>

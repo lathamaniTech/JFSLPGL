@@ -14,10 +14,6 @@ import {
 import { DataPassingProviderService } from 'src/providers/data-passing-provider.service';
 import { GlobalService } from 'src/providers/global.service';
 import { SqliteService } from 'src/providers/sqlite.service';
-import { AuditLogsPage } from './pages/audit-logs/audit-logs.page';
-import { ExistApplicationPage } from './pages/exist-application/exist-application.page';
-import { ExistingPage } from './pages/existing/existing.page';
-import { JfshomePage } from './pages/jfshome/jfshome.page';
 import { Geolocation } from '@capacitor/geolocation';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { SquliteSupportProviderService } from 'src/providers/squlite-support-provider.service';
@@ -30,7 +26,6 @@ declare var window: any;
 })
 export class AppComponent {
   myDate = new Date();
-  // alertCheck: boolean = false;
   userGroupsName = [];
   usersGroupsName: string;
   alertCtrl = new AlertController();
@@ -50,7 +45,6 @@ export class AppComponent {
     public menuCtrl: MenuController,
   ) {
     this.pages = [
-      { title: 'Home Page', component: '/JsfhomePage', icon: 'home' },
       {
         title: 'Existing Leads',
         component: '/ExistingPage',
@@ -61,7 +55,16 @@ export class AppComponent {
         component: '/ExistApplicationsPage',
         icon: 'documents',
       },
-      { title: 'Audit Log', component: '/audit-logs', icon: 'reader' },
+      {
+        title: 'Create Lead',
+        component: '/ProofVerification',
+        icon: 'person-add',
+      },
+      {
+        title: 'Audit Log',
+        component: '/audit-logs',
+        icon: 'reader'
+      },
     ];
     this.initializeApp();
     this.globalData.loginUser.subscribe((data) => this.getUsersGroupsNames());
@@ -303,7 +306,7 @@ export class AppComponent {
                   {
                     text: 'No',
                     role: 'cancel',
-                    handler: () => {},
+                    handler: () => { },
                   },
                   {
                     text: 'Yes',
@@ -390,107 +393,15 @@ export class AppComponent {
     navigator['app'].exitApp();
   }
 
-  async floderCreation() {
-    console.log('Folder Plugin triggered..,');
-    const directory =
-      +this.globFunc.getAndroidV() > 10
-        ? Directory.Documents
-        : Directory.External;
-    try {
-      // Attempt to read the directory
-      await Filesystem.readdir({
-        path: 'WebPImage',
-        directory: directory,
-      });
-      console.log('Folder already exists.');
-    } catch (e) {
-      // If the directory doesn't exist, create it
-      try {
-        const ret = await Filesystem.mkdir({
-          path: 'WebPImage',
-          directory: directory,
-          recursive: false,
-        });
-        console.log('Folder created:', ret);
-      } catch (error) {
-        console.error('Error creating folder:', error);
-      }
-    }
-  }
-
-  async floderCreationForAudit() {
-    console.log('Folder Plugin triggered..,');
-    const directory =
-      +this.globFunc.getAndroidV() > 10
-        ? Directory.Documents
-        : Directory.External;
-    try {
-      // Attempt to read the directory
-      await Filesystem.readdir({
-        path: 'AuditLog',
-        directory: directory,
-      });
-      console.log('Folder already exists.');
-    } catch (e) {
-      // If the directory doesn't exist, create it
-      try {
-        const ret = await Filesystem.mkdir({
-          path: 'AuditLog',
-          directory: directory,
-          recursive: false,
-        });
-        console.log('Folder created:', ret);
-      } catch (error) {
-        console.error('Error creating folder:', error);
-      }
-    }
-  }
-
   async openPage(page) {
-    // await this.getUserGroupsNames().then((data : any) => {
-    // if(data){
-    if (this.pages[4])
-      this.pages[4].title === page.title ? this.pages : this.pages.splice(4);
-    if (
-      page.title !== 'Vehicle Details' &&
-      page.title !== 'Nach Details' &&
-      page.title !== 'CASA Details' &&
-      page.title !== 'Lead Details' &&
-      page.title !== 'Posidex Details'
-    ) {
-      if (page.title == 'Existing Leads') {
-        if (
-          (this.usersGroupsName.includes('CRES') &&
-            this.usersGroupsName.includes('CPCOPS')) ||
-          this.usersGroupsName.includes('CRES')
-        ) {
-          this.router.navigate([page.component], {
-            queryParams: {
-              _leadStatus: 'online',
-              user: this.globFunc.basicDec(localStorage.getItem('username')),
-              branch: localStorage.getItem('janaCenter'),
-            },
-          });
-        } else {
-          this.globalData.showAlert(
-            'Alert!',
-            'This user is allowed to view lead!',
-          );
-          this.router.navigate(['/JsfhomePage'], {
-            skipLocationChange: true,
-            replaceUrl: true,
-          });
-        }
-      } else {
-        this.router.navigate([page.component], {
-          queryParams: {
-            _leadStatus: 'online',
-            user: this.globFunc.basicDec(localStorage.getItem('username')),
-            branch: localStorage.getItem('janaCenter'),
-          },
-        });
-      }
-    }
+    if (this.pages[4]) this.pages[4].title === page.title ? this.pages : this.pages.splice(4);
+    this.router.navigate([page.component], {
+      queryParams: {
+        _leadStatus: 'online',
+        user: this.globFunc.basicDec(localStorage.getItem('username')),
+        branch: localStorage.getItem('janaCenter'),
+      },
+    });
   }
 
   /**
