@@ -3,42 +3,56 @@
     <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-    <ion-title>Document View
+    <ion-title
+      >Document View
       <!-- <span (click)="homepage()">
         <ion-icon name="home" style="float:right;"></ion-icon>
       </span> -->
       <span (click)="closeModal()">
-        <ion-icon name="close-circle" style="float:right;"></ion-icon>
+        <ion-icon name="close-circle" style="float: right"></ion-icon>
       </span>
     </ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
-
-
 <ion-content class="ion-padding">
-
   <ion-list *ngFor="let doc of documents;let i=index">
     <ion-item>
-      <ion-row style="padding-left: 5px; width: 95%;; display: flex;align-items: center;">
-        <ion-col size="1" style="padding-top:5px !important">
-          <ion-icon style="color: #DA107E;" name="document" class="icon-zoom"></ion-icon>
+      <ion-row
+        style="
+          padding-left: 5px;
+          width: 95%;
+          display: flex;
+          align-items: center;
+        "
+      >
+        <ion-col size="1" style="padding-top: 5px !important">
+          <ion-icon
+            style="color: #da107e"
+            name="document"
+            class="icon-zoom"
+          ></ion-icon>
         </ion-col>
-        <ion-col size="9" style="padding: 10px !important;">
-          <div class="applName"><span style="font-weight: bold;">{{ doc.proofName }}</span> <br /> <span
-              style="font-weight: normal;">{{ this.globFunc.basicDec(doc.promoIDRef) | uppercase}}</span></div>
+        <ion-col size="9" style="padding: 10px !important">
+          <div class="applName">
+            <span style="font-weight: bold">{{ doc.proofName }}</span> <br />
+            <span style="font-weight: normal"
+              >{{ this.globFunc.basicDec(doc.promoIDRef) | uppercase}}</span
+            >
+          </div>
         </ion-col>
-        <ion-col size="2" style="text-align: center;">
-          <ion-button shape="round" class="docview" style="--background: #DA107E;"
-            (click)="viewIdProof(doc, doc.imgs)">
+        <ion-col size="2" style="text-align: center">
+          <ion-button
+            shape="round"
+            class="docview"
+            style="--background: #da107e"
+            (click)="viewIdProof(doc, doc.imgs)"
+          >
             <ion-icon name="camera"></ion-icon>
           </ion-button>
           <ion-badge class="count">{{doc.imgs.length}}</ion-badge>
-
         </ion-col>
       </ion-row>
     </ion-item>
   </ion-list>
-
 </ion-content>

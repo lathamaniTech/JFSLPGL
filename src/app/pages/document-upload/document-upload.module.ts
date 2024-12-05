@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { DocumentUploadPageRoutingModule } from './document-upload-routing.module';
 
 import { DocumentUploadPage } from './document-upload.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,9 +15,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     DocumentUploadPageRoutingModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [DocumentUploadPage]
+  declarations: [DocumentUploadPage],
 })
 export class DocumentUploadPageModule {}

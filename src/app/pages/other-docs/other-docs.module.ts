@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { OtherDocsPageRoutingModule } from './other-docs-routing.module';
 
 import { OtherDocsPage } from './other-docs.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 import { PipesModule } from 'src/modules/pipes/pipes.module';
 
@@ -17,11 +16,10 @@ import { PipesModule } from 'src/modules/pipes/pipes.module';
     FormsModule,
     IonicModule,
     OtherDocsPageRoutingModule,
-    SharedModule,
     ReactiveFormsModule,
     DirectivesModule,
-    PipesModule
+    PipesModule,
   ],
-  declarations: [OtherDocsPage]
+  declarations: [OtherDocsPage],
 })
 export class OtherDocsPageModule {}

@@ -5,38 +5,60 @@
     </ion-buttons>
     <ion-title>Other Documents</ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
 <ion-content class="padding">
   <h2 class="headtitel">Other Documents</h2>
-  <form [formGroup]="OtherDocData" (ngSubmit)="otherDocSave(OtherDocData.value)">
+  <form
+    [formGroup]="OtherDocData"
+    (ngSubmit)="otherDocSave(OtherDocData.value)"
+  >
     <ion-row>
       <ion-col size="4">
         <ion-item class="proofdes">
-          <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" placeholder="Doc-Type" formControlName="docType" [disabled]="addDocuments">
+          <ion-select
+            interface="popover"
+            [interfaceOptions]="customPopoverOptions"
+            placeholder="Doc-Type"
+            formControlName="docType"
+            [disabled]="addDocuments"
+          >
             <!-- <ion-select-option value="0">Other</ion-select-option>
             <ion-select-option value="1">Field-Visit</ion-select-option> -->
-            <ion-select-option *ngFor="let tit of titles;let i=index" [value]="tit.CODE">{{ tit.NAME }}</ion-select-option>
+            <ion-select-option
+              *ngFor="let tit of titles;let i=index"
+              [value]="tit.CODE"
+              >{{ tit.NAME }}</ion-select-option
+            >
           </ion-select>
         </ion-item>
       </ion-col>
       <ion-col size="4">
         <ion-item>
-          <ion-input type="text" placeholder="Description" formControlName="docDescription" autocapitalize="characters"
-            [disabled]="addDocuments"></ion-input>
+          <ion-input
+            type="text"
+            placeholder="Description"
+            formControlName="docDescription"
+            autocapitalize="characters"
+            [disabled]="addDocuments"
+          ></ion-input>
         </ion-item>
         <span
-          *ngIf="!OtherDocData.controls.docDescription.valid && (OtherDocData.controls.docDescription.dirty || OtherDocData.controls.docDescription.touched)">
+          *ngIf="!OtherDocData.controls.docDescription.valid && (OtherDocData.controls.docDescription.dirty || OtherDocData.controls.docDescription.touched)"
+        >
           <span class="errText">Enter Valid Description.</span>
         </span>
       </ion-col>
       <ion-col size="1" class="ion-text-center" (click)="attacheDocPic()">
-        <ion-icon color="headpart" style="zoom: 2.0;" name="images"></ion-icon>
+        <ion-icon color="headpart" style="zoom: 2" name="images"></ion-icon>
       </ion-col>
       <ion-col size="3" class="ion-text-center">
-        <ion-button style='padding-left: 3px;' class="proceedbtn" shape="round"
-          [disabled]="(OtherDocData.invalid) || addDocuments">
+        <ion-button
+          style="padding-left: 3px"
+          class="proceedbtn"
+          shape="round"
+          [disabled]="(OtherDocData.invalid) || addDocuments"
+        >
           Save
         </ion-button>
       </ion-col>
@@ -45,9 +67,18 @@
 
   <div class="segment02 top10">
     <ion-segment [(ngModel)]="submitType">
-      <ion-segment-button value="non-submit" class="proofPromo" style="margin-right: -4px;"
-        (click)="getNonSubmitDocDetails()">non-submit</ion-segment-button>
-      <ion-segment-button value="submited" class="ProofEntity" (click)="getSubmitDocDetails()">Submited
+      <ion-segment-button
+        value="non-submit"
+        class="proofPromo"
+        style="margin-right: -4px"
+        (click)="getNonSubmitDocDetails()"
+        >non-submit</ion-segment-button
+      >
+      <ion-segment-button
+        value="submited"
+        class="ProofEntity"
+        (click)="getSubmitDocDetails()"
+        >Submited
       </ion-segment-button>
     </ion-segment>
   </div>
@@ -60,9 +91,12 @@
       </ion-row>
     </ion-card>
     <ion-row *ngFor="let subDoc of submitedData;let i=index">
-      <ion-col size="6" class="ion-text-center" (click)="showSubmitData(i)">{{subDoc.docType | otherdocmap }}
+      <ion-col size="6" class="ion-text-center" (click)="showSubmitData(i)"
+        >{{subDoc.docType | otherdocmap }}
       </ion-col>
-      <ion-col size="6" class="ion-text-center" (click)="showSubmitData(i)">{{subDoc.docDescription}}</ion-col>
+      <ion-col size="6" class="ion-text-center" (click)="showSubmitData(i)"
+        >{{subDoc.docDescription}}</ion-col
+      >
     </ion-row>
   </div>
 
@@ -75,14 +109,17 @@
       </ion-row>
     </ion-card>
     <ion-row *ngFor="let docs of docsData;let i=index">
-      <ion-col size="4" class="ion-text-center" (click)="showData(i)">{{docs.docType | otherdocmap }}</ion-col>
-      <ion-col size="6" class="ion-text-center" (click)="showData(i)">{{docs.docDescription}}</ion-col>
+      <ion-col size="4" class="ion-text-center" (click)="showData(i)"
+        >{{docs.docType | otherdocmap }}</ion-col
+      >
+      <ion-col size="6" class="ion-text-center" (click)="showData(i)"
+        >{{docs.docDescription}}</ion-col
+      >
       <ion-col size="2" class="ion-text-center" (click)="deleteDoc(docs.docId)">
-        <ion-icon name="trash" style="zoom: 2.0;" color="danger"></ion-icon>
+        <ion-icon name="trash" style="zoom: 2" color="danger"></ion-icon>
       </ion-col>
     </ion-row>
   </div>
-
 </ion-content>
 
 <ion-footer *ngIf="submitType === 'non-submit'">

@@ -8,7 +8,6 @@ import { KarzaDetailsPageRoutingModule } from './karza-details-routing.module';
 
 import { KarzaDetailsPage } from './karza-details.page';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -19,9 +18,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     KarzaDetailsPageRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [KarzaDetailsPage]
+  declarations: [KarzaDetailsPage],
 })
 export class KarzaDetailsPageModule {}

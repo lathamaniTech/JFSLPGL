@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LmsPageRoutingModule } from './lms-routing.module';
 
 import { LmsPage } from './lms.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { PipesModule } from 'src/modules/pipes/pipes.module';
 
 @NgModule({
@@ -16,9 +15,8 @@ import { PipesModule } from 'src/modules/pipes/pipes.module';
     FormsModule,
     IonicModule,
     LmsPageRoutingModule,
-    SharedModule,
-    PipesModule
+    PipesModule,
   ],
-  declarations: [LmsPage]
+  declarations: [LmsPage],
 })
 export class LmsPageModule {}

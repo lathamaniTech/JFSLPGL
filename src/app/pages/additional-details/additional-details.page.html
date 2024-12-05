@@ -3,153 +3,275 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Property Details
+    <ion-title
+      >Property Details
       <span (click)="existPage()">
-        <ion-icon name="person" style="float:right;padding: 0px 5px;"></ion-icon>
+        <ion-icon
+          name="person"
+          style="float: right; padding: 0px 5px"
+        ></ion-icon>
       </span>
       <span (click)="homePage()">
-        <ion-icon name="home" style="float:right;margin-right: 15px; padding: 0px 5px;"></ion-icon>
+        <ion-icon
+          name="home"
+          style="float: right; margin-right: 15px; padding: 0px 5px"
+        ></ion-icon>
       </span>
     </ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
 <ion-content no-padding>
-  <form [formGroup]="additionalData" (ngSubmit)="additionalDatasave(additionalData.value)">
+  <form
+    [formGroup]="additionalData"
+    (ngSubmit)="additionalDatasave(additionalData.value)"
+  >
     <ion-item class="field">
-      <ion-label position="floating">Ownership Type
+      <ion-label position="floating"
+        >Ownership Type
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="ownType" [disabled]="submitDisable">
-        <ion-select-option *ngFor="let dummy of dummy_master;let i=index" value="{{ dummy.CODE }}">{{ dummy.NAME }}</ion-select-option>
+      <ion-select
+        interface="popover"
+        [interfaceOptions]="customPopoverOptions"
+        formControlName="ownType"
+        [disabled]="submitDisable"
+      >
+        <ion-select-option
+          *ngFor="let dummy of dummy_master;let i=index"
+          value="{{ dummy.CODE }}"
+          >{{ dummy.NAME }}</ion-select-option
+        >
       </ion-select>
     </ion-item>
-    <span *ngIf="!additionalData.controls.ownType.valid && (additionalData.controls.ownType.touched)">
+    <span
+      *ngIf="!additionalData.controls.ownType.valid && (additionalData.controls.ownType.touched)"
+    >
       <div class="errText">Must select Ownership Type.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">Name of first property owner
+      <ion-label position="floating"
+        >Name of first property owner
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="text" formControlName="owner" [disabled]="submitDisable"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="owner"
+        [disabled]="submitDisable"
+      ></ion-input>
     </ion-item>
-    <span *ngIf="!additionalData.controls.owner.valid && (additionalData.controls.owner.dirty || additionalData.controls.owner.touched)">
+    <span
+      *ngIf="!additionalData.controls.owner.valid && (additionalData.controls.owner.dirty || additionalData.controls.owner.touched)"
+    >
       <div class="errText">Enter Name of first property owner.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">Name of second property owner
-      </ion-label>
-      <ion-input type="text" formControlName="owner1" [disabled]="submitDisable"></ion-input>
+      <ion-label position="floating">Name of second property owner </ion-label>
+      <ion-input
+        type="text"
+        formControlName="owner1"
+        [disabled]="submitDisable"
+      ></ion-input>
     </ion-item>
-    <span *ngIf="!additionalData.controls.owner1.valid && (additionalData.controls.owner1.dirty || additionalData.controls.owner1.touched)">
+    <span
+      *ngIf="!additionalData.controls.owner1.valid && (additionalData.controls.owner1.dirty || additionalData.controls.owner1.touched)"
+    >
       <div class="errText">Enter Name of second property owner.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">Property Address 1 (Plot/House/Flat/Door No. & Street etc)
+      <ion-label position="floating"
+        >Property Address 1 (Plot/House/Flat/Door No. & Street etc)
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="text" formControlName="address1" [disabled]="submitDisable"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="address1"
+        [disabled]="submitDisable"
+      ></ion-input>
     </ion-item>
-    <span *ngIf="!additionalData.controls.address1.valid  && (additionalData.controls.address1.dirty || additionalData.controls.address1.touched)">
+    <span
+      *ngIf="!additionalData.controls.address1.valid  && (additionalData.controls.address1.dirty || additionalData.controls.address1.touched)"
+    >
       <div class="errText">Please Enter Property Address 1.</div>
     </span>
     <ion-item class="field">
-      <ion-label position="floating">Property Address 2 (Locality/Colony name)
+      <ion-label position="floating"
+        >Property Address 2 (Locality/Colony name)
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="text" formControlName="address2" [disabled]="submitDisable"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="address2"
+        [disabled]="submitDisable"
+      ></ion-input>
     </ion-item>
-    <span *ngIf="!additionalData.controls.address2.valid  && (additionalData.controls.address2.dirty || additionalData.controls.address2.touched)">
+    <span
+      *ngIf="!additionalData.controls.address2.valid  && (additionalData.controls.address2.dirty || additionalData.controls.address2.touched)"
+    >
       <div class="errText">Please Enter Property Address 2.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">State
+      <ion-label position="floating"
+        >State
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="states" [(ngModel)]="stateName" (ionChange)="stateChng()" [disabled]="submitDisable">
-        <ion-select-option *ngFor="let state of master_states;let i=index" [value]="state.stateCode">{{ state.stateName }}</ion-select-option>
+      <ion-select
+        interface="popover"
+        [interfaceOptions]="customPopoverOptions"
+        formControlName="states"
+        [(ngModel)]="stateName"
+        (ionChange)="stateChng()"
+        [disabled]="submitDisable"
+      >
+        <ion-select-option
+          *ngFor="let state of master_states;let i=index"
+          [value]="state.stateCode"
+          >{{ state.stateName }}</ion-select-option
+        >
       </ion-select>
     </ion-item>
-    <span *ngIf="!additionalData.controls.states.valid && (additionalData.controls.states.touched)">
+    <span
+      *ngIf="!additionalData.controls.states.valid && (additionalData.controls.states.touched)"
+    >
       <div class="errText">Must select State.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">City
+      <ion-label position="floating"
+        >City
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="cities" [disabled]="submitDisable">
-        <ion-select-option *ngFor="let city of master_cities;let i=index" [value]="city.cityCode">{{ city.cityName }}</ion-select-option>
+      <ion-select
+        interface="popover"
+        [interfaceOptions]="customPopoverOptions"
+        formControlName="cities"
+        [disabled]="submitDisable"
+      >
+        <ion-select-option
+          *ngFor="let city of master_cities;let i=index"
+          [value]="city.cityCode"
+          >{{ city.cityName }}</ion-select-option
+        >
       </ion-select>
     </ion-item>
-    <span *ngIf="!additionalData.controls.cities.valid && (additionalData.controls.cities.touched)">
+    <span
+      *ngIf="!additionalData.controls.cities.valid && (additionalData.controls.cities.touched)"
+    >
       <div class="errText">Must select City.</div>
     </span>
-    
-    
+
     <ion-item class="field">
-      <ion-label position="floating">District
+      <ion-label position="floating"
+        >District
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="district" [disabled]="submitDisable">
-        <ion-select-option *ngFor="let city of master_cities;let i=index" [value]="city.cityCode">{{ city.cityName }}</ion-select-option>
+      <ion-select
+        interface="popover"
+        [interfaceOptions]="customPopoverOptions"
+        formControlName="district"
+        [disabled]="submitDisable"
+      >
+        <ion-select-option
+          *ngFor="let city of master_cities;let i=index"
+          [value]="city.cityCode"
+          >{{ city.cityName }}</ion-select-option
+        >
       </ion-select>
     </ion-item>
-    <span *ngIf="!additionalData.controls.district.valid && (additionalData.controls.district.touched)">
+    <span
+      *ngIf="!additionalData.controls.district.valid && (additionalData.controls.district.touched)"
+    >
       <div class="errText">Must select District.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">Pincode
+      <ion-label position="floating"
+        >Pincode
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="tel" maxlength="6" formControlName="pincode" [disabled]="submitDisable"></ion-input>
+      <ion-input
+        type="tel"
+        maxlength="6"
+        formControlName="pincode"
+        [disabled]="submitDisable"
+      ></ion-input>
     </ion-item>
-    <span *ngIf="!additionalData.controls.pincode.valid  && (additionalData.controls.pincode.dirty || additionalData.controls.pincode.touched)">
+    <span
+      *ngIf="!additionalData.controls.pincode.valid  && (additionalData.controls.pincode.dirty || additionalData.controls.pincode.touched)"
+    >
       <div class="errText">Please Enter PinCode.</div>
     </span>
 
     <ion-item class="field">
-      <ion-label position="floating">Country
+      <ion-label position="floating"
+        >Country
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="text" formControlName="country" [disabled]="true" value="India"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="country"
+        [disabled]="true"
+        value="India"
+      ></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating">Landmark
+      <ion-label position="floating"
+        >Landmark
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="text" formControlName="landmark" [disabled]="submitDisable"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="landmark"
+        [disabled]="submitDisable"
+      ></ion-input>
     </ion-item>
-    <span *ngIf="!additionalData.controls.landmark.valid  && (additionalData.controls.landmark.dirty || additionalData.controls.landmark.touched)">
+    <span
+      *ngIf="!additionalData.controls.landmark.valid  && (additionalData.controls.landmark.dirty || additionalData.controls.landmark.touched)"
+    >
       <div class="errText">Please Enter Landmark.</div>
-    </span>   
-    
+    </span>
+
     <ion-item class="field">
-      <ion-label position="floating">Type of Property
+      <ion-label position="floating"
+        >Type of Property
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="property" [disabled]="submitDisable">
-        <ion-select-option *ngFor="let dummy of dummy_master;let i=index" value="{{ dummy.CODE }}">{{ dummy.NAME }}</ion-select-option>
+      <ion-select
+        interface="popover"
+        [interfaceOptions]="customPopoverOptions"
+        formControlName="property"
+        [disabled]="submitDisable"
+      >
+        <ion-select-option
+          *ngFor="let dummy of dummy_master;let i=index"
+          value="{{ dummy.CODE }}"
+          >{{ dummy.NAME }}</ion-select-option
+        >
       </ion-select>
     </ion-item>
-    <span *ngIf="!additionalData.controls.property.valid && (additionalData.controls.property.touched)">
+    <span
+      *ngIf="!additionalData.controls.property.valid && (additionalData.controls.property.touched)"
+    >
       <div class="errText">Must select Type of Property.</div>
     </span>
 
     <ion-row>
-      <ion-col style="text-align: center;">
+      <ion-col style="text-align: center">
         <div class="buttspace roundbtn">
-          <ion-button shape="round" type="submit" [disabled]="additionalData.invalid || submitDisable" style="--background: #FBA41D;">Save</ion-button>
+          <ion-button
+            shape="round"
+            type="submit"
+            [disabled]="additionalData.invalid || submitDisable"
+            style="--background: #fba41d"
+            >Save</ion-button
+          >
         </div>
       </ion-col>
     </ion-row>
   </form>
-
 </ion-content>

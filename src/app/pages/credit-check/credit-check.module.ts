@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { CreditCheckPageRoutingModule } from './credit-check-routing.module';
 
 import { CreditCheckPage } from './credit-check.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     CreditCheckPageRoutingModule,
-    SharedModule,
     DirectivesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [CreditCheckPage]
+  declarations: [CreditCheckPage],
 })
 export class CreditCheckPageModule {}

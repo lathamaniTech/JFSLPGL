@@ -8,7 +8,6 @@ import { FingerprintPageRoutingModule } from './fingerprint-routing.module';
 
 import { FingerprintPage } from './fingerprint.page';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 
 @NgModule({
   imports: [
@@ -18,8 +17,7 @@ import { SharedModule } from 'src/modules/sharedModule/sharedModule';
     FingerprintPageRoutingModule,
     ReactiveFormsModule,
     DirectivesModule,
-    SharedModule
   ],
-  declarations: [FingerprintPage]
+  declarations: [FingerprintPage],
 })
 export class FingerprintPageModule {}

@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { NomineeAfterPsPageRoutingModule } from './nominee-after-ps-routing.module';
 
 import { NomineeAfterPsPage } from './nominee-after-ps.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -17,9 +16,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     IonicModule,
     NomineeAfterPsPageRoutingModule,
     ReactiveFormsModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [NomineeAfterPsPage]
+  declarations: [NomineeAfterPsPage],
 })
 export class NomineeAfterPsPageModule {}
