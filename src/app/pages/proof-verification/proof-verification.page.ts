@@ -931,4 +931,11 @@ export class ProofVerificationPage {
     }
   }
 
+  pageClose() {
+    this.router.navigate(['/ExistingPage'], {
+      queryParams:
+        { username: localStorage.getItem('username') }, skipLocationChange: true, replaceUrl: true
+    });
+  }
+
 }
