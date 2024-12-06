@@ -11,12 +11,12 @@
       </span>
     </ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
 <ion-content padding>
 
-  <ion-searchbar *ngIf="showSearch" placeholder="Name, Application No, Date" (ionInput)="filterItems($event)">
+  <ion-searchbar *ngIf="showSearch" placeholder="Name, Application No, Date" (ionInput)="filterItems($event)"
+    show-clear-button="always" clear-icon="trash-bin">
   </ion-searchbar>
   <div class="existPlaceholder" *ngIf="nouserdata && (items.length == 0)">
     <h2>No Data Found!</h2>
@@ -31,9 +31,10 @@
     </h2>
   </div>
 
-  <ion-list *ngFor="let item of items;let i=index">
+  <ion-list *ngFor="let item of exLeads;let i=index">
     <ion-item-sliding #slidingItem>
       <ion-item *ngIf="nouserdata" lines="none">
+        <!-- <ion-item lines="none"> -->
         <ion-label style="color: black !important;">
           <div>
             <ion-row>
@@ -41,7 +42,7 @@
                 <ion-icon style="color: #DA107E;" name="person" class="icon-zoom"></ion-icon>
               </ion-col>
               <ion-col size="5">
-                <h3 class="applName">{{ item.firstname || item.enterName }}</h3>
+                <h3 class="applName">{{ item.firstname }}</h3>
                 <p class="applLeadNum">{{ item.appUniqueId }}
                   <span class="wifiIcon">
                     <ion-icon class="online" name="wifi" *ngIf="leadStatus === 'online'"></ion-icon>
@@ -103,24 +104,12 @@
                   <p class="cibilText">DOCUMENT<br />UPLOAD
                   </p>
                 </ion-col>
-                <!-- <ion-col class="coIcon" *ngIf="item.coAppFlag == 'Y'" (click)="viewCoDetails(item)">
-                  <ion-icon name="people" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">CO-APPLICANT
-                    <br>DETAILS
-                  </p>
-                </ion-col> -->
                 <ion-col class="coIcon" (click)="CASA(item)">
                   <ion-icon name="card" class="cibilIcons"></ion-icon>
                   <p class="cibilText">CASA
                     <br>DETAILS
                   </p>
                 </ion-col>
-                <!-- <ion-col class="coIcon" (click)="additional(item)" *ngIf="item.prdtype != 'u'">
-                  <ion-icon name="bicycle" class="cibilIcons"></ion-icon>
-                  <p class="cibilText">VEHICLE
-                    <br>DETAILS
-                  </p>
-                </ion-col> -->
                 <ion-col class="coIcon" (click)="referenceDetails(item)">
                   <ion-icon name="people" class="cibilIcons"></ion-icon>
                   <p class="cibilText">REFERENCE
@@ -150,5 +139,19 @@
     <ion-fab-button style="--background: #FBA41D;">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab class="ionfabicons" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button style="--background: #FBA41D;">
+      <ion-icon name="people"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start" (click)="newapplication()">
+      <ion-fab-button style="--background: #FBA41D;">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button style="--background: #FBA41D;" (click)="submittedApplicant()">
+        <ion-icon name="document-text"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

@@ -5,34 +5,46 @@
     </ion-buttons>
     <ion-title>E-NACH/NACH Details</ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
 <ion-content class="padding">
-
-  <form [formGroup]="nachDetails" (ngSubmit)="nachDetailsSave(nachDetails.value)">
-
+  <form
+    [formGroup]="nachDetails"
+    (ngSubmit)="nachDetailsSave(nachDetails.value)"
+  >
     <ion-item class="field" [disabled]="submitDisable">
-      <ion-label position="floating">Bank Name
+      <ion-label position="floating"
+        >Bank Name
         <span class="mandatory">*</span>
       </ion-label>
-      <ionic-selectable formControlName="nachBName" [(ngModel)]="nachBName" [items]="bankNames" itemValueField="CODE"
-        itemTextField="NAME" [canSearch]="true">
+      <ionic-selectable
+        formControlName="nachBName"
+        [(ngModel)]="nachBName"
+        [items]="bankNames"
+        itemValueField="CODE"
+        itemTextField="NAME"
+        [canSearch]="true"
+      >
       </ionic-selectable>
     </ion-item>
-    <div *ngIf="nachDetails.controls.nachBName.invalid && (nachDetails.controls.nachBName.touched)">
+    <div
+      *ngIf="nachDetails.controls.nachBName.invalid && (nachDetails.controls.nachBName.touched)"
+    >
       <span *ngIf="nachDetails.controls.nachBName.errors.required">
         <span class="errText">Must enter Bank Name.</span>
       </span>
     </div>
 
     <ion-item class="field" [disabled]="submitDisable">
-      <ion-label position="floating">Branch Name
+      <ion-label position="floating"
+        >Branch Name
         <span class="mandatory">*</span>
       </ion-label>
       <ion-input type="text" formControlName="nachBranName"></ion-input>
     </ion-item>
-    <div *ngIf="nachDetails.controls.nachBranName.invalid && (nachDetails.controls.nachBranName.touched)">
+    <div
+      *ngIf="nachDetails.controls.nachBranName.invalid && (nachDetails.controls.nachBranName.touched)"
+    >
       <span *ngIf="nachDetails.controls.nachBranName.errors.required">
         <span class="errText">Must enter Branch Name.</span>
       </span>
@@ -42,12 +54,19 @@
     </div>
 
     <ion-item class="field" [disabled]="submitDisable">
-      <ion-label position="floating">Account No.
+      <ion-label position="floating"
+        >Account No.
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="tel" maxlength="18" formControlName="nachACNumber"></ion-input>
+      <ion-input
+        type="tel"
+        maxlength="18"
+        formControlName="nachACNumber"
+      ></ion-input>
     </ion-item>
-    <div *ngIf="nachDetails.controls.nachACNumber.invalid && (nachDetails.controls.nachACNumber.touched)">
+    <div
+      *ngIf="nachDetails.controls.nachACNumber.invalid && (nachDetails.controls.nachACNumber.touched)"
+    >
       <span *ngIf="nachDetails.controls.nachACNumber.errors.required">
         <span class="errText">Must enter Account No.</span>
       </span>
@@ -55,18 +74,26 @@
         <span class="errText">Enter Valid Account No.</span>
       </span>
       <span
-        *ngIf="(nachDetails.controls.nachACNumber.errors?.minlength) || (nachDetails.controls.nachACNumber.errors?.maxlength)">
+        *ngIf="(nachDetails.controls.nachACNumber.errors?.minlength) || (nachDetails.controls.nachACNumber.errors?.maxlength)"
+      >
         <span class="errText">Minimum of 9 and Maximum of 17 Numbers.</span>
       </span>
     </div>
 
     <ion-item class="field" [disabled]="submitDisable">
-      <ion-label position="floating">IFSC Code
+      <ion-label position="floating"
+        >IFSC Code
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="text" formControlName="nachIFSC" (ionChange)="toUpperCase('nachDetails','nachIFSC')"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="nachIFSC"
+        (ionChange)="toUpperCase('nachDetails','nachIFSC')"
+      ></ion-input>
     </ion-item>
-    <div *ngIf="nachDetails.controls.nachIFSC.invalid && (nachDetails.controls.nachIFSC.touched)">
+    <div
+      *ngIf="nachDetails.controls.nachIFSC.invalid && (nachDetails.controls.nachIFSC.touched)"
+    >
       <span *ngIf="nachDetails.controls.nachIFSC.errors.required">
         <span class="errText">Must enter IFSC Code.</span>
       </span>
@@ -79,27 +106,40 @@
     </div>
 
     <ion-item class="field" [disabled]="submitDisable">
-      <ion-label position="floating">Account Type
+      <ion-label position="floating"
+        >Account Type
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" formControlName="nachAcType">
-        <ion-select-option *ngFor="let ac of nachaccounttype;let i=index" [value]="ac.CODE">{{ ac.NAME }}
+      <ion-select
+        interface="popover"
+        [interfaceOptions]="customPopoverOptions"
+        formControlName="nachAcType"
+      >
+        <ion-select-option
+          *ngFor="let ac of nachaccounttype;let i=index"
+          [value]="ac.CODE"
+          >{{ ac.NAME }}
         </ion-select-option>
       </ion-select>
     </ion-item>
-    <div *ngIf="nachDetails.controls.nachAcType.invalid && (nachDetails.controls.nachAcType.touched)">
+    <div
+      *ngIf="nachDetails.controls.nachAcType.invalid && (nachDetails.controls.nachAcType.touched)"
+    >
       <span *ngIf="nachDetails.controls.nachAcType.errors.required">
         <span class="errText">Must enter Bank Name.</span>
       </span>
     </div>
 
     <ion-item class="field" [disabled]="submitDisable">
-      <ion-label position="floating">Account Holder Name
+      <ion-label position="floating"
+        >Account Holder Name
         <span class="mandatory">*</span>
       </ion-label>
       <ion-input type="text" formControlName="nachACName"></ion-input>
     </ion-item>
-    <div *ngIf="nachDetails.controls.nachACName.invalid && (nachDetails.controls.nachACName.touched)">
+    <div
+      *ngIf="nachDetails.controls.nachACName.invalid && (nachDetails.controls.nachACName.touched)"
+    >
       <span *ngIf="nachDetails.controls.nachACName.errors.required">
         <span class="errText">Must enter Account Holder Name.</span>
       </span>
@@ -112,28 +152,35 @@
       <ion-col>
         <ion-fab horizontal="start">
           <div class="fabBadge">{{nachImglen}}</div>
-          <ion-fab-button style="--background: #FBA41D;" (click)="showpicmaodal('nachcheque')">
+          <ion-fab-button
+            style="--background: #fba41d"
+            (click)="showpicmaodal('nachcheque')"
+          >
             <ion-icon name="cash"></ion-icon>
           </ion-fab-button>
         </ion-fab>
 
         <ion-fab horizontal="end">
           <div class="fabBadge">{{nachStateImglen}}</div>
-          <ion-fab-button style="--background: #FBA41D;" (click)="showpicmaodal('nachState')">
+          <ion-fab-button
+            style="--background: #fba41d"
+            (click)="showpicmaodal('nachState')"
+          >
             <ion-icon name="newspaper"></ion-icon>
           </ion-fab-button>
         </ion-fab>
 
         <div class="buttspace roundbtn">
-          <ion-button class="proceedbtn" type="submit" shape="round"
-            [disabled]="(nachDetails.invalid) || submitDisable">
+          <ion-button
+            class="proceedbtn"
+            type="submit"
+            shape="round"
+            [disabled]="(nachDetails.invalid) || submitDisable"
+          >
             Save
           </ion-button>
         </div>
       </ion-col>
     </ion-row>
-
-
   </form>
-
 </ion-content>

@@ -7,9 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ImddetailsPageRoutingModule } from './imddetails-routing.module';
 
 import { ImddetailsPage } from './imddetails.page';
-import { StatusComponent } from 'src/app/components/status/status.component';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
@@ -20,9 +18,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     ReactiveFormsModule,
     DirectivesModule,
     ImddetailsPageRoutingModule,
-    SharedModule,
-    IonicSelectableModule
+    IonicSelectableModule,
   ],
-  declarations: [ImddetailsPage]
+  declarations: [ImddetailsPage],
 })
 export class ImddetailsPageModule {}

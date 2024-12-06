@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { ServiceAfterPsPageRoutingModule } from './service-after-ps-routing.module';
 
 import { ServiceAfterPsPage } from './service-after-ps.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     ServiceAfterPsPageRoutingModule,
-    SharedModule,
     ReactiveFormsModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [ServiceAfterPsPage]
+  declarations: [ServiceAfterPsPage],
 })
 export class ServiceAfterPsPageModule {}

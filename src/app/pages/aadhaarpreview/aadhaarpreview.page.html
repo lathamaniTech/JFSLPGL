@@ -5,7 +5,6 @@
     </ion-buttons>
     <ion-title>Aadhaar Details</ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -13,7 +12,7 @@
     <legend>Personal Details</legend>
     <ion-row>
       <ion-col size="5">
-        <p class="profile-img"><img src="assets/imgs/profile-img.png"></p>
+        <p class="profile-img"><img src="assets/imgs/profile-img.png" /></p>
       </ion-col>
       <ion-col size="4">
         <p class="label">Name</p>
@@ -61,20 +60,29 @@
       </ion-col>
     </ion-row>
   </fieldset>
-
 </ion-content>
 
 <ion-footer>
-  <div class="buttspace roundbtn" style="text-align:center">
+  <div class="buttspace roundbtn" style="text-align: center">
     Would you like to use Aadhaar Data in Lead Process?
     <!--<button ion-button round (click)="presentLoadingCustom()" color="jsfgoald">Proceed</button>-->
   </div>
   <ion-row>
-    <ion-col size="6" style="text-align: center;">
-      <ion-button shape="round" (click)="presentLoadingCustomNo()" style="--background: #FBA41D;">No</ion-button>
+    <ion-col size="6" style="text-align: center">
+      <ion-button
+        shape="round"
+        (click)="presentLoadingCustomNo()"
+        style="--background: #fba41d"
+        >No</ion-button
+      >
     </ion-col>
-    <ion-col size="6" style="text-align: center;">
-      <ion-button shape="round" (click)="presentLoadingCustomYes()" style="--background: #FBA41D;">Yes</ion-button>
+    <ion-col size="6" style="text-align: center">
+      <ion-button
+        shape="round"
+        (click)="presentLoadingCustomYes()"
+        style="--background: #fba41d"
+        >Yes</ion-button
+      >
     </ion-col>
   </ion-row>
 </ion-footer>

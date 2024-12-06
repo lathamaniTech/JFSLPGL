@@ -3,15 +3,18 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Score Card
+    <ion-title
+      >Score Card
       <span>
-        <ion-icon (click)="homePage()" name="home" style="float:right;margin-right: 10px; zoom:1.3"></ion-icon>
+        <ion-icon
+          (click)="homePage()"
+          name="home"
+          style="float: right; margin-right: 10px; zoom: 1.3"
+        ></ion-icon>
       </span>
     </ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
-
 
 <ion-content class="content">
   <div class="existPlaceholder" *ngIf="sanctionedAmt === 0 && emi === 0">
@@ -21,40 +24,69 @@
     <div class="scoreResult" *ngIf="sanctionedAmt">
       Sanctioned Amount : <span>{{sanctionedAmt}}</span>
     </div>
-    <div class="scoreResult" *ngIf="emi">
-      Emi : <span>{{emi}}</span>
-    </div>
+    <div class="scoreResult" *ngIf="emi">Emi : <span>{{emi}}</span></div>
   </div>
 </ion-content>
-<ion-footer *ngIf="!showManualUser" style="background: white;">
-  <div *ngIf="this.checked==='N'" style="text-align: center;">
-    <ion-button class="proceedbtn" (click)="checkScoreCard()">Check Score Card</ion-button>
+<ion-footer *ngIf="!showManualUser" style="background: white">
+  <div *ngIf="this.checked==='N'" style="text-align: center">
+    <ion-button class="proceedbtn" (click)="checkScoreCard()"
+      >Check Score Card</ion-button
+    >
   </div>
-  <div *ngIf="this.checked==='Y' && this.isAutoApprovalFlag === false"
-    style="text-align: center;">
-    <ion-button class="proceedbtn" expand="full" (click)="fieldInvestigation()">Submit For Field
-      Investigation</ion-button>
+  <div
+    *ngIf="this.checked==='Y' && this.isAutoApprovalFlag === false"
+    style="text-align: center"
+  >
+    <ion-button class="proceedbtn" expand="full" (click)="fieldInvestigation()"
+      >Submit For Field Investigation</ion-button
+    >
   </div>
-  <div *ngIf="this.checked==='Y' && this.isAutoApprovalFlag && this.autoAppStat==='0'"
-    style="text-align: center;">
-    <ion-button class="proceedbtn" expand="full" (click)="autoApproval()">Submit For Auto Approval</ion-button>
+  <div
+    *ngIf="this.checked==='Y' && this.isAutoApprovalFlag && this.autoAppStat==='0'"
+    style="text-align: center"
+  >
+    <ion-button class="proceedbtn" expand="full" (click)="autoApproval()"
+      >Submit For Auto Approval</ion-button
+    >
   </div>
-  <div *ngIf="this.checked==='Y' && this.autoAppStat==='1'" style="text-align: center;">
-    <ion-button class="proceedbtn" expand="full" (click)="postSubmission()" [disabled]="this.postSanctionStat === '1'">
+  <div
+    *ngIf="this.checked==='Y' && this.autoAppStat==='1'"
+    style="text-align: center"
+  >
+    <ion-button
+      class="proceedbtn"
+      expand="full"
+      (click)="postSubmission()"
+      [disabled]="this.postSanctionStat === '1'"
+    >
       Proceed to Post Sanction
     </ion-button>
   </div>
 </ion-footer>
-<div *ngIf="showManualUser" style="position: relative;top: 10%;">
+<div *ngIf="showManualUser" style="position: relative; top: 10%">
   <ion-item class="field">
-    <ion-label position="floating">Choose user for manual approval <span class=" mandatory">*</span></ion-label>
-    <ion-select interface="popover" [interfaceOptions]="customPopoverOptions" (ionChange)="onUserChange($event)">
-      <ion-select-option *ngFor="let op of manualUserList;let i=index" [value]="op.UserGroup">{{op.UserGroupName}}
+    <ion-label position="floating"
+      >Choose user for manual approval
+      <span class="mandatory">*</span></ion-label
+    >
+    <ion-select
+      interface="popover"
+      [interfaceOptions]="customPopoverOptions"
+      (ionChange)="onUserChange($event)"
+    >
+      <ion-select-option
+        *ngFor="let op of manualUserList;let i=index"
+        [value]="op.UserGroup"
+        >{{op.UserGroupName}}
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <div class="buttspace roundbtn" style="text-align: center;">
-    <ion-button class="proceedbtn" [disabled]="disableManualApprvalBtn" (click)="this.ManualApprovalCall()">
+  <div class="buttspace roundbtn" style="text-align: center">
+    <ion-button
+      class="proceedbtn"
+      [disabled]="disableManualApprvalBtn"
+      (click)="this.ManualApprovalCall()"
+    >
       Submit
     </ion-button>
     <!--ManualApprovalCall()-->

@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { CibilCheckPageRoutingModule } from './cibil-check-routing.module';
 
 import { CibilCheckPage } from './cibil-check.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,9 +15,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     CibilCheckPageRoutingModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [CibilCheckPage]
+  declarations: [CibilCheckPage],
 })
 export class CibilCheckPageModule {}

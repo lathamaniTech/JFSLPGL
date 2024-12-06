@@ -5,21 +5,24 @@
     </ion-buttons>
     <ion-title>Lead Details</ion-title>
   </ion-toolbar>
-  <app-status></app-status>
 </ion-header>
 
 <ion-content no-padding>
   <div class="existPlaceholder" *ngIf="!nouserdata && applType === 'guaran'">
-    <h2>To add New<br />
+    <h2>
+      To add New<br />
       Guarantor, tap
-      <ion-icon name="add"></ion-icon> button <br /> at the bottom
+      <ion-icon name="add"></ion-icon> button <br />
+      at the bottom
     </h2>
   </div>
 
   <div class="existPlaceholder" *ngIf="!noCoappData && applType === 'coapp'">
-    <h2>To add New<br />
+    <h2>
+      To add New<br />
       Co-Applicant, tap
-      <ion-icon name="add"></ion-icon> button <br /> at the bottom
+      <ion-icon name="add"></ion-icon> button <br />
+      at the bottom
     </h2>
   </div>
 
@@ -27,11 +30,19 @@
     <ion-row>
       <ion-col size="3" class="profile">
         <p class="takepic">
-          <img src="assets/imgs/profile.png" *ngIf="!(userInfo.profPic)" class="userimg">
-          <img [src]="userInfo.profPic" *ngIf="(userInfo.profPic)" class="userimg">
+          <img
+            src="assets/imgs/profile.png"
+            *ngIf="!(userInfo.profPic)"
+            class="userimg"
+          />
+          <img
+            [src]="userInfo.profPic"
+            *ngIf="(userInfo.profPic)"
+            class="userimg"
+          />
         </p>
       </ion-col>
-      <ion-col size="9" style="padding:20px">
+      <ion-col size="9" style="padding: 20px">
         <p class="currency">₹{{userInfo.loanAmount}}</p>
         <p class="PromoterName">{{userInfo.firstname || userInfo.enterName}}</p>
         <p class="promoInfo">{{userInfo.branch}}</p>
@@ -40,21 +51,34 @@
     </ion-row>
   </ion-card>
 
-  <div class="segment002 top10" *ngIf="userInfo.coAppFlag === 'Y' && userInfo.guaFlag === 'Y'">
+  <div
+    class="segment002 top10"
+    *ngIf="userInfo.coAppFlag === 'Y' && userInfo.guaFlag === 'Y'"
+  >
     <ion-segment [(ngModel)]="applType">
-      <ion-segment-button value="coapp" style="margin-right: -4px;">Co-Applicant</ion-segment-button>
-      <ion-segment-button value="guaran" style="margin-right: -4px;">Guarantor</ion-segment-button>
+      <ion-segment-button value="coapp" style="margin-right: -4px"
+        >Co-Applicant</ion-segment-button
+      >
+      <ion-segment-button value="guaran" style="margin-right: -4px"
+        >Guarantor</ion-segment-button
+      >
     </ion-segment>
   </div>
 
-  <ion-card style="--background: #DA107E;" *ngIf="userInfo.coAppFlag === 'Y' && userInfo.guaFlag === 'N'">
-    <h2 class="ion-text-center" style="color: white;">
+  <ion-card
+    style="--background: #da107e"
+    *ngIf="userInfo.coAppFlag === 'Y' && userInfo.guaFlag === 'N'"
+  >
+    <h2 class="ion-text-center" style="color: white">
       <b>Co-Applicant Details</b>
     </h2>
   </ion-card>
 
-  <ion-card style="--background: #DA107E;" *ngIf="userInfo.coAppFlag === 'N' && userInfo.guaFlag === 'Y'">
-    <h2 class="ion-text-center" style="color: white;">
+  <ion-card
+    style="--background: #da107e"
+    *ngIf="userInfo.coAppFlag === 'N' && userInfo.guaFlag === 'Y'"
+  >
+    <h2 class="ion-text-center" style="color: white">
       <b>Guarantor Details</b>
     </h2>
   </ion-card>
@@ -66,34 +90,57 @@
           <ion-card (click)="passGuaDetails(gurantor)" *ngIf="nouserdata">
             <ion-row>
               <ion-col size="3">
-                <img src="assets/imgs/profile.png" *ngIf="!(gurantor.profPic)" class="userimg">
-                <img [src]="gurantor.profPic" *ngIf="(gurantor.profPic)" class="userimg">
+                <img
+                  src="assets/imgs/profile.png"
+                  *ngIf="!(gurantor.profPic)"
+                  class="userimg"
+                />
+                <img
+                  [src]="gurantor.profPic"
+                  *ngIf="(gurantor.profPic)"
+                  class="userimg"
+                />
               </ion-col>
               <ion-col size="9">
                 <h3 class="applName">{{ gurantor.firstname }}</h3>
                 <ion-row>
                   <ion-col>
-                    <p class="applLeadNum">{{ this.globFunc.basicDec(gurantor.panNum) || this.globFunc.basicDec(gurantor.docvalue) || gurantor.aadharNum }}</p>
+                    <p class="applLeadNum">
+                      {{ this.globFunc.basicDec(gurantor.panNum) ||
+                      this.globFunc.basicDec(gurantor.docvalue) ||
+                      gurantor.aadharNum }}
+                    </p>
                   </ion-col>
                   <ion-col>
-                    <p class="applLeadNum">{{ this.globFunc.basicDec(gurantor.mobNum) }}</p>
+                    <p class="applLeadNum">
+                      {{ this.globFunc.basicDec(gurantor.mobNum) }}
+                    </p>
                   </ion-col>
                 </ion-row>
               </ion-col>
-
             </ion-row>
           </ion-card>
         </ion-item>
         <ion-item-options side="end">
-          <ion-button color="danger" (click)="removeGuaUser(gurantor)" style="height: auto;">
+          <ion-button
+            color="danger"
+            (click)="removeGuaUser(gurantor)"
+            style="height: auto"
+          >
             <ion-icon name="trash" class="icon-size"></ion-icon>Delete
           </ion-button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
 
-    <ion-fab class="ionfabicons" slot="fixed" vertical="bottom" horizontal="end" (click)="addguarantorDetails()">
-      <ion-fab-button style="--background: #FBA41D;">
+    <ion-fab
+      class="ionfabicons"
+      slot="fixed"
+      vertical="bottom"
+      horizontal="end"
+      (click)="addguarantorDetails()"
+    >
+      <ion-fab-button style="--background: #fba41d">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -106,14 +153,24 @@
           <ion-card (click)="passCoappDetails(coapp)" *ngIf="noCoappData">
             <ion-row>
               <ion-col size="3">
-                <img src="assets/imgs/profile.png" *ngIf="!(coapp.profPic)" class="userimg">
-                <img [src]="coapp.profPic" *ngIf="(coapp.profPic)" class="userimg">
+                <img
+                  src="assets/imgs/profile.png"
+                  *ngIf="!(coapp.profPic)"
+                  class="userimg"
+                />
+                <img
+                  [src]="coapp.profPic"
+                  *ngIf="(coapp.profPic)"
+                  class="userimg"
+                />
               </ion-col>
-              <ion-col size="9" style="padding:20px">
+              <ion-col size="9" style="padding: 20px">
                 <h3 class="applName">{{ coapp.firstname }}</h3>
                 <ion-row>
                   <ion-col>
-                    <p class="applLeadNum">{{ this.globFunc.basicDec(coapp.mobNum) }}</p>
+                    <p class="applLeadNum">
+                      {{ this.globFunc.basicDec(coapp.mobNum) }}
+                    </p>
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -121,19 +178,27 @@
           </ion-card>
         </ion-item>
         <ion-item-options side="end">
-          <ion-button color="danger" (click)="removeCoappUser(coapp)" style="height: auto;">
+          <ion-button
+            color="danger"
+            (click)="removeCoappUser(coapp)"
+            style="height: auto"
+          >
             <ion-icon name="trash" class="icon-size"></ion-icon>Delete
           </ion-button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
 
-    <ion-fab class="ionfabicons" slot="fixed" vertical="bottom" horizontal="end" (click)="addCoappDetails()">
-      <ion-fab-button style="--background: #FBA41D;">
+    <ion-fab
+      class="ionfabicons"
+      slot="fixed"
+      vertical="bottom"
+      horizontal="end"
+      (click)="addCoappDetails()"
+    >
+      <ion-fab-button style="--background: #fba41d">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </div>
-
 </ion-content>
-

@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { VehicleDetailsPageRoutingModule } from './vehicle-details-routing.module';
 
 import { VehicleDetailsPage } from './vehicle-details.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     VehicleDetailsPageRoutingModule,
-    SharedModule,
     DirectivesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [VehicleDetailsPage]
+  declarations: [VehicleDetailsPage],
 })
 export class VehicleDetailsPageModule {}

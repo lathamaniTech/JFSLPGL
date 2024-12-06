@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { ReferenceDetailsPageRoutingModule } from './reference-details-routing.module';
 
 import { ReferenceDetailsPage } from './reference-details.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -17,9 +16,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     IonicModule,
     ReferenceDetailsPageRoutingModule,
     ReactiveFormsModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [ReferenceDetailsPage]
+  declarations: [ReferenceDetailsPage],
 })
 export class ReferenceDetailsPageModule {}

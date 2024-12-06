@@ -7,6 +7,7 @@ import { DataPassingProviderService } from 'src/providers/data-passing-provider.
 import { GlobalService } from 'src/providers/global.service';
 import { SqliteService } from 'src/providers/sqlite.service';
 import { SquliteSupportProviderService } from 'src/providers/squlite-support-provider.service';
+import { Network } from '@awesome-cordova-plugins/network/ngx';
 //7231222161141064
 @Component({
   selector: 'app-existing',
@@ -52,15 +53,12 @@ export class ExistingPage {
   itemslist: any[] = [];
   naveParamsValue: any;
 
-  constructor(public navCtrl: NavController,
+  constructor(public navCtrl: NavController, public network: Network,
     public navParams: NavParams, public modalCtrl: ModalController,
     public sqliteProvider: SqliteService, public globalData: DataPassingProviderService,
     public alertCtrl: AlertController, public loadCtrl: LoadingController,
     public globFunc: GlobalService,
-    // public events: Events,
     public http: HTTP, public platform: Platform,
-    // public ionicApp: IonicApp,
-    // public global: GlobalfunctionsProvider
     public sqlSupport: SquliteSupportProviderService, public activateRoute: ActivatedRoute,
     public router: Router) {
 
@@ -74,13 +72,10 @@ export class ExistingPage {
     this.leadStatus = this.naveParamsValue._leadStatus || "online";
     this.submitUrl = environment.apiURL + "LeadDetails";
     this.getproducts();
-    // this.username = this.globalData.getusername();
     this.username = this.globFunc.basicDec(localStorage.getItem('username'));
-
     this.sqliteProvider.getOrganisation().then(data => {
       this.org_master = data;
     })
-
     if (this.naveParamsValue._leadStatus) {
       if (this.leadStatus == "online") {
         this.online = true;
@@ -98,8 +93,6 @@ export class ExistingPage {
     this.globalData.setrefId("");
     this.globalData.setId("");
     this.globalData.setloanType("");
-    // this.globalData.setborrowerType("");
-    // this.globalData.setURN('');
     this.globalData.setCustType('');
     this.globalData._EditSaveStatus = [];
     localStorage.setItem('leadId', '');
@@ -110,55 +103,25 @@ export class ExistingPage {
     localStorage.setItem('Present', '');
     localStorage.setItem('Proof', '');
   }
-  ionViewWillLeave() {
-    // this.platform.registerBackButtonAction(() => {
-    //   let activePortal =
-    //     this.ionicApp._modalPortal.getActive() ||
-    //     this.ionicApp._overlayPortal.getActive();
-    //   if (activePortal) {
-    //     activePortal.dismiss();
-    //   } else {
-    //     this.navCtrl.pop();
-    //   }
-    // });
-  }
+  ionViewWillLeave() { }
 
-  ionViewDidEnter() {
-    // this.platform.registerBackButtonAction(() => {
-    //   this.navCtrl.push(JsfhomePage);
-    // });
-    this.globFunc.statusbarValuesForPages();
-  }
-
-
-
-
-  getNachaccList() {
-    this.sqliteProvider.getMasterDataUsingType('Nachaccounttype').then(data => {
-      this.nachAccnType = data;
-      console.log('Nach details from master ', this.nachAccnType)
-    })
-  }
-
-
-
-
+  ionViewDidEnter() { }
 
   newapplication() {
-    this.userType = "A";
-    this.globalData.setgId("");
-    this.globalData.setborrowerType(this.userType);
-    this.router.navigate(['/home'], { queryParams: { userType: this.userType },skipLocationChange: true, replaceUrl: true })
-  }
-  home() {
-    this.router.navigate(['/JsfhomePage'],{skipLocationChange: true, replaceUrl: true})
+    if (this.network.type == 'none' || this.network.type == "unknown") {
+      this.leadStatus = "online";
+      this.userType = "A";
+      this.globalData.setborrowerType(this.userType);
+      this.globalData.setCustType('N');
+      this.router.navigate(['/ProofVerification'], { queryParams: { userType: this.userType, leadStatus: this.leadStatus }, skipLocationChange: true, replaceUrl: true });
+    }
   }
 
   docsUpload(item) {
     this.globalData.setborrowerType(item.userType);
     this.globalData.setrefId(item.refId);
     this.globalData.setId(item.id);
-    this.router.navigate(['/OtherDocsPage'],{skipLocationChange: true, replaceUrl: true})
+    this.router.navigate(['/OtherDocsPage'], { skipLocationChange: true, replaceUrl: true })
   }
 
   expandItem(item) {
@@ -183,7 +146,7 @@ export class ExistingPage {
             let himarkCheck = coapp.filter(data => data.himarkCheckStat == '0');
             if (cibilCheck.length == 0) {
               if (himarkCheck.length == 0) {
-                this.router.navigate(['/DocumentUploadPage'], { queryParams: { viewData: JSON.stringify(item) },skipLocationChange: true, replaceUrl: true })
+                this.router.navigate(['/DocumentUploadPage'], { queryParams: { viewData: JSON.stringify(item) }, skipLocationChange: true, replaceUrl: true })
               } else {
                 this.globalData.showAlert("Alert!", "Please Check the Co-Applicant's Hi-Mark Status!");
               }
@@ -197,7 +160,7 @@ export class ExistingPage {
               let himarkCheckStat = data[0].himarkCheckStat;
               if (cibilCheckStat == '1') {
                 if (himarkCheckStat == '1') {
-                  this.router.navigate(['/DocumentUploadPage'], { queryParams: { viewData: JSON.stringify(item) },skipLocationChange: true, replaceUrl: true })
+                  this.router.navigate(['/DocumentUploadPage'], { queryParams: { viewData: JSON.stringify(item) }, skipLocationChange: true, replaceUrl: true })
 
                 } else {
                   this.globalData.showAlert("Alert!", "Please Check the Applicant's Hi-Mark Status!");
@@ -236,7 +199,7 @@ export class ExistingPage {
               this.globalData.setJanaCenter(item.janaCenter);
               this.globalData.setCustomerType(item.customerType);
               localStorage.setItem('leadId', item.coAppGuaId);
-              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" },skipLocationChange: true, replaceUrl: true })
+              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" }, skipLocationChange: true, replaceUrl: true })
             } else {
               this.globalData.setborrowerType(item.userType);
               this.globalData.setrefId(item.refId);
@@ -247,7 +210,7 @@ export class ExistingPage {
               this.globalData.setJanaCenter(item.janaCenter);
               localStorage.setItem('leadId', item.coAppGuaId);
               this.globalData.setCustomerType(item.customerType);
-              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" },skipLocationChange: true, replaceUrl: true })
+              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" }, skipLocationChange: true, replaceUrl: true })
             }
           } else {
             this.globalData.setborrowerType(item.userType);
@@ -259,7 +222,7 @@ export class ExistingPage {
             this.globalData.setJanaCenter(item.janaCenter);
             localStorage.setItem('leadId', item.coAppGuaId);
             this.globalData.setCustomerType(item.customerType);
-            this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" },skipLocationChange: true, replaceUrl: true })
+            this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" }, skipLocationChange: true, replaceUrl: true })
           }
         });
       } else {
@@ -276,7 +239,7 @@ export class ExistingPage {
               this.globalData.setJanaCenter(item.janaCenter);
               localStorage.setItem('leadId', item.coAppGuaId);
               this.globalData.setCustomerType(item.customerType);
-              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" },skipLocationChange: true, replaceUrl: true })
+              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" }, skipLocationChange: true, replaceUrl: true })
             } else {
               this.globalData.setborrowerType(item.userType);
               this.globalData.setrefId(item.refId);
@@ -286,7 +249,7 @@ export class ExistingPage {
               this.globalData.setJanaCenter(item.janaCenter);
               localStorage.setItem('leadId', item.coAppGuaId);
               this.globalData.setCustomerType(item.customerType);
-              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" },skipLocationChange: true, replaceUrl: true })
+              this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" }, skipLocationChange: true, replaceUrl: true })
             }
           } else {
             this.globalData.setborrowerType(item.userType);
@@ -297,7 +260,7 @@ export class ExistingPage {
             this.globalData.setJanaCenter(item.janaCenter);
             localStorage.setItem('leadId', item.coAppGuaId);
             this.globalData.setCustomerType(item.customerType);
-            this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" },skipLocationChange: true, replaceUrl: true })
+            this.router.navigate(['/NewapplicationPage'], { queryParams: { appRefValue: JSON.stringify(item), usertype: "A" }, skipLocationChange: true, replaceUrl: true })
           }
         });
       }
@@ -317,7 +280,7 @@ export class ExistingPage {
                 this.globalData.setborrowerType(item.userType);
                 this.globalData.setrefId(item.refId);
                 this.globalData.setId(item.id);
-                this.router.navigate(['/AssetTabsPage'],{skipLocationChange: true, replaceUrl: true});
+                this.router.navigate(['/AssetTabsPage'], { skipLocationChange: true, replaceUrl: true });
               } else {
                 this.globalData.showAlert("Alert!", "Please complete CASA details!");
               }
@@ -326,7 +289,7 @@ export class ExistingPage {
             this.globalData.setborrowerType(item.userType);
             this.globalData.setrefId(item.refId);
             this.globalData.setId(item.id);
-            this.router.navigate(['/AssetTabsPage'],{skipLocationChange: true, replaceUrl: true});
+            this.router.navigate(['/AssetTabsPage'], { skipLocationChange: true, replaceUrl: true });
           }
         } else {
           this.globalData.showAlert("Alert!", "Please complete CASA details!");
@@ -389,9 +352,6 @@ export class ExistingPage {
         this.items[i].janaLoanName = this.getLoanName(this.items[i].janaLoan);
         this.items[i].inputDate = this.convertDate(this.items[i].createdDate);
         this.items[i].age = this.ageCalc(this.items[i].dob);
-        // if (this.items[i].age >= 18 && this.items[i].age <= 21 || this.items[i].age >= 60) {
-        //   this.sqliteProvider.updateBasicDetailsForCoApp(this.items[i].id);
-        // }
       }
       console.log(this.items, 'all applicant');
       if (this.items.length > 0) {
@@ -429,7 +389,7 @@ export class ExistingPage {
               console.log(`cibil data ===>${JSON.stringify(data)}`);
               this.globalData.setCustomerType(item.customerType);
               this.globalData.setUniqueId(data[0].rootId);
-              this.router.navigate(['/CibilcheckPage'], { queryParams: { viewData: JSON.stringify(item) },skipLocationChange: true, replaceUrl: true })
+              this.router.navigate(['/CibilcheckPage'], { queryParams: { viewData: JSON.stringify(item) }, skipLocationChange: true, replaceUrl: true })
             });
           } else {
             this.globalData.showAlert("Alert!", "Please complete Applicant address details!");
@@ -437,26 +397,6 @@ export class ExistingPage {
         })
       }
     });
-    // this.sqliteProvider.getPersonalDetails(item.refId, item.id).then(data => {
-    //   let promoLength = data.length;
-    //   if (promoLength > 0) {
-    //     this.sqliteProvider.getPromoterProofDetails(item.refId, item.id).then(promo => {
-    //       let promoProof = promo.length;
-    //       if (promoProof > 1) {
-    //         this.sqliteProvider.selectOrgin(item.refId).then(data => {
-    //           console.log(`cibil data ===>${JSON.stringify(data)}`);
-    //           this.globalData.setCustomerType(item.customerType);
-    //           this.globalData.setUniqueId(data[0].rootId);
-    //           this.navCtrl.push(CibilcheckPage, { viewData: item });
-    //         });
-    //       } else {
-    //         this.globalData.showAlert("Alert!", "Please add the Applicant's KYC Details!");
-    //       }
-    //     })
-    //   } else {
-    //     this.globalData.showAlert("Alert!", "Please add the Applicant Details!");
-    //   }
-    // });
   }
 
   loadGuaranDetails(item) {
@@ -507,13 +447,9 @@ export class ExistingPage {
                                           if (coAppStatus.includes('0')) {
                                             this.globalData.showAlert("Alert!", "Please capture Co-Applicant's Mandatory KYC Docs!");
                                           } else {
-
-                                            // this.sqlSupport.getImdDetails(item.refId, item.id).then(imd => {
-                                            // if (imd.length > 0) {
                                             this.sqlSupport.getCASADetails(item.refId, item.id).then(casa => {
                                               if (casa.length > 0) {
                                                 if (casa[0].janaAcc == 'Y') {
-
 
                                                   if (casa[0].nomAvail == 'Y') {
                                                     this.sqlSupport.getNomineeDetails(item.refId, item.id).then(nom => {
@@ -522,7 +458,7 @@ export class ExistingPage {
                                                           if (ser.length > 0) {
                                                             this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                               if (nach.length > 0) {
-                                                                this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp), guaranDetails: JSON.stringify(gua) },skipLocationChange: true, replaceUrl: true })
+                                                                this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp), guaranDetails: JSON.stringify(gua) }, skipLocationChange: true, replaceUrl: true })
                                                               } else {
                                                                 this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                                               }
@@ -544,7 +480,7 @@ export class ExistingPage {
                                                       if (ser.length > 0) {
                                                         this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                           if (nach.length > 0) {
-                                                            this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp), guaranDetails: JSON.stringify(gua) },skipLocationChange: true, replaceUrl: true })
+                                                            this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp), guaranDetails: JSON.stringify(gua) }, skipLocationChange: true, replaceUrl: true })
                                                           } else {
                                                             this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                                           }
@@ -560,7 +496,7 @@ export class ExistingPage {
 
                                                   this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                     if (nach.length > 0) {
-                                                      this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp), guaranDetails: JSON.stringify(gua) },skipLocationChange: true, replaceUrl: true })
+                                                      this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp), guaranDetails: JSON.stringify(gua) }, skipLocationChange: true, replaceUrl: true })
                                                       // this.navCtrl.push(SubmitPage, { applicantDetails: item, coappDetails: coapp, guaranDetails: JSON.stringify(gua) });
                                                     } else {
                                                       this.globalData.showAlert("Alert!", "Please add Reference Details!");
@@ -575,13 +511,6 @@ export class ExistingPage {
                                             }, err => {
                                               console.log(err);
                                             })
-                                            // } else {
-                                            //   this.globalData.showAlert("Alert!", "Please add the IMD Details!");
-                                            // }
-                                            // }, err => {
-                                            //   console.log(err);
-                                            // })
-
                                           }
                                         }
                                       })
@@ -596,9 +525,6 @@ export class ExistingPage {
                               }, err => {
                                 console.log(err);
                               })
-                              // } else {
-                              //   this.globalData.showAlert("Alert!", "Please add the Guarantor Details!");
-                              // }
                             });
                           } else if (item.coAppFlag == 'Y' && item.guaFlag == 'N') {
                             this.sqliteProvider.getCoappDetails(item.refId).then(coapp => {
@@ -615,13 +541,9 @@ export class ExistingPage {
                                         if (coAppStatus.includes('0')) {
                                           this.globalData.showAlert("Alert!", "Please capture Co-Applicant's Mandatory KYC Docs!");
                                         } else {
-                                          // this.sqlSupport.getImdDetails(item.refId, item.id).then(imd => {
-                                          // if (imd.length > 0) {
                                           this.sqlSupport.getCASADetails(item.refId, item.id).then(casa => {
                                             if (casa.length > 0) {
                                               if (casa[0].janaAcc == 'Y') {
-
-
                                                 if (casa[0].nomAvail == 'Y') {
                                                   this.sqlSupport.getNomineeDetails(item.refId, item.id).then(nom => {
                                                     if (nom.length > 0) {
@@ -629,7 +551,7 @@ export class ExistingPage {
                                                         if (ser.length > 0) {
                                                           this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                             if (nach.length > 0) {
-                                                              this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp) },skipLocationChange: true, replaceUrl: true })
+                                                              this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp) }, skipLocationChange: true, replaceUrl: true })
                                                             } else {
                                                               this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                                             }
@@ -651,7 +573,7 @@ export class ExistingPage {
                                                     if (ser.length > 0) {
                                                       this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                         if (nach.length > 0) {
-                                                          this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp) },skipLocationChange: true, replaceUrl: true })
+                                                          this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp) }, skipLocationChange: true, replaceUrl: true })
                                                         } else {
                                                           this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                                         }
@@ -666,8 +588,7 @@ export class ExistingPage {
                                               } else {
                                                 this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                   if (nach.length > 0) {
-                                                    // this.navCtrl.push(SubmitPage, { applicantDetails: item, coappDetails: coapp, guaranDetails: JSON.stringify(gua) });
-                                                    this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp) },skipLocationChange: true, replaceUrl: true })
+                                                    this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), coappDetails: JSON.stringify(coapp) }, skipLocationChange: true, replaceUrl: true })
                                                   } else {
                                                     this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                                   }
@@ -679,14 +600,6 @@ export class ExistingPage {
                                           }, err => {
                                             console.log(err);
                                           })
-                                          // } else {
-                                          //   this.globalData.showAlert("Alert!", "Please add the IMD Details!");
-                                          // }
-                                          // }, err => {
-                                          //   console.log(err);
-                                          // })
-
-
                                         }
                                       }
                                     })
@@ -702,14 +615,9 @@ export class ExistingPage {
                             })
                           } else if (item.coAppFlag == 'N' && item.guaFlag == 'Y') {
                             this.sqliteProvider.getGuaranDetails(item.refId).then(gua => {
-                              // if (gua.length > 0) {
-                              // this.sqlSupport.getImdDetails(item.refId, item.id).then(imd => {
-                              // if (imd.length > 0) {
                               this.sqlSupport.getCASADetails(item.refId, item.id).then(casa => {
                                 if (casa.length > 0) {
                                   if (casa[0].janaAcc == 'Y') {
-
-
                                     if (casa[0].nomAvail == 'Y') {
                                       this.sqlSupport.getNomineeDetails(item.refId, item.id).then(nom => {
                                         if (nom.length > 0) {
@@ -717,7 +625,7 @@ export class ExistingPage {
                                             if (ser.length > 0) {
                                               this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                                 if (nach.length > 0) {
-                                                  this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: JSON.stringify(gua) },skipLocationChange: true, replaceUrl: true })
+                                                  this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: JSON.stringify(gua) }, skipLocationChange: true, replaceUrl: true })
                                                 } else {
                                                   this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                                 }
@@ -739,7 +647,7 @@ export class ExistingPage {
                                         if (ser.length > 0) {
                                           this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                             if (nach.length > 0) {
-                                              this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: JSON.stringify(gua) },skipLocationChange: true, replaceUrl: true })
+                                              this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: JSON.stringify(gua) }, skipLocationChange: true, replaceUrl: true })
                                             } else {
                                               this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                             }
@@ -755,7 +663,7 @@ export class ExistingPage {
                                     this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                       if (nach.length > 0) {
                                         // this.navCtrl.push(SubmitPage, { applicantDetails: item, coappDetails: coapp, guaranDetails: JSON.stringify(gua) });
-                                        this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: JSON.stringify(gua) },skipLocationChange: true, replaceUrl: true })
+                                        this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: JSON.stringify(gua) }, skipLocationChange: true, replaceUrl: true })
                                       } else {
                                         this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                       }
@@ -768,19 +676,9 @@ export class ExistingPage {
                               }, err => {
                                 console.log(err);
                               });
-                              // } else {
-                              //   this.globalData.showAlert("Alert!", "Please add the IMD Details!");
-                              // }
-                              // }, err => {
-                              //   console.log(err);
-                              // })
-                              // } else {
-                              //   this.globalData.showAlert("Alert!", "Please add the Guarantor Details!");
-                              // }
                             }, err => {
                               console.log(err);
                             })
-                            // } else if (item.coAppFlag == 'N' && item.guaFlag == 'N') {
                           } else if (item.coAppFlag == 'N') {
                             this.sqlSupport.getCASADetails(item.refId, item.id).then(casa => {
                               if (casa.length > 0) {
@@ -793,7 +691,7 @@ export class ExistingPage {
                                           if (ser.length > 0) {
                                             this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                               if (nach.length > 0) {
-                                                this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: '' },skipLocationChange: true, replaceUrl: true })
+                                                this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: '' }, skipLocationChange: true, replaceUrl: true })
                                               } else {
                                                 this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                               }
@@ -815,7 +713,7 @@ export class ExistingPage {
                                       if (ser.length > 0) {
                                         this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                           if (nach.length > 0) {
-                                            this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: '' },skipLocationChange: true, replaceUrl: true })
+                                            this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: '' }, skipLocationChange: true, replaceUrl: true })
                                           } else {
                                             this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                           }
@@ -831,7 +729,7 @@ export class ExistingPage {
                                   this.sqlSupport.getreferenceDetails(item.refId, item.id).then(nach => {
                                     if (nach.length > 0) {
                                       // this.navCtrl.push(SubmitPage, { applicantDetails: item, coappDetails: coapp, guaranDetails: JSON.stringify(gua) });
-                                      this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: '' },skipLocationChange: true, replaceUrl: true })
+                                      this.router.navigate(['/submit'], { queryParams: { applicantDetails: JSON.stringify(item), guaranDetails: '' }, skipLocationChange: true, replaceUrl: true })
                                     } else {
                                       this.globalData.showAlert("Alert!", "Please add Reference Details!");
                                     }
@@ -853,9 +751,6 @@ export class ExistingPage {
                     } else {
                       this.globalData.showAlert("Alert!", "For this product Applicant document count is empty, please configure!");
                     }
-                    //                   else {
-                    // this.globalData.showAlert("Alert!", "Please add the Applicant's Permanent Address Details!");
-                    //                   }
                   }, err => {
                     console.log(err);
                   })
@@ -904,29 +799,6 @@ export class ExistingPage {
       });
     }
 
-    // this.sqliteProvider.getAllDetails(this.leadStatus, this.username).then(data => {
-    //     this.items = data;
-    //     let value = event.target.value;
-    //     if (value && value.trim() !== '') {
-    //       // console.log(JSON.stringify(this.items));
-    //       // console.log((this.items));
-
-    //       this.items = this.items.filter(function (item) {
-    //         return (
-    //           (item.enterName.toLowerCase().indexOf(value.toLowerCase()) > -1) ||
-    //           (item.appUniqueId.toLowerCase().indexOf(value.toLowerCase()) > -1) ||
-    //           (item.loanAmount.toLowerCase().indexOf(value.toLowerCase()) > -1) ||
-    //           (item.appRevd.toLowerCase().indexOf(value.toLowerCase()) > -1) ||
-    //           (item.janaCenterName.toLowerCase().indexOf(value.toLowerCase()) > -1) ||
-    //           (item.janaLoanName.toLowerCase().indexOf(value.toLowerCase()) > -1)
-    //         )
-    //       })
-    //     }
-    //   }).catch(Error => {
-    //     console.log(Error);
-    //     this.items = [];
-    //   });
-
   }
   async ageFromDb(item) {
     try {
@@ -943,11 +815,6 @@ export class ExistingPage {
     } else {
       let coAppStatus = '';
       this.ageFromDb(item).then(age => {
-        // this.sqliteProvider.getSubmitDetailsByRefIdOnly(item.refId).then(data => {
-        //   console.log(data, 'data in casa func', item, age);
-        // if (data.length > 0 && age > 21 && age < 60) {
-        // if (data[data.length - 1].cibilCheckStat == '1' && data[data.length - 1].himarkCheckStat == '1') {
-
         this.sqliteProvider.getPromoterProofDetails(item.refId, item.id).then(proofData => {
           if (proofData) {
             this.sqliteProvider.getPromoterProofImageDetails(item.refId, item.id).then(appProof => {
@@ -971,7 +838,7 @@ export class ExistingPage {
                                 this.globalData.setCoAppFlag(item.coAppFlag);
                                 this.globalData.setGuaFlag(item.guaFlag);
                                 localStorage.setItem("submit", "false");
-                                this.router.navigate(['/TabsPage'],{skipLocationChange: true, replaceUrl: true});
+                                this.router.navigate(['/TabsPage'], { skipLocationChange: true, replaceUrl: true });
                               }
                             }
                           })
@@ -988,7 +855,7 @@ export class ExistingPage {
                   this.globalData.setCoAppFlag(item.coAppFlag);
                   this.globalData.setGuaFlag(item.guaFlag);
                   localStorage.setItem("submit", "false");
-                  this.router.navigate(['/TabsPage'],{skipLocationChange: true, replaceUrl: true});
+                  this.router.navigate(['/TabsPage'], { skipLocationChange: true, replaceUrl: true });
                 }
               } else {
                 this.globalData.showAlert("Alert!", "Please capture Borrower's Mandatory KYC Docs!");
@@ -998,53 +865,9 @@ export class ExistingPage {
             this.globalData.showAlert("Alert!", "Please add Applicant kyc details!");
           }
         });
-        // if (data[data.length - 1].himarkCheckStat == '1') {
-
-        // } else {
-        //   this.globalData.showAlert("Alert!", "Please complete CIBIL and HIMARK");
-        // }
-        // }
-        // else if (data.length > 1 && (age <= 21 || age <= 60)) {
-        //   if (data[data.length - 1].cibilCheckStat == '1' && data[data.length - 1].himarkCheckStat == '1') {
-        //     // if (data[data.length - 1].himarkCheckStat == '1') {
-        //     this.globalData.setborrowerType(item.userType);
-        //     this.globalData.setrefId(item.refId);
-        //     this.globalData.setId(item.id);
-        //     this.globalData.setCoAppFlag(item.coAppFlag);
-        //     this.globalData.setGuaFlag(item.guaFlag);
-        //     localStorage.setItem("submit", "false");
-        //     this.navCtrl.push(TabsPage);
-        //   } else {
-        //     this.globalData.showAlert("Alert!", "Please complete Co-Applicant details!");
-        //   }
-        // } else {
-        //   this.globalData.showAlert("Alert!", "Please add Co-Applicant details!");
-        // }
-        // });
       }).catch(err => err)
-
-      // this.sqlSupport.getImdDetails(item.refId, item.id).then(imddata => {
-      //   if (imddata.length > 0) {
-      //     this.globalData.setborrowerType(item.userType);
-      //     this.globalData.setrefId(item.refId);
-      //     this.globalData.setId(item.id);
-      //     this.globalData.setCoAppFlag(item.coAppFlag);
-      //     this.globalData.setGuaFlag(item.guaFlag);
-      //     this.navCtrl.push(TabsPage);
-      //   } else {
-      //     this.globalData.showAlert("Alert!", "Please add IMD details!");
-      //   }
-      // });
     }
   }
-
-  // guaFlag
-  // coAppFlag
-
-  // this.globalData.setborrowerType(item.userType);
-  // this.globalData.setrefId(item.refId);
-  // this.globalData.setId(item.id);
-  // this.navCtrl.push(ImddetailsPage);
 
   IMD(item) {
     if (item.coAppFlag == 'Y' && item.guaFlag == 'Y') {
@@ -1091,7 +914,7 @@ export class ExistingPage {
                               this.globalData.setborrowerType(item.userType);
                               this.globalData.setrefId(item.refId);
                               this.globalData.setId(item.id);
-                              this.router.navigate(['/imddetails'],{skipLocationChange: true, replaceUrl: true})
+                              this.router.navigate(['/imddetails'], { skipLocationChange: true, replaceUrl: true })
                             } else {
                               this.globalData.showAlert("Alert!", "Please complete Guarantor details!");
                             }
@@ -1137,7 +960,7 @@ export class ExistingPage {
                   this.globalData.setborrowerType(item.userType);
                   this.globalData.setrefId(item.refId);
                   this.globalData.setId(item.id);
-                  this.router.navigate(['/imddetails'],{skipLocationChange: true, replaceUrl: true})
+                  this.router.navigate(['/imddetails'], { skipLocationChange: true, replaceUrl: true })
                 } else {
                   this.globalData.showAlert("Alert!", "Please complete Co-Applicant details!");
                 }
@@ -1173,7 +996,7 @@ export class ExistingPage {
                   this.globalData.setborrowerType(item.userType);
                   this.globalData.setrefId(item.refId);
                   this.globalData.setId(item.id);
-                  this.router.navigate(['/imddetails'],{skipLocationChange: true, replaceUrl: true})
+                  this.router.navigate(['/imddetails'], { skipLocationChange: true, replaceUrl: true })
                 } else {
                   this.globalData.showAlert("Alert!", "Please complete Guarantor details!");
                 }
@@ -1188,7 +1011,6 @@ export class ExistingPage {
   }
 
   getproducts() {
-    // let productType = localStorage.getItem('loan');
     this.sqliteProvider.getAllProductValues().then(data => {
       this.pdt_master = data;
     })
@@ -1233,7 +1055,7 @@ export class ExistingPage {
           this.globalData.setborrowerType(item.userType);
           this.globalData.setrefId(item.refId);
           this.globalData.setId(item.id);
-          this.router.navigate(['/ReferenceDetailsPage'],{skipLocationChange: true, replaceUrl: true})
+          this.router.navigate(['/ReferenceDetailsPage'], { skipLocationChange: true, replaceUrl: true })
         } else {
           this.globalData.showAlert("Alert!", "Please complete vehicle details!");
         }
@@ -1250,30 +1072,19 @@ export class ExistingPage {
           this.globalData.setborrowerType(item.userType);
           this.globalData.setrefId(item.refId);
           this.globalData.setId(item.id);
-          this.router.navigate(['/nach'],{skipLocationChange: true, replaceUrl: true})
+          this.router.navigate(['/nach'], { skipLocationChange: true, replaceUrl: true })
         } else {
           this.globalData.showAlert("Alert!", "Please complete vehicle details!");
         }
       })
-      // this.sqlSupport.getServDetails(item.refId, item.id).then(data => {
-      //   console.log(data, 'data in nach func');
-      //   if (data.length > 0) {
-      //     this.globalData.setborrowerType(item.userType);
-      //     this.globalData.setrefId(item.refId);
-      //     this.globalData.setId(item.id);
-      //     this.navCtrl.push(NachPage);
-      //   } else {
-      //     this.globalData.showAlert("Alert!", "Please complete CASA details!");
-      //   }
-      // });
     }
   }
 
   docUpload(item, type) {
-    this.router.navigate(['/DocumentUploadPage'], { queryParams: { viewData: JSON.stringify(item) },skipLocationChange: true, replaceUrl: true })
+    this.router.navigate(['/DocumentUploadPage'], { queryParams: { viewData: JSON.stringify(item) }, skipLocationChange: true, replaceUrl: true })
   }
   postSanction(item) {
-    this.router.navigate(['/PostSanctionPage'], { queryParams: { viewData: JSON.stringify(item) },skipLocationChange: true, replaceUrl: true })
+    this.router.navigate(['/PostSanctionPage'], { queryParams: { viewData: JSON.stringify(item) }, skipLocationChange: true, replaceUrl: true })
   }
 
   viewCoDetails(item) {
@@ -1292,7 +1103,7 @@ export class ExistingPage {
                   this.globalData.setrefId(item.refId);
                   this.globalData.setId(item.id);
 
-                  this.router.navigate(['/ViewDetailsPage'], {queryParams: {refvalue: JSON.stringify(item), userVal: JSON.stringify(item), user_Type: 'G'},skipLocationChange: true, replaceUrl: true})
+                  this.router.navigate(['/ViewDetailsPage'], { queryParams: { refvalue: JSON.stringify(item), userVal: JSON.stringify(item), user_Type: 'G' }, skipLocationChange: true, replaceUrl: true })
                 } else {
                   this.globalData.showAlert("Alert!", "Please Check the Applicant's Hi-Mark Status!");
                 }
@@ -1315,7 +1126,7 @@ export class ExistingPage {
                           this.globalData.setrefId(item.refId);
                           this.globalData.setId(item.id);
 
-                          this.router.navigate(['/ViewDetailsPage'], { queryParams: { refvalue: JSON.stringify(item), userVal: JSON.stringify(item), user_Type: 'G' },skipLocationChange: true, replaceUrl: true })
+                          this.router.navigate(['/ViewDetailsPage'], { queryParams: { refvalue: JSON.stringify(item), userVal: JSON.stringify(item), user_Type: 'G' }, skipLocationChange: true, replaceUrl: true })
                         } else {
                           this.globalData.showAlert("Alert!", "Please capture Borrower's Mandatory KYC Docs!");
                         }
@@ -1337,8 +1148,10 @@ export class ExistingPage {
         });
       });
     }
+  }
 
-
+  submittedApplicant() {
+    this.router.navigate(['/ExistApplicationsPage'], { skipLocationChange: true, replaceUrl: true });
   }
 
 

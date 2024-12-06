@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { AadhaarpreviewPageRoutingModule } from './aadhaarpreview-routing.module';
 
 import { AadhaarpreviewPage } from './aadhaarpreview.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     AadhaarpreviewPageRoutingModule,
-    SharedModule,
     DirectivesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [AadhaarpreviewPage]
+  declarations: [AadhaarpreviewPage],
 })
 export class AadhaarpreviewPageModule {}

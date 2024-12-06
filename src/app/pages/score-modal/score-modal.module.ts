@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { ScoreModalPageRoutingModule } from './score-modal-routing.module';
 
 import { ScoreModalPage } from './score-modal.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     ScoreModalPageRoutingModule,
-    SharedModule,
     DirectivesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [ScoreModalPage]
+  declarations: [ScoreModalPage],
 })
 export class ScoreModalPageModule {}

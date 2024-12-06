@@ -8,7 +8,6 @@ import { SubmitPageRoutingModule } from './submit-routing.module';
 
 import { SubmitPage } from './submit.page';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -19,9 +18,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     SubmitPageRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule,
-    DirectivesModule  
+    DirectivesModule,
   ],
-  declarations: [SubmitPage]
+  declarations: [SubmitPage],
 })
 export class SubmitPageModule {}

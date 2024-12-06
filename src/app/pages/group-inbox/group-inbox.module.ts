@@ -7,8 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { GroupInboxPageRoutingModule } from './group-inbox-routing.module';
 
 import { GroupInboxPage } from './group-inbox.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
-import { NgxPaginationModule } from 'ngx-pagination'
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -16,9 +15,8 @@ import { NgxPaginationModule } from 'ngx-pagination'
     FormsModule,
     IonicModule,
     GroupInboxPageRoutingModule,
-    SharedModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
-  declarations: [GroupInboxPage]
+  declarations: [GroupInboxPage],
 })
 export class GroupInboxPageModule {}

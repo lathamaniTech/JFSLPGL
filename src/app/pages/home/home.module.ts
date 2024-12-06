@@ -6,9 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
-
 
 @NgModule({
   imports: [
@@ -18,11 +16,10 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     HomePageRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
   declarations: [HomePage],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  providers: []
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [],
 })
 export class HomePageModule {}
