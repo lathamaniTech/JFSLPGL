@@ -10,6 +10,11 @@ npm i @awesome-cordova-plugins/geolocation
 npm i cordova-plugin-network-information
 npm i @awesome-cordova-plugins/network
 
+npm i cordova-plugins-device
+npm i @awesome-cordova-plugins/device
+
+"webpconvertor": "file:webpconvertorBase64",
+
 installed
 
 $ npm i cordova-plugin-nativegeocoder
