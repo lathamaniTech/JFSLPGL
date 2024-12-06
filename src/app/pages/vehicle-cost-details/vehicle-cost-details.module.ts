@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { VehicleCostDetailsPageRoutingModule } from './vehicle-cost-details-routing.module';
 
 import { VehicleCostDetailsPage } from './vehicle-cost-details.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 
 @NgModule({
   imports: [
@@ -15,8 +14,7 @@ import { SharedModule } from 'src/modules/sharedModule/sharedModule';
     FormsModule,
     IonicModule,
     VehicleCostDetailsPageRoutingModule,
-    SharedModule
   ],
-  declarations: [VehicleCostDetailsPage]
+  declarations: [VehicleCostDetailsPage],
 })
 export class VehicleCostDetailsPageModule {}

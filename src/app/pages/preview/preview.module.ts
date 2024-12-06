@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { PreviewPageRoutingModule } from './preview-routing.module';
 
 import { PreviewPage } from './preview.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     PreviewPageRoutingModule,
-    SharedModule,
     DirectivesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [PreviewPage]
+  declarations: [PreviewPage],
 })
 export class PreviewPageModule {}

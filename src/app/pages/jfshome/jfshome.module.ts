@@ -8,9 +8,7 @@ import { JfshomePageRoutingModule } from './jfshome-routing.module';
 
 import { JfshomePage } from './jfshome.page';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
-
 
 @NgModule({
   imports: [
@@ -20,8 +18,7 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     JfshomePageRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
   declarations: [JfshomePage],
 })

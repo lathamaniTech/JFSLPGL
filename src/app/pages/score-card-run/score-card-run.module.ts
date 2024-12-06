@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { ScoreCardRunPageRoutingModule } from './score-card-run-routing.module';
 
 import { ScoreCardRunPage } from './score-card-run.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -16,10 +15,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     ScoreCardRunPageRoutingModule,
-    SharedModule,
     ReactiveFormsModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [ScoreCardRunPage]
+  declarations: [ScoreCardRunPage],
 })
 export class ScoreCardRunPageModule {}

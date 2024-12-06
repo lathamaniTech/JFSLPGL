@@ -8,10 +8,7 @@ import { AssetTabsPageRoutingModule } from './asset-tabs-routing.module';
 
 import { AssetTabsPage } from './asset-tabs.page';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
-// import { StatusComponent } from 'src/app/components/status/status.component';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { IonicSelectableModule } from 'ionic-selectable';
-// import { IonicSelectableComponent } from 'ionic-selectable';
 
 @NgModule({
   imports: [
@@ -19,12 +16,10 @@ import { IonicSelectableModule } from 'ionic-selectable';
     FormsModule,
     IonicModule,
     AssetTabsPageRoutingModule,
-    SharedModule,
     ReactiveFormsModule,
     DirectivesModule,
-    IonicSelectableModule
-    // IonicSelectableComponent
+    IonicSelectableModule,
   ],
-  declarations: [AssetTabsPage]
+  declarations: [AssetTabsPage],
 })
 export class AssetTabsPageModule {}

@@ -3,62 +3,88 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Vehicle Valuation
+    <ion-title
+      >Vehicle Valuation
       <span (click)="homePage()">
-        <ion-icon name="home" style="float:right;margin-right: 10px; zoom:1.3"></ion-icon>
+        <ion-icon
+          name="home"
+          style="float: right; margin-right: 10px; zoom: 1.3"
+        ></ion-icon>
       </span>
     </ion-title>
   </ion-toolbar>
-  <app-status></app-status>
-
 </ion-header>
 
-
 <ion-content>
-
   <h4 class="h4Label">Vehicle Valuation in case of used TW</h4>
 
-  <form [formGroup]="vehicleValuationDetails" (ngSubmit)="vehicleValuationSave(vehicleValuationDetails.value)">
-
+  <form
+    [formGroup]="vehicleValuationDetails"
+    (ngSubmit)="vehicleValuationSave(vehicleValuationDetails.value)"
+  >
     <ion-item class="field">
-      <ion-label position="floating"> Vehicle Make <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        Vehicle Make <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="make"></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating"> Vehicle Model <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        Vehicle Model <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="model"></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating"> Vehicle Age <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        Vehicle Age <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="vechicleAge"></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating"> Enter KMs Driven <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        Enter KMs Driven <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="kmDriven"></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating"> OBV Value <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        OBV Value <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="obvValue"></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating"> Valuators Valuation Amount <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        Valuators Valuation Amount <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="valuationAmount"></ion-input>
     </ion-item>
 
     <ion-item class="field">
-      <ion-label position="floating"> Sanction Amount <span class="mandatory">*</span></ion-label>
+      <ion-label position="floating">
+        Sanction Amount <span class="mandatory">*</span></ion-label
+      >
       <ion-input type="text" formControlName="sanctionAmount"></ion-input>
     </ion-item>
 
     <div class="layout">
-      <div class="box1" (click)="captureVideo()"><h6 no-margin>Vehicle Inspection Video</h6><p no-margin text-center><ion-icon style="zoom:2.0;" name="videocam"></ion-icon></p></div>
+      <div class="box1" (click)="captureVideo()">
+        <h6 no-margin>Vehicle Inspection Video</h6>
+        <p no-margin text-center>
+          <ion-icon style="zoom: 2" name="videocam"></ion-icon>
+        </p>
+      </div>
       <div class="box2">
-        <ion-button expand="full" fill="outline" (click)="obvCheck()" style="--background: #DA107E;">
+        <ion-button
+          expand="full"
+          fill="outline"
+          (click)="obvCheck()"
+          style="--background: #da107e"
+        >
           OBV Check
         </ion-button>
       </div>
@@ -67,13 +93,16 @@
     <ion-row text-center>
       <ion-col>
         <div class="buttspace roundbtn">
-          <ion-button class="proceedbtn" shape="round" [disabled]="vehicleValuationDetails.invalid" type="submit">
+          <ion-button
+            class="proceedbtn"
+            shape="round"
+            [disabled]="vehicleValuationDetails.invalid"
+            type="submit"
+          >
             Save
           </ion-button>
         </div>
       </ion-col>
     </ion-row>
-
   </form>
-
 </ion-content>

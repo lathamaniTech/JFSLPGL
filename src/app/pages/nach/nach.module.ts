@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { NachPageRoutingModule } from './nach-routing.module';
 
 import { NachPage } from './nach.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 import { PipesModule } from 'src/modules/pipes/pipes.module';
 import { IonicSelectableModule } from 'ionic-selectable';
@@ -18,13 +17,12 @@ import { IonicSelectableModule } from 'ionic-selectable';
     FormsModule,
     IonicModule,
     NachPageRoutingModule,
-    SharedModule,
     DirectivesModule,
     ReactiveFormsModule,
     PipesModule,
-    IonicSelectableModule
+    IonicSelectableModule,
   ],
   declarations: [NachPage],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NachPageModule {}

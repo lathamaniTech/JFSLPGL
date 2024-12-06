@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { PosidexCheckPageRoutingModule } from './posidex-check-routing.module';
 
 import { PosidexCheckPage } from './posidex-check.page';
-import { SharedModule } from 'src/modules/sharedModule/sharedModule';
 import { DirectivesModule } from 'src/modules/directives/directives.module';
 
 @NgModule({
@@ -17,9 +16,8 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     IonicModule,
     PosidexCheckPageRoutingModule,
     ReactiveFormsModule,
-    SharedModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  declarations: [PosidexCheckPage]
+  declarations: [PosidexCheckPage],
 })
 export class PosidexCheckPageModule {}

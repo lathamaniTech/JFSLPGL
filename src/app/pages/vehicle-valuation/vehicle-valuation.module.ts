@@ -16,10 +16,9 @@ import { DirectivesModule } from 'src/modules/directives/directives.module';
     FormsModule,
     IonicModule,
     VehicleValuationPageRoutingModule,
-    SharedModule,
     DirectivesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [VehicleValuationPage]
+  declarations: [VehicleValuationPage],
 })
 export class VehicleValuationPageModule {}
