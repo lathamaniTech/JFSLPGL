@@ -21,25 +21,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/jfshome/jfshome.module').then(m => m.JfshomePageModule)
   },
   {
-    path: 'aadhaarpreview',
-    loadChildren: () => import('./pages/aadhaarpreview/aadhaarpreview.module').then(m => m.AadhaarpreviewPageModule)
-  },
-  {
     path: 'AdditionalDetailsPage',
     loadChildren: () => import('./pages/additional-details/additional-details.module').then(m => m.AdditionalDetailsPageModule)
-  },
-  {
-    path: 'AssetTabsPage',
-    loadChildren: () => import('./pages/asset-tabs/asset-tabs.module').then(m => m.AssetTabsPageModule)
   },
   {
     path: 'audit-logs',
     loadChildren: () => import('./pages/audit-logs/audit-logs.module').then(m => m.AuditLogsPageModule)
   },
-  // {
-  //   path: 'CasaDetailsPage',
-  //   loadChildren: () => import('./pages/casa-details/casa-details.module').then( m => m.CasaDetailsPageModule)
-  // },
   {
     path: 'ChoosecustomerPage',
     loadChildren: () => import('./pages/choose-customer/choose-customer.module').then(m => m.ChooseCustomerPageModule)
@@ -59,10 +47,6 @@ const routes: Routes = [
   {
     path: 'CropImgPage',
     loadChildren: () => import('./pages/crop-img/crop-img.module').then(m => m.CropImgPageModule)
-  },
-  {
-    path: 'dealer-details',
-    loadChildren: () => import('./pages/dealer-details/dealer-details.module').then(m => m.DealerDetailsPageModule)
   },
   {
     path: 'DocumentUploadPage',
@@ -93,24 +77,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/fingerprint/fingerprint.module').then(m => m.FingerprintPageModule)
   },
   {
-    path: 'AadharModalPage',
-    loadChildren: () => import('./pages/aadhar-modal/aadhar-modal.module').then(m => m.AadharModalPageModule)
-  },
-  {
     path: 'ImddetailsPage',
     loadChildren: () => import('./pages/imddetails/imddetails.module').then(m => m.ImddetailsPageModule)
   },
   {
-    path: 'insurance-details',
-    loadChildren: () => import('./pages/insurance-details/insurance-details.module').then(m => m.InsuranceDetailsPageModule)
-  },
-  {
     path: 'karza-details',
     loadChildren: () => import('./pages/karza-details/karza-details.module').then(m => m.KarzaDetailsPageModule)
-  },
-  {
-    path: 'LmsPage',
-    loadChildren: () => import('./pages/lms/lms.module').then(m => m.LmsPageModule)
   },
   {
     path: 'modal',
@@ -128,10 +100,6 @@ const routes: Routes = [
     path: 'nominee-after-ps',
     loadChildren: () => import('./pages/nominee-after-ps/nominee-after-ps.module').then(m => m.NomineeAfterPsPageModule)
   },
-  // {
-  //   path: 'NomineedetailsPage',
-  //   loadChildren: () => import('./pages/nomineedetails/nomineedetails.module').then( m => m.NomineedetailsPageModule)
-  // },
   {
     path: 'OtherDocsPage',
     loadChildren: () => import('./pages/other-docs/other-docs.module').then(m => m.OtherDocsPageModule)
@@ -196,10 +164,6 @@ const routes: Routes = [
     path: 'service-after-ps',
     loadChildren: () => import('./pages/service-after-ps/service-after-ps.module').then(m => m.ServiceAfterPsPageModule)
   },
-  // {
-  //   path: 'ServiceDetailsPage',
-  //   loadChildren: () => import('./pages/service-details/service-details.module').then( m => m.ServiceDetailsPageModule)
-  // },
   {
     path: 'show-image',
     loadChildren: () => import('./pages/show-image/show-image.module').then(m => m.ShowImagePageModule)
@@ -221,24 +185,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'vehicle-cost-details',
-    loadChildren: () => import('./pages/vehicle-cost-details/vehicle-cost-details.module').then(m => m.VehicleCostDetailsPageModule)
-  },
-  {
-    path: 'vehicle-details',
-    loadChildren: () => import('./pages/vehicle-details/vehicle-details.module').then(m => m.VehicleDetailsPageModule)
-  },
-  {
-    path: 'VehicleValuationPage',
-    loadChildren: () => import('./pages/vehicle-valuation/vehicle-valuation.module').then(m => m.VehicleValuationPageModule)
-  },
-  {
     path: 'ViewDetailsPage',
     loadChildren: () => import('./pages/view-details/view-details.module').then(m => m.ViewDetailsPageModule)
-  },
-  {
-    path: 'test-purpose',
-    loadChildren: () => import('./pages/test-purpose/test-purpose.module').then(m => m.TestPurposePageModule)
   },
   {
     path: 'secondKycPage', component: SecondKycComponent

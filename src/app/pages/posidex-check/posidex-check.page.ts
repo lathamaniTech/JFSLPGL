@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, NavController, NavParams, PopoverController } from '@ionic/angular';
 import { RemarksComponent } from 'src/app/components/remarks/remarks.component';
-import { SfdCviewComponent } from 'src/app/components/sfd-cview/sfd-cview.component';
+// import { SfdCviewComponent } from 'src/app/components/sfd-cview/sfd-cview.component';
 import { DataPassingProviderService } from 'src/providers/data-passing-provider.service';
 import { GlobalService } from 'src/providers/global.service';
 import { RestService } from 'src/providers/rest.service';
@@ -586,7 +586,7 @@ export class PosidexCheckPage {
         this.globFunc.globalLodingDismiss();
         console.log("360 view");
         let modal = await this.modalCtrl.create({
-          component: SfdCviewComponent,
+          component: 'SfdCviewComponent',
           componentProps: { data: cfdsData.sfdc360Res }
         });
         modal.present();

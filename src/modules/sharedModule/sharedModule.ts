@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { IonicModule, NavParams } from '@ionic/angular';
-import { StatusComponent } from 'src/app/components/status/status.component';
 import { CaptureImageComponent } from 'src/app/components/capture-image/capture-image.component';
 import { ExpandableComponent } from 'src/app/components/expandable/expandable.component';
 import { BasicComponent } from 'src/app/components/basic/basic.component';
@@ -24,7 +23,6 @@ import { PaginationComponent } from 'src/app/components/pagination/pagination.co
 import { VerifyOtpComponent } from 'src/app/components/verify-otp/verify-otp.component';
 import { ViewReferenceDetailsComponent } from 'src/app/components/view-reference-details/view-reference-details.component';
 import { RemarksComponent } from 'src/app/components/remarks/remarks.component';
-import { SfdCviewComponent } from 'src/app/components/sfd-cview/sfd-cview.component';
 import { CasadetailsComponent } from 'src/app/components/casadetails/casadetails.component';
 import { NomineedetailsComponent } from 'src/app/components/nomineedetails/nomineedetails.component';
 import { ServicedetailsComponent } from 'src/app/components/servicedetails/servicedetails.component';
@@ -32,10 +30,8 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
 
 @NgModule({
   declarations: [
-    StatusComponent,
     CaptureImageComponent,
     ExpandableComponent,
-    StatusComponent,
     BasicComponent,
     PersonalComponent,
     AddressComponent,
@@ -51,7 +47,6 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
     VerifyOtpComponent,
     ViewReferenceDetailsComponent,
     RemarksComponent,
-    SfdCviewComponent,
     NomineedetailsComponent,
     CasadetailsComponent,
     ServicedetailsComponent,
@@ -67,10 +62,8 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
     DirectivesModule,
   ],
   exports: [
-    StatusComponent,
     CaptureImageComponent,
     ExpandableComponent,
-    StatusComponent,
     BasicComponent,
     PersonalComponent,
     AddressComponent,
@@ -86,7 +79,6 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
     VerifyOtpComponent,
     ViewReferenceDetailsComponent,
     RemarksComponent,
-    SfdCviewComponent,
     NomineedetailsComponent,
     CasadetailsComponent,
     ServicedetailsComponent,
@@ -96,4 +88,4 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
   providers: [HTTP, NavParams],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedModule {}
+export class SharedModule { }

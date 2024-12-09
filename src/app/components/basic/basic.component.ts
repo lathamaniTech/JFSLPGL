@@ -24,126 +24,83 @@ import { SquliteSupportProviderService } from 'src/providers/squlite-support-pro
   styleUrls: ['./basic.component.scss'],
 })
 export class BasicComponent implements OnInit {
-  @Output() saveStatus = new EventEmitter();
-  coAppFlag: any;
-  guaFlag: any;
-  moratorium: any;
-  schemeCode: any;
-  Repayments: any;
-  vlTenure: any;
-  installments: any;
-  agent_master: any;
-  empIdDisable: boolean = false;
-  agentIdDisable: boolean = false;
-  lmsLeadId: any;
-  _distanceFromBrance: number;
-  _longitude: number;
-  _latitude: number;
-  loanAmountFrom: any;
-  loanAmountTo: any;
-  interestFrom: any;
-  interestTo: any;
-  tenureFrom: any;
-  tenureTo: any;
-  tenure: any;
-  appUniqueId: any;
-  _selectedCenter: any;
-  janaLoanName: any;
-  latlong: any;
-  ind_master: any;
-  org_master: any;
-  pdt_master: any[];
-  pur_master: any;
-  nat_master: any;
-  appStatusURL: any;
-  cibilCheckStat: any;
-  submitStat: any;
-  selectedProdect: any;
-  janaProduct: any;
-  getBasicData: any;
-  refId: any;
-  id: any;
-  basicData: FormGroup;
-  panNumber: any;
-  userType: any;
-  deviceId: any;
-  createdDate: any;
-  public createdUser: any;
-  productType: any;
-  loanAmount: any;
-  panResult: any;
-  refinfo: any;
-  profPic: any;
-  uniqueId: any;
-  sixteenDigId: any;
-  selectOptions = {
-    cssClass: 'remove-ok',
-  };
-  submitDisable: boolean = false;
-  dateValue: any;
+  refId: string;
+  id: string;
+  appStatusURL: string;
+  createdUser: string;
+  deviceId: string;
+  userType: string;
+  productType: string;
+  sixteenDigId: string;
+  leadId: string;
+  pagename: string = 'Basic Details';
+  coAppFlag: string;
+  guaFlag: string;
+
+  signImglen: number = 0;
+  appUniqueId: number;
+  idNumber: number;
+  schemeCode: number;
+  loanAmount: number;
+  loanAmountFrom: number;
+  loanAmountTo: number;
+  interestFrom: number;
+  interestTo: number;
+  tenureFrom: number;
+  tenureTo: number;
+
   productClicked: boolean = false;
-  LMSDetails: any;
+  submitDisable: boolean = false;
   lmsData: boolean = false;
-  yesOrNo: any = [
-    { code: '1', name: 'YES' },
-    { code: '2', name: 'NO' },
-  ];
-  segmentList: any = [
-    // { code: "1", name: "OPTION 1" },
-    // { code: "2", name: "OPTION 2" },
-  ];
-  vehicle: any = [
-    { code: '1', name: 'NEW' },
-    { code: '2', name: 'USED' },
-  ];
-  ElectricType: any = [
-    { code: 'Y', name: 'YES' },
-    { code: 'N', name: 'NO' },
-  ];
-  isNewVehicle = false;
-  dummy_master: any = [
-    { CODE: '2', NAME: 'Vehicle Purchase' },
-    { CODE: '1', NAME: 'Vehicle Refinance' },
-  ];
+
+  basicData: FormGroup;
+
+  idType: any;
+  janaLoanName: any;
+  moratorium: any;
+  janaid: any;
+  signPic: any;
+  naveParamsValue: any;
+  profPic: any;
+  _selectedCenter: any;
+  org_master: any;
+  dateValue: any;
+  refinfo: any;
+  pdt_master: any[];
+  signImgs: any = [];
+  userPrdResponse: any[];
+  getBasicData: any[];
+  jana_products: any = [];
+  scheme_master: any[] = [];
+  processFeesData: any = [];
   intType: any = [
     { code: "1", name: "Fixed" },
     { code: "2", name: "Floating" },
     { code: "3", name: "Hybrid" },
   ];
+
+  loanProduct = [{ prdCode: '960', prdDesc: '960' }];
+
+  createdDate = new Date();
+  formActivater = { disableForm: true };
+  @Output() saveStatus = new EventEmitter();
+
+
+  selectOptions = {
+    cssClass: 'remove-ok',
+  };
   customPopoverOptions = {
     cssClass: 'custom-popover',
   };
 
-  dealerNameTemp: any;
-  dummy_masterDealer: any;
-  GstCharges = {
-    GstonProcessingFee: 18,
-    GstonSdcTax: 18,
-    GstonLegalandAdvanceCharges: 18,
-    GstonOtherCharges: 18,
-    GstonCollateralInsurence: 18,
-    GstonCreditLifeInsurence: 18,
-    GstonPddCharges: 18,
-    GstonNachCharges: 18,
-    VEHICLE: '13',
-  };
 
-  loanProduct = [{ prdCode: '960', prdDesc: '960' }];
-  idType: any;
-  idNumber: any;
-  leadId: any;
-  scheme_master: any[] = [];
-  formActivater = { disableForm: true };
-  pagename = 'Basic Details';
-  processFeesData: any = [];
+  // dummy_master: any = [
+  //   { CODE: '2', NAME: 'Value_2' },
+  //   { CODE: '1', NAME: 'Value_1' },
+  // ];
 
-  janaid: any;
-  naveParamsValue: any;
-  signPic: any;
-  signImgs: any = [];
-  signImglen: number = 0;
-  userPrdResponse: any[];
-  jana_products: any = [];
+
+
   constructor(
     public navCtrl: Router,
     public platform: Platform,
@@ -170,16 +127,7 @@ export class BasicComponent implements OnInit {
   private childConstructor(value) {
     this.getProductScheme();
     this.getAllJanaProducts();
-    this.getsegmentType();
-    // this.getProductValue(undefined);
-    this.getPurposeValue();
-    this.getIndustryValue();
-    this.getModeofRepayment();
-    this.getVlTenure();
     this.getCibilCheckedDetails();
-    this.getPeriodInstallments();
-    this.getDealerMaster();
-    this.getProcessingFees();
     this.dateValue = new Date();
     this.appStatusURL = this.master.apiURL + 'AppStatus';
 
@@ -217,8 +165,6 @@ export class BasicComponent implements OnInit {
       this.id = this.globalData.getId();
     } else if (this.userType === 'G') {
       this.globalData.setId('');
-      // this.globalData.setEditSaveStatus('basicTick');
-      // this.globalData.setEditSaveStatus('basicSaved');
       this.saveStatus.emit('basicTick');
       localStorage.setItem('Basic', 'basicSaved');
     }
@@ -236,10 +182,6 @@ export class BasicComponent implements OnInit {
     this.basicData = this.formBuilder.group({
       prdSche: ['', Validators.required],
       janaLoan: ['', Validators.required],
-      // vehicleType: ['', Validators.required],
-      // electricVehicle: ['', Validators.required],
-      // dealerName: ['', Validators.required],
-      // dealerCode: [''],
       loanAmount: ['', Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
       interest: ['', Validators.required],
       intRate: ['', Validators.required],
@@ -256,67 +198,17 @@ export class BasicComponent implements OnInit {
       this.submitDisable = true;
     }
 
-    // this.basicData.get('dealerName').valueChanges.subscribe((value) => {
-    //   console.log(value, 'dealerCodeValue');
-    //   this.basicData.get('dealerCode').setValue(value);
-    // });
   }
 
-  ngOnInit() {
-    // let root = this.viewCtrl.instance.navCtrl._app._appRoot;
-    document.addEventListener('click', function (event) {
-      let btn = <HTMLLIElement>(
-        document.querySelector('.remove-ok .alert-button-group')
-      );
-      let target = <HTMLElement>event.target;
-      if (
-        (btn && target.className == 'alert-radio-label') ||
-        target.className == 'alert-radio-inner' ||
-        target.className == 'alert-radio-icon'
-      ) {
-        // let view = root._overlayPortal._views[0];
-        // let inputs = view.instance.d.inputs;
-        // for (let input of inputs) {
-        //   if (input.checked) {
-        //     view.instance.d.buttons[1].handler([input.value]);
-        //     view.dismiss();
-        //     break;
-        //   }
-        // }
-      }
-    });
-  }
+  ngOnInit() { }
 
-  ngAfterViewInit() {
-    this.platform.ready().then((readySource) => {
-      if (readySource === 'cordova') {
-        let posOptions = {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        };
-        //   this.geolocation.getCurrentPosition(posOptions).then((res) => {
-        //     // console.log(`latitude ${res.coords.latitude}====longitude ${res.coords.longitude}`)
-        //     this._latitude = res.coords.latitude;
-        //     this._longitude = res.coords.longitude;
-        //     this._distanceFromBrance = this.globFunc.returnDistanceFromLatLong(res.coords.latitude, res.coords.longitude, 12.971599, 77.594566);
-        //   }, err => {
-        //     this.globalData.showAlert("Alert!", `Check Gps Connection`)
-        //   })
-      }
-    });
-  }
+  ngAfterViewInit() { }
 
   getOrgName(value: string) {
     let selectedOrgName = this.org_master.find((f) => {
       return f.orgscode === value;
     });
     return selectedOrgName;
-  }
-
-  setFilteredItems(panNumber) {
-    this.panNumber = panNumber.toUpperCase();
-    this.panResult = undefined;
   }
 
   async basicsave(value) {
@@ -330,8 +222,6 @@ export class BasicComponent implements OnInit {
     } else {
       this.janaLoanName = this.getJanaLoanName(value.janaLoan);
     }
-    // let tenure = this.basicData.get('tenure').value
-    // let tenureval = this.vlTenure.filter(data => data.CODE == tenure);
     if (this.loanAmount < this.loanAmountFrom) {
       this.globalData.globalLodingDismiss();
       this.globalData.showAlert(
@@ -357,52 +247,24 @@ export class BasicComponent implements OnInit {
       if (this.profPic) {
         if (this.signImgs.length > 0) {
           this.signPic = this.signImgs[0].imgpath;
-          if (
-            this.refId === '' ||
-            this.refId === undefined ||
-            this.refId === null
-          ) {
+          if (this.refId === '' || this.refId === undefined || this.refId === null) {
             this.appUniqueId = Math.floor(Math.random() * 90000000) + 10000000;
             this.globalData.setUniqueId(this.appUniqueId);
-            let rootData = [
-              this.createdDate,
-              this.deviceId,
-              this.createdUser,
-              'mlos' + this.appUniqueId,
-            ];
+            let rootData = [this.createdDate, this.deviceId, this.createdUser, 'mlos' + this.appUniqueId];
             this.sqliteProvider.rootDetails(rootData).then((data) => {
               let aaaId = 'mlos' + new Date().getFullYear() + '0000';
               let idStr = '' + data.insertId;
-              this.sixteenDigId =
-                aaaId.substring(0, aaaId.length - idStr.length) + data.insertId;
+              this.sixteenDigId = aaaId.substring(0, aaaId.length - idStr.length) + data.insertId;
               this.refId = data.insertId;
               this.globalData.setrefId(this.refId);
               if (this.idType == 'aadhaar') {
-                this.sqliteProvider.insertIdproofData(
-                  this.idNumber,
-                  this.idType,
-                  this.leadId
-                );
+                this.sqliteProvider.insertIdproofData(this.idNumber, this.idType, this.leadId);
               } else {
-                this.sqliteProvider.insertIdproofData(
-                  this.idType.idNumber,
-                  this.idType.type,
-                  this.leadId
-                );
+                this.sqliteProvider.insertIdproofData(this.idType.idNumber, this.idType.type, this.leadId);
               }
               this.sqliteProvider
-                .addBasicDetails(
-                  this.refId,
-                  value,
-                  this.loanAmountFrom,
-                  this.loanAmountTo,
-                  this.guaFlag,
-                  this.userType,
-                  this.productType,
-                  this.profPic,
-                  this.lmsLeadId,
-                  this.signPic
-                )
+                .addAndUpdateBasicDetails(this.refId, value, this.loanAmountFrom, this.loanAmountTo, this.guaFlag,
+                  this.userType, this.profPic, this.signPic, this.id)
                 .then((data) => {
                   this.id = data.insertId;
                   this.globalData.setborrowerType(this.userType);
@@ -418,7 +280,6 @@ export class BasicComponent implements OnInit {
                     this.pagename
                   );
                   this.saveStatus.emit('basicTick');
-                  // this.globalData.setEditSaveStatus('basicSaved');
                   localStorage.setItem('Basic', 'basicSaved');
                   this.globalData.setPDT('');
                 })
@@ -429,22 +290,10 @@ export class BasicComponent implements OnInit {
             });
           } else {
             this.sqliteProvider
-              .updateBasicDetails(
-                this.refId,
-                value,
-                this.loanAmountFrom,
-                this.loanAmountTo,
-                this.guaFlag,
-                this.userType,
-                this.productType,
-                this.profPic,
-                this.lmsLeadId,
-                this.signPic,
-                this.id
-              )
-              .then((data) => {
+              .addAndUpdateBasicDetails(this.refId, value, this.loanAmountFrom, this.loanAmountTo, this.guaFlag,
+                this.userType, this.profPic, this.signPic, this.id
+              ).then((data) => {
                 this.saveStatus.emit('basicTick');
-                // this.globalData.setEditSaveStatus('basicSaved');
                 localStorage.setItem('Basic', 'basicSaved');
                 this.globalData.globalLodingDismiss();
                 this.globalData.showAlert(
@@ -482,7 +331,7 @@ export class BasicComponent implements OnInit {
 
   getBasicDetails() {
     this.globalData.globalLodingPresent('Fetching Data...!');
-    this.sqliteProvider.getBasicDetails(this.refId, this.id).then((data) => {
+    this.sqliteProvider.getBasicDetails_GL(this.refId, this.id).then((data) => {
       this.getBasicData = data;
       this.basicData.controls.prdSche.setValue(this.getBasicData[0].prdSche);
       this.basicData.controls.janaLoan.setValue(
@@ -492,7 +341,9 @@ export class BasicComponent implements OnInit {
         this.getBasicData[0].loanAmount
       );
       this.getProductValue(this.getBasicData[0].prdSche);
-      // filter based on orgCode
+      this.basicData.controls.tenure.setValue(this.getBasicData[0].tenure);
+      this.basicData.controls.interest.setValue(this.getBasicData[0].interest);
+      this.basicData.controls.intRate.setValue(this.getBasicData[0].intRate);
       this.refId = this.getBasicData[0].refId;
       this.id = this.getBasicData[0].id;
       this.userType = this.getBasicData[0].userType;
@@ -515,9 +366,7 @@ export class BasicComponent implements OnInit {
     this.sqliteProvider.getOrganisation().then((data) => {
       this.org_master = data;
       if (
-        this.refId === '' ||
-        this.refId === undefined ||
-        this.refId === null
+        this.refId === '' || this.refId === undefined || this.refId === null
       ) {
         this.basicData
           .get('janaCenter')
@@ -535,10 +384,11 @@ export class BasicComponent implements OnInit {
             if (sepcSubCode && sepcSubCode.length > 0) {
               this.pdt_master = [];
               sepcSubCode.forEach(async subCode => {
-                await this.sqlSupport.getProductBasedOnSchemeSpec(orgCode[0].OrgID, value, subCode.sub).then(data => {
-                  this.pdt_master.push(...data);
-                  this.productChange(undefined);
-                })
+                await this.sqlSupport.getProductBasedOnSchemeSpec(orgCode[0].OrgID, value, subCode.sub)
+                  .then(data => {
+                    this.pdt_master.push(...data);
+                    this.productChange(undefined);
+                  })
               })
             } else {
               this.sqlSupport.getProductBasedOnScheme(orgCode[0].OrgID, value).then(data => {
@@ -584,17 +434,7 @@ export class BasicComponent implements OnInit {
       this.basicData.controls.loanAmount.setValue('');
       this.basicData.controls.loanAmount.updateValueAndValidity();
     }
-    // let janaScheme = this.getJanaSchemeCode(value.detail.value);
-    // if (janaScheme == '1060') {
-    //   this.basicData.controls.vehicleType.setValue('2');
-    //   this.basicData.get('electricVehicle').setValue('');
-    //   this.basicData.get('electricVehicle').clearValidators();
-    //   this.basicData.get('electricVehicle').updateValueAndValidity();
-    // } else {
-    //   this.basicData.controls.vehicleType.setValue('1');
-    // }
     this.getProductValue(value.detail.value);
-    this.vehicleTypeChng();
   }
 
   productChange(change) {
@@ -605,15 +445,15 @@ export class BasicComponent implements OnInit {
       this.pdt_master.forEach((element) => {
         if (element.prdCode == this.basicData.controls.janaLoan.value) {
           this.loanAmountFrom = element.prdamtFromRange;
-          this.loanAmountFrom = parseInt(this.loanAmountFrom);
+          this.loanAmountFrom = +this.loanAmountFrom;
           this.loanAmountTo = element.prdamtToRange;
-          this.loanAmountTo = parseInt(this.loanAmountTo);
+          this.loanAmountTo = +this.loanAmountTo;
           this.interestFrom = element.prdbaserate;
           this.interestTo = element.prdinterest;
           this.tenureFrom = element.prdTenorFrom;
-          this.tenureFrom = parseInt(this.tenureFrom);
+          this.tenureFrom = +this.tenureFrom;
           this.tenureTo = element.prdTenorTo;
-          this.tenureTo = parseInt(this.tenureTo);
+          this.tenureTo = +this.tenureTo;
           this.schemeCode = element.prdSchemeCode;
           this.moratorium = element.prdMoratoriumMax;
           this.coAppFlag = 'N'; //element.prdCoappFlag;
@@ -625,51 +465,10 @@ export class BasicComponent implements OnInit {
           this.globalData.eventValue.next(
             this.basicData.controls.janaLoan.value
           );
-          // this.eventValue.publish("product", "product", 'value');
-          // this.getIntRate(this.basicData.controls.interest.value);
         }
-        // if (element.prdSchemeCode == '1060') {
-        //   this.basicData.controls.vehicleType.setValue('2');
-        //   this.basicData.get('electricVehicle').setValue('');
-        //   this.basicData.get('electricVehicle').clearValidators();
-        //   this.basicData.get('electricVehicle').updateValueAndValidity();
-        // } else {
-        //   this.basicData.controls.vehicleType.setValue('1');
-        // }
       });
     } else {
       console.log('sub category empty');
-    }
-  }
-
-  latLongFunction() {
-    let loading = this.loadCtrl.create({
-      // content: 'Please wait...'
-    });
-    // loading.present();
-    this.getJanaCenterName(this.basicData.controls.janaCenter.value.orgscode);
-    if (this._selectedCenter) {
-      let _janaLatitude = this._selectedCenter.latitudebrnch;
-      let _janaLongitude = this._selectedCenter.longitudebrnch;
-      let posOptions = {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      };
-      // this.geolocation.getCurrentPosition(posOptions).then((res) => {
-      //   this._latitude = res.coords.latitude;
-      //   this._longitude = res.coords.latitude;
-      //   this._distanceFromBrance = this.globFunc.returnDistanceFromLatLong(res.coords.latitude, res.coords.longitude, _janaLatitude, _janaLongitude);
-      //   if (this._distanceFromBrance > 5) {
-      //     loading.dismiss();
-      //     this.globalData.showAlert("Alert!", `Jana center is Out of Boundary!`);
-      //   } else {
-      //     loading.dismiss();
-      //   }
-      // }, err => {
-      //   loading.dismiss();
-      //   this.globalData.showAlert("Alert!", `Check Gps Connection`)
-      // })
     }
   }
 
@@ -714,37 +513,6 @@ export class BasicComponent implements OnInit {
     });
   }
 
-  agentChange(value) {
-    if (value == 'e') {
-      this.basicData
-        .get('janaEmpId')
-        .setValidators(
-          Validators.compose([
-            Validators.maxLength(12),
-            Validators.pattern('[0-9]*'),
-            Validators.required,
-          ])
-        );
-      this.basicData.get('janaEmpId').updateValueAndValidity();
-      this.empIdDisable = true;
-    } else {
-      this.basicData.get('janaEmpId').clearValidators();
-      this.basicData.get('janaEmpId').setValue('');
-      this.empIdDisable = false;
-    }
-    if (value == 'a') {
-      this.basicData
-        .get('janaAgentName')
-        .setValidators(Validators.compose([Validators.required]));
-      this.basicData.get('janaAgentName').updateValueAndValidity();
-      this.agentIdDisable = true;
-    } else {
-      this.basicData.get('janaAgentName').clearValidators();
-      this.basicData.get('janaAgentName').setValue('');
-      this.agentIdDisable = false;
-    }
-  }
-
   getProductCodeValue(value: string) {
     let selectedLoanName = this.pdt_master.find((f) => {
       return f.prdname === value;
@@ -757,54 +525,6 @@ export class BasicComponent implements OnInit {
       return f.prdSchemeId === value;
     });
     return selectedLoanName.prdSchemeCode;
-  }
-
-  getPurposeValue() {
-    this.sqliteProvider.getMasterDataUsingType('PurposeOfLoan').then((data) => {
-      console.log(data, 'get purpose');
-      this.pur_master = data;
-    });
-  }
-
-  getIndustryValue() {
-    this.sqliteProvider.getMasterDataUsingType('IndustryType').then((data) => {
-      this.ind_master = data;
-    });
-  }
-
-  getModeofRepayment() {
-    this.sqliteProvider
-      .getMasterDataUsingType('ModeofRepayment')
-      .then((data) => {
-        this.Repayments = data;
-      });
-  }
-
-  getVlTenure() {
-    this.sqliteProvider.getMasterDataUsingType('VLTenure').then((data) => {
-      this.vlTenure = data;
-    });
-  }
-
-  getDealerMaster() {
-    this.sqliteProvider
-      .getDealerMasterData(localStorage.getItem('janaCenter'))
-      .then((data) => {
-        this.dummy_masterDealer = data;
-      });
-  }
-  getProcessingFees() {
-    this.sqliteProvider.getProcessingFees().then((data) => {
-      this.processFeesData = data;
-    });
-  }
-
-  getPeriodInstallments() {
-    this.sqliteProvider
-      .getMasterDataUsingType('PeriodicityInstalment')
-      .then((data) => {
-        this.installments = data;
-      });
   }
 
   async getProductScheme() {
@@ -832,11 +552,7 @@ export class BasicComponent implements OnInit {
     })
   }
 
-  getsegmentType() {
-    this.sqliteProvider.getMasterDataUsingType('SegmentType').then((data) => {
-      this.segmentList = data;
-    });
-  }
+
 
   getAllJanaProducts() {
     this.sqliteProvider.getAllProductValues().then((data) => {
@@ -846,14 +562,9 @@ export class BasicComponent implements OnInit {
 
   getIntRate(val) {
     let prd = this.basicData.controls.janaLoan.value;
-    let intType = val[0];
-    if (
-      prd != '' &&
-      prd != null &&
-      prd != undefined &&
-      intType != '' &&
-      intType != null &&
-      intType != undefined
+    let intType = val.detail ? val.detail.value : val[0];
+    if (prd != '' && prd != null && prd != undefined && intType != ''
+      && intType != null && intType != undefined
     ) {
       this.sqliteProvider.getInterestRate(prd, intType).then((data) => {
         if (data.length > 0) {
@@ -862,90 +573,11 @@ export class BasicComponent implements OnInit {
           this.basicData.controls.intRate.setValue('');
           this.basicData.controls.interest.setValue('');
           this.basicData.controls.interest.updateValueAndValidity();
-
           this.globalData.presentToastMiddle(
             'Interest type is not available for the selected product!!!'
           );
         }
       });
-    }
-  }
-
-  vehicleTypeChng() {
-    if (this.basicData.controls.vehicleType.value == '1') {
-      this.isNewVehicle = true;
-      this.basicData.get('electricVehicle').setValue('');
-      this.basicData.get('electricVehicle').setValidators(Validators.required);
-    } else {
-      this.isNewVehicle = false;
-      this.basicData.get('electricVehicle').setValue('');
-      this.basicData.get('electricVehicle').clearValidators();
-      this.basicData.get('electricVehicle').updateValueAndValidity();
-    }
-  }
-
-  getGstStampDuty() {
-    let stampVal = this.basicData.controls.stampDuty.value;
-    if (stampVal != '' && stampVal != undefined && stampVal != null) {
-      let gstVal = this.GstCharges.GstonSdcTax;
-      let StampCharges = stampVal * (gstVal / 100);
-      this.basicData.controls.gstonSdc.setValue(StampCharges.toFixed(2));
-    } else {
-      this.basicData.controls.gstonSdc.setValue('');
-      this.globalData.presentToastMiddle(
-        'Please Insert the Stamp Duty Charges'
-      );
-    }
-  }
-
-  getGstNachCharges() {
-    let nachVal = this.basicData.controls.nachCharges.value;
-    if (nachVal != '' && nachVal != undefined && nachVal != null) {
-      let gstVal = this.GstCharges.GstonNachCharges;
-      let NachCharges = nachVal * (gstVal / 100);
-      this.basicData.controls.gstonNach.setValue(NachCharges.toFixed(2));
-    } else {
-      this.basicData.controls.gstonNach.setValue('');
-      this.globalData.presentToastMiddle('Please Insert the Nach Charges');
-    }
-  }
-  gstCallForPF() {
-    let processFee = this.basicData.controls.processingFee.value;
-    if (processFee != '' && processFee != undefined && processFee != null) {
-      let gstVal = this.GstCharges.GstonProcessingFee;
-      let processingFeeCharges = +processFee * (+gstVal / 100);
-      this.basicData.controls.gstonPf.setValue(processingFeeCharges.toFixed(2));
-      this.basicData.controls.gstonPf.updateValueAndValidity();
-    } else {
-      this.basicData.controls.gstonPf.setValue('');
-      this.basicData.controls.gstonPf.updateValueAndValidity();
-      this.globalData.presentToastMiddle('Please Insert the Process Fees');
-    }
-  }
-
-  getGstPddCharges() {
-    let pddVal = this.basicData.controls.pddCharges.value;
-    if (pddVal != '' && pddVal != undefined && pddVal != null) {
-      let gstVal = this.GstCharges.GstonPddCharges;
-      let PddCharges = pddVal * (gstVal / 100);
-      this.basicData.controls.gstonPddCharges.setValue(PddCharges.toFixed(2));
-    } else {
-      this.basicData.controls.gstonPddCharges.setValue('');
-      this.globalData.presentToastMiddle('Please Insert the Pdd Charges');
-    }
-  }
-
-  getGstOtherCharges() {
-    let otherVal = this.basicData.controls.otherCharges.value;
-    if (otherVal != '' && otherVal != undefined && otherVal != null) {
-      let gstVal = this.GstCharges.GstonOtherCharges;
-      let OtherCharges = otherVal * (gstVal / 100);
-      this.basicData.controls.gstonOtherCharges.setValue(
-        OtherCharges.toFixed(2)
-      );
-    } else {
-      this.basicData.controls.gstonOtherCharges.setValue('');
-      this.globalData.presentToastMiddle('Please Insert the Other Charges');
     }
   }
 
@@ -956,25 +588,6 @@ export class BasicComponent implements OnInit {
       this.basicData.controls.prdSche.value == null
     ) {
       this.globalData.showAlert('Alert!', `Please select Loan Main Product!`);
-    }
-  }
-
-  calcProcessFess() {
-    let subProduct = this.basicData.controls.janaLoan.value;
-    let loanAmt = +this.basicData.controls.loanAmount.value;
-    let processFeesAmt = this.processFeesData.filter(
-      (data) => data.prodId == subProduct
-    );
-    let proceesPercentage = loanAmt * (processFeesAmt[0].proPercentage / 100);
-    if (+proceesPercentage <= +processFeesAmt[0].minProcessingFee) {
-      // this.basicData.controls.processingFee.setValue(+processFeesAmt[0].minProcessingFee);
-      // this.basicData.controls.processingFee.updateValueAndValidity();
-    } else if (+proceesPercentage >= +processFeesAmt[0].maxProcessingFee) {
-      // this.basicData.controls.processingFee.setValue(+processFeesAmt[0].maxProcessingFee);
-      // this.basicData.controls.processingFee.updateValueAndValidity();
-    } else {
-      // this.basicData.controls.processingFee.setValue(+proceesPercentage.toFixed(2));
-      // this.basicData.controls.processingFee.updateValueAndValidity();
     }
   }
 
@@ -1013,5 +626,5 @@ export class BasicComponent implements OnInit {
       this.sqlSupport.insertErrorLog(error.stack, "BasicComponent-checkTenureProduct");
     }
   }
-  
+
 }

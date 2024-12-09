@@ -14,7 +14,6 @@
     <span *ngIf="!basicData.controls.prdSche.valid && (basicData.controls.prdSche.touched)">
       <span class="errText">Must select Main Loan Product.</span>
     </span>
-
     <ion-item class="field" [disabled]="submitDisable">
       <ion-label position="floating">Loan Sub Category
         <span class="mandatory">*</span>
@@ -33,7 +32,7 @@
         <span class="mandatory">*</span>
       </ion-label>
       <ion-input numberonly formControlName="loanAmount" type="tel" maxlength="10" [min]="loanAmountFrom"
-        [max]="loanAmountTo" (ionBlur)="calcProcessFess()">
+        [max]="loanAmountTo">
       </ion-input>
     </ion-item>
     <div
@@ -84,11 +83,11 @@
       <span class="errText">Must select the Interest Type.</span>
     </span>
 
-    <ion-item class="field">
+    <ion-item class="field" [disabled]="true">
       <ion-label position="floating">Interest Rate
         <span class="mandatory">*</span>
       </ion-label>
-      <ion-input type="tel" maxlength="5" formControlName="intRate" [disabled]="true"></ion-input>
+      <ion-input type="tel" maxlength="5" formControlName="intRate"></ion-input>
     </ion-item>
     <span *ngIf="basicData.controls.intRate.invalid && (basicData.controls.intRate.touched)">
       <span class="errText">Enter Valid Interest Rate.</span>

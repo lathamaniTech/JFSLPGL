@@ -328,7 +328,7 @@ export class NewapplicationPage {
   }
 
   preview() {
-    this.navCtrl.navigate(['/PreviewPage'],{skipLocationChange: true, replaceUrl: true});
+    this.navCtrl.navigate(['/PreviewPage'], { skipLocationChange: true, replaceUrl: true });
     // this.navCtrl.push(PreviewPage);
   }
 
@@ -416,18 +416,18 @@ export class NewapplicationPage {
     }
   }
 
-  existPage() {
+  homePage() {
     let leadStatus;
     if (this.network.type == 'none' || this.network.type == "unknown") {
       leadStatus = 'offline'
     } else {
       leadStatus = 'online'
     }
-    this.navCtrl.navigate(['/ExistingPage'], { queryParams: { _leadStatus: leadStatus },skipLocationChange: true, replaceUrl: true });
+    this.navCtrl.navigate(['/ExistingPage'], { queryParams: { _leadStatus: leadStatus }, skipLocationChange: true, replaceUrl: true });
   }
-  homePage() {
-    this.navCtrl.navigate(['/JsfhomePage'],{skipLocationChange: true, replaceUrl: true});
-  }
+  // homePage() {
+  //   this.navCtrl.navigate(['/JsfhomePage'],{skipLocationChange: true, replaceUrl: true});
+  // }
 
   // scrollToTop() {
   //   this.content.scrollToTop();

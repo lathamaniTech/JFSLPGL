@@ -248,36 +248,6 @@ export class SqliteService {
     }
   }
 
-  addPersonalDetails(refId, id, URNnumber, customerType, value, profPic, userType, coAppGuaId, applType, promocustType, leadStatus, disableFirstName, disableLastName, disableFatherName, dobDisable, disableGender, isNameAsPerEkyc, ShowAadharDob, disablePan, panName, panValidation, nameValidation, DOBValidation, seedingStatus) {
-    let data = [refId, id, URNnumber, customerType, value.genTitle, value.firstname, value.middlename, value.lastname, value.fathername, value.mothername, value.dobAadhar, value.dobDocument, value.dob, value.marital, value.spouseName, value.gender, this.globFunc.basicEnc(value.mobNum), this.globFunc.basicEnc(value.altMobNum), value.panAvailable, this.globFunc.basicEnc(value.panNum), this.globFunc.basicEnc(value.form60), value.employment, value.employerName, value.employeeId, value.designation, value.joinDate, value.lmName, this.globFunc.basicEnc(value.lmEmail), value.experience, value.monthSalary, value.bussName, value.actDetail, value.monthIncome, value.vinOfServ, value.annualIncome, value.caste, value.religion, value.languages, value.resciStatus, value.education, this.globFunc.basicEnc(value.email), profPic, userType, coAppGuaId, applType, promocustType, leadStatus, value.coAppFlag, disableFirstName, disableLastName, disableFatherName, dobDisable, disableGender, isNameAsPerEkyc, value.nameEkyc, ShowAadharDob, disablePan, panName, panValidation, nameValidation, DOBValidation, seedingStatus,value.upiNo,value.nameupi,value.vap];
-    return this.database.executeSql("INSERT INTO ORIG_PERSONAL_DETAILS(refId, id, URNnumber, customerType, genTitle, firstname, middlename, lastname, fathername, mothername, dobAadhar, dobDocument, dob, marital,spouseName, gender, mobNum, altMobNum, panAvailable, panNum, form60, employment, employerName, employeeId, designation, joinDate, lmName, lmEmail, experience, monthSalary, bussName,actDetail,monthIncome,vinOfServ, annualIncome, caste, religion, languages, resciStatus, education, email, profPic, userType, coAppGuaId, applType, promocustType, leadStatus,coAppFlag,disableFirstName,disableLastName,disableFatherName,dobDisable,disableGender,isNameAsPerEkyc,nameAsPerEkyc,ShowAadharDob,disablePan,panName,panValidation,nameValidation,DOBValidation,seedingStatus,upiNo,nameupi,vap) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data).then((data) => {
-      return data;
-    }, err => {
-      console.log("err: " + JSON.stringify(err));
-      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addPersonalDetails", "Insert Failure", JSON.stringify(err));
-      return err;
-    })
-  }
-  updatePesonalDetails(refId, id, URNnumber, customerType, value, profPic, perId) {
-    let data = [refId, id, URNnumber, customerType, value.genTitle, value.firstname, value.middlename, value.lastname, value.fathername, value.mothername, value.dobAadhar, value.dobDocument, value.dob, value.marital, value.spouseName, value.gender, this.globFunc.basicEnc(value.mobNum), this.globFunc.basicEnc(value.altMobNum), value.panAvailable, this.globFunc.basicEnc(value.panNum), this.globFunc.basicEnc(value.form60), value.employment, value.employerName, value.employeeId, value.designation, value.joinDate, value.lmName, this.globFunc.basicEnc(value.lmEmail), value.experience, value.monthSalary, value.bussName, value.actDetail, value.monthIncome, value.vinOfServ, value.annualIncome, value.caste, value.religion, value.languages, value.resciStatus, value.education, this.globFunc.basicEnc(value.email), profPic, value.coAppFlag,value.upiNo,value.nameupi,value.vap, perId];
-    return this.database.executeSql("UPDATE ORIG_PERSONAL_DETAILS SET refId=?, id=?, URNnumber=?, customerType=?, genTitle=?, firstname=?, middlename=?, lastname=?, fathername=?, mothername=?, dobAadhar=?, dobDocument=?, dob=?, marital=?,spouseName=?, gender=?, mobNum=?,altMobNum=?, panAvailable=?, panNum=?, form60=?, employment=?, employerName=?,employeeId=?,designation=?,joinDate=?,lmName=?,lmEmail=?, experience=?, monthSalary=?, bussName=?, actDetail=?, monthIncome=?, vinOfServ=?, annualIncome=?, caste=?, religion=?, languages=?, resciStatus=?, education=?, email=?, profPic=?, coAppFlag=?,upiNo=?,nameupi=?,vap=? WHERE perId=?", data).then(data => {
-      return data;
-    }, err => {
-      console.log("err: " + JSON.stringify(err));
-      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "updatePesonalDetails", "Update Failure", JSON.stringify(err));
-      return err;
-    })
-  }
-  getPersonalDetails(refId, id) {
-    let data = [refId, id];
-    return this.database.executeSql("SELECT * FROM ORIG_PERSONAL_DETAILS WHERE refId=? AND id=?", data).then((data) => {
-      return this.getAll(data);
-    }, err => {
-      console.log('Error: ', JSON.stringify(err));
-      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "getPersonalDetails", "Retrieve Failure", JSON.stringify(err));
-      return [];
-    })
-  }
   getPersonalDetailsForPanValue(refId, userType) {
     let data = [refId, userType];
     return this.database.executeSql("SELECT panAvailable FROM ORIG_PERSONAL_DETAILS WHERE refId=? AND userType=?", data).then((data) => {
@@ -308,41 +278,7 @@ export class SqliteService {
       return [];
     })
   }
-  addSourcingDetails(refId, id, userType, value, sourceid) {
-    if (sourceid === "" || sourceid === undefined || sourceid === null) {
-      let data = [refId, id, userType, value.janaEmployee, value.applicType, value.busiDesc, value.sourChannel, value.sourIdName, value.sourIdName1, value.leadId, value.typeCase, value.balTrans, value.branchName, value.branchState, value.loginBranch, value.applDate, value.roName, value.roCode];
-      return this.database.executeSql("INSERT INTO ORIG_SOURCING_DETAILS(refId, id, userType, janaEmployee, applicType, busiDesc, sourChannel, sourIdName, sourIdName1, leadId, typeCase, balTrans, branchName, branchState, loginBranch, applDate, roName, roCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data).then((data) => {
-        this.globalData.globalLodingDismiss();
-        this.globalData.showAlert("Alert!", "Sourcing Details Added Successfully");
-        return data;
-      }, err => {
-        console.log("err: " + JSON.stringify(err));
-        this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addSourcingDetails", "Insert Failure", JSON.stringify(err));
-        return err;
-      })
-    } else {
-      let data = [refId, id, value.janaEmployee, value.applicType, value.busiDesc, value.sourChannel, value.sourIdName, value.sourIdName1, value.leadId, value.typeCase, value.balTrans, value.branchName, value.branchState, value.loginBranch, value.applDate, value.roName, value.roCode, sourceid];
-      return this.database.executeSql("UPDATE ORIG_SOURCING_DETAILS SET refId=?, id=?, janaEmployee=?, applicType=?, busiDesc=?, sourChannel=?, sourIdName=?, sourIdName1=?, leadId=?, typeCase=?, balTrans=?, branchName=?, branchState=?, loginBranch=?, applDate=?, roName=?, roCode=? WHERE sourceid=?", data).then(data => {
-        this.globalData.globalLodingDismiss();
-        this.globalData.showAlert("Alert!", "Sourcing Details Updated Successfully");
-        return data;
-      }, err => {
-        console.log("err: " + JSON.stringify(err));
-        this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addSourcingDetails", "Update Failure", JSON.stringify(err));
-        return err;
-      })
-    }
-  }
-  getSourcingDetails(refId, id) {
-    let data = [refId, id];
-    return this.database.executeSql("SELECT * FROM ORIG_SOURCING_DETAILS WHERE refId=? AND id=?", data).then((data) => {
-      return this.getAll(data);
-    }, err => {
-      console.log('Error: ', JSON.stringify(err));
-      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "getSourcingDetails", "Retrieve Failure", JSON.stringify(err));
-      return [];
-    })
-  }
+
   getPSLDetails(refId, id) {
     let data = [refId, id];
     return this.database.executeSql("SELECT * FROM PSL_BUSINESS WHERE refId=? AND id=?", data).then((data) => {
@@ -529,7 +465,7 @@ export class SqliteService {
       if (!promoIdRef.includes("MV_")) {
         promoIdRef = this.globFunc.basicEnc(value.promoIDRef)
       }
-      let data = [refId, id, value.promoIDType, JSON.stringify(value.promoDoc), promoIdRef, value.promoexpiry, vaultStatus, proofName,value.aepsStatus];
+      let data = [refId, id, value.promoIDType, JSON.stringify(value.promoDoc), promoIdRef, value.promoexpiry, vaultStatus, proofName, value.aepsStatus];
       return this.database.executeSql("INSERT INTO ORIG_PROOF_PROMOTER_DETAILS(refId, id, promoIDType, promoDoc, promoIDRef, promoexpiry, vaultStatus, proofName,aepsFlag) VALUES (?,?,?,?,?,?,?,?,?)", data).then((data) => {
         return data;
       }, err => {
@@ -542,7 +478,7 @@ export class SqliteService {
       if (!promoIdRef.includes("MV_")) {
         promoIdRef = this.globFunc.basicEnc(value.promoIDRef)
       }
-      let udata = [refId, id, value.promoIDType, JSON.stringify(value.promoDoc), promoIdRef, value.promoexpiry, vaultStatus, proofName,value.aepsStatus, pproofId];
+      let udata = [refId, id, value.promoIDType, JSON.stringify(value.promoDoc), promoIdRef, value.promoexpiry, vaultStatus, proofName, value.aepsStatus, pproofId];
       return this.database.executeSql("UPDATE ORIG_PROOF_PROMOTER_DETAILS SET refId=?, id=?, promoIDType=?, promoDoc=?, promoIDRef=?, promoexpiry=?, vaultStatus=?, proofName=?,aepsFlag=? WHERE pproofId=?", udata).then(data => {
         return data;
       }, err => {
@@ -1919,7 +1855,7 @@ export class SqliteService {
     return Array.isArray(value) ? value.toString() : value;
   }
   addVehicleDetails(refId, id, value, assetAge) {
-    const data = [refId, id, this.convertToString(value.brandName), this.convertToString(value.model), this.convertToString(value.variant), value.cc, value.onroadPrice, value.downpayment, value.dealerType, value.dealerIFSCcode, value.dealerBank, value.dealerCurAcc, value.dealerBranch, value.dealerAddress, value.insPolicyNo, value.insCompany, value.insDate, value.insExpDate, value.insValue, value.scheme, value.promoCode, value.rcNo, value.engineNo, value.chassisNo, value.yearOfMan, value.kmDriven, value.vehicleAge, value.dealerName, value.dealerCode, value.nomName, value.nomRel, value.nomDOB, value.nomGender, value.variant, value.registrationDate, value.dealerQuotation, value.obv, value.assetPrice, value.insuranceCover, value.hypothecation, value.noofOwner, assetAge, value.vehicleCatogery,value.nameAsPerRC,value.apiFlag];
+    const data = [refId, id, this.convertToString(value.brandName), this.convertToString(value.model), this.convertToString(value.variant), value.cc, value.onroadPrice, value.downpayment, value.dealerType, value.dealerIFSCcode, value.dealerBank, value.dealerCurAcc, value.dealerBranch, value.dealerAddress, value.insPolicyNo, value.insCompany, value.insDate, value.insExpDate, value.insValue, value.scheme, value.promoCode, value.rcNo, value.engineNo, value.chassisNo, value.yearOfMan, value.kmDriven, value.vehicleAge, value.dealerName, value.dealerCode, value.nomName, value.nomRel, value.nomDOB, value.nomGender, value.variant, value.registrationDate, value.dealerQuotation, value.obv, value.assetPrice, value.insuranceCover, value.hypothecation, value.noofOwner, assetAge, value.vehicleCatogery, value.nameAsPerRC, value.apiFlag];
     return this.database.executeSql("INSERT INTO VEHICLE_DETAILS(refId, id, brandName, model,variant, cc, onroadPrice,downpayment,dealerType,dealerIFSCcode,dealerBank,dealerCurAcc,dealerBranch,dealerAddress,insPolicyNo,insCompany,insDate,insExpDate,insValue, scheme, promoCode, rcNo, engineNo, chassisNo, yearOfMan, kmDriven, vehicleAge, dealerName, dealerCode, nomName, nomRel, nomDOB, nomGender, variant, registrationDate, dealerQuotation, obv, assetPrice, insuranceCover, hypothecation, noofOwner, assetAge,vehicleCatogery,nameAsPerRC,apiFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data).then(data => data).catch(err => {
       console.log('Error: ', err);
       this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addVehicleDetails", "Insert Failure", JSON.stringify(err));
@@ -1927,7 +1863,7 @@ export class SqliteService {
     })
   }
   updateVehicleDetails(refId, id, vehicleId, value, assetAge) {
-    const data = [refId, id, this.convertToString(value.brandName), this.convertToString(value.model), this.convertToString(value.variant), value.cc, value.onroadPrice, value.downpayment, value.dealerType, value.dealerIFSCcode, value.dealerBank, value.dealerCurAcc, value.dealerBranch, value.dealerAddress, value.insPolicyNo, value.insCompany, value.insDate, value.insExpDate, value.insValue, value.scheme, value.promoCode, value.rcNo, value.engineNo, value.chassisNo, value.yearOfMan, value.kmDriven, value.vehicleAge, value.dealerName, value.dealerCode, value.nomName, value.nomRel, value.nomDOB, value.nomGender, value.variant, value.registrationDate, value.dealerQuotation, value.obv, value.assetPrice, value.insuranceCover, value.hypothecation, value.noofOwner, assetAge, value.vehicleCatogery,value.nameAsPerRC,value.apiFlag,vehicleId];
+    const data = [refId, id, this.convertToString(value.brandName), this.convertToString(value.model), this.convertToString(value.variant), value.cc, value.onroadPrice, value.downpayment, value.dealerType, value.dealerIFSCcode, value.dealerBank, value.dealerCurAcc, value.dealerBranch, value.dealerAddress, value.insPolicyNo, value.insCompany, value.insDate, value.insExpDate, value.insValue, value.scheme, value.promoCode, value.rcNo, value.engineNo, value.chassisNo, value.yearOfMan, value.kmDriven, value.vehicleAge, value.dealerName, value.dealerCode, value.nomName, value.nomRel, value.nomDOB, value.nomGender, value.variant, value.registrationDate, value.dealerQuotation, value.obv, value.assetPrice, value.insuranceCover, value.hypothecation, value.noofOwner, assetAge, value.vehicleCatogery, value.nameAsPerRC, value.apiFlag, vehicleId];
     return this.database.executeSql("UPDATE VEHICLE_DETAILS SET refId =?, id =?, brandName =?, model =?,variant=?, cc =?, onroadPrice =?,downpayment =?,dealerType =?,dealerIFSCcode =?,dealerBank =?,dealerCurAcc=?,dealerBranch =?,dealerAddress =?,insPolicyNo =?,insCompany =?,insDate =?,insExpDate =?,insValue =?, scheme =?, promoCode =?, rcNo =?, engineNo =?, chassisNo =?, yearOfMan =?, kmDriven =?, vehicleAge =?, dealerName =?, dealerCode =?, nomName =?, nomRel =?, nomDOB =?, nomGender =?, variant=?, registrationDate=?, dealerQuotation=?, obv=?, assetPrice=?, insuranceCover=?, hypothecation=?, noofOwner=?, assetAge=?, vehicleCatogery=?, nameAsPerRC=?, apiFlag=? WHERE vehicleId=?", data).catch(err => {
       console.log('Error: ', err);
       this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "updateVehicleDetails", "Update Failure", JSON.stringify(err));
@@ -2497,20 +2433,125 @@ export class SqliteService {
         this.database.executeSql("ALTER TABLE ORIG_PROOF_PROMOTER_DETAILS ADD COLUMN aepsFlag TEXT", []);
       }
     })
-  //   this.database.executeSql("SELECT lsoFlag FROM VEHICLE_DETAILS", []).then(org => {
-  //     return org;
-  //   }, err => {
-  //     if (err.code == 5) {
-  //       this.database.executeSql("ALTER TABLE VEHICLE_DETAILS ADD COLUMN lsoFlag TEXT DEFAULT 'N'", []);
-  //     }
-  //   })
-  //   this.database.executeSql("SELECT lsoFlag FROM ORIG_POST_SANCTION", []).then(org => {
-  //     return org;
-  //   }, err => {
-  //     if (err.code == 5) {
-  //       this.database.executeSql("ALTER TABLE ORIG_POST_SANCTION ADD COLUMN lsoFlag TEXT DEFAULT 'N'", []);
-  //     }
-  //   })
+    //   this.database.executeSql("SELECT lsoFlag FROM VEHICLE_DETAILS", []).then(org => {
+    //     return org;
+    //   }, err => {
+    //     if (err.code == 5) {
+    //       this.database.executeSql("ALTER TABLE VEHICLE_DETAILS ADD COLUMN lsoFlag TEXT DEFAULT 'N'", []);
+    //     }
+    //   })
+    //   this.database.executeSql("SELECT lsoFlag FROM ORIG_POST_SANCTION", []).then(org => {
+    //     return org;
+    //   }, err => {
+    //     if (err.code == 5) {
+    //       this.database.executeSql("ALTER TABLE ORIG_POST_SANCTION ADD COLUMN lsoFlag TEXT DEFAULT 'N'", []);
+    //     }
+    //   })
+  }
+
+  // ---------------------------- Below lines are only for GL Tables ------------------------------------
+
+  // ------- Basic Details ------------
+  addAndUpdateBasicDetails(refId, value, loanAmountFrom, loanAmountTo, guaFlag, userType, profPic, signPic, id) {
+    if (id == "" || id == undefined || id == null) {
+      let data = [refId, value.intRate, value.interest, value.janaLoan, value.loanAmount, value.tenure, value.prdSche, loanAmountFrom, loanAmountTo, guaFlag, userType, profPic, signPic];
+      return this.database.executeSql("INSERT INTO ORIG_BASIC_DETAILS_GL(refId,intRate,interest,janaLoan,loanAmount,tenure,prdSche,loanAmountFrom,loanAmountTo,userType,guaFlag,profPic,signPic) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", data).then((data) => {
+        return data;
+      }, err => {
+        console.log("err: " + JSON.stringify(err));
+        this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addBasicDetails", "Insert Failure", JSON.stringify(err));
+        return err;
+      })
+    } else {
+      let data = [refId, value.intRate, value.interest, value.janaLoan, value.loanAmount, value.tenure, value.prdSche, loanAmountFrom, loanAmountTo, guaFlag, userType, profPic, signPic];
+      return this.database.executeSql("UPDATE ORIG_BASIC_DETAILS_GL SET refId =?, intRate =?, interest =?, janaLoan =?, loanAmount =?, tenure =?, prdSche =?, loanAmountFrom =?, loanAmountTo =?, userType =?, guaFlag =?, profPic =?, signPic =? WHERE id=?", data).then((data) => {
+        return data;
+      }, err => {
+        console.log("err: " + JSON.stringify(err));
+        this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addBasicDetails", "Insert Failure", JSON.stringify(err));
+        return err;
+      })
+    }
+  }
+
+  getBasicDetails_GL(refId, id) {
+    let data = [refId, id];
+    return this.database.executeSql("SELECT * FROM ORIG_BASIC_DETAILS_GL WHERE refId=? AND id=?", data).then((data) => {
+      return this.getAll(data);
+    }, err => {
+      console.log('Error: ', JSON.stringify(err));
+      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "getBasicDetails", "Retrieve Failure", JSON.stringify(err));
+      return [];
+    })
+  }
+
+  // ----------- Sourcing Details ----------------
+  addSourcingDetails(refId, id, userType, value, sourceid) {
+    if (sourceid === "" || sourceid === undefined || sourceid === null) {
+      let data = [refId, id, userType, value.janaEmployee, value.applicType, value.busiDesc, value.sourChannel, value.sourIdName, value.sourIdName1, value.leadId, value.typeCase, value.balTrans, value.branchName, value.branchState, value.loginBranch, value.applDate, value.roName, value.roCode];
+      return this.database.executeSql("INSERT INTO ORIG_SOURCING_DETAILS(refId, id, userType, janaEmployee, applicType, busiDesc, sourChannel, sourIdName, sourIdName1, leadId, typeCase, balTrans, branchName, branchState, loginBranch, applDate, roName, roCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data).then((data) => {
+        this.globalData.globalLodingDismiss();
+        this.globalData.showAlert("Alert!", "Sourcing Details Added Successfully");
+        return data;
+      }, err => {
+        console.log("err: " + JSON.stringify(err));
+        this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addSourcingDetails", "Insert Failure", JSON.stringify(err));
+        return err;
+      })
+    } else {
+      let data = [refId, id, value.janaEmployee, value.applicType, value.busiDesc, value.sourChannel, value.sourIdName, value.sourIdName1, value.leadId, value.typeCase, value.balTrans, value.branchName, value.branchState, value.loginBranch, value.applDate, value.roName, value.roCode, sourceid];
+      return this.database.executeSql("UPDATE ORIG_SOURCING_DETAILS SET refId=?, id=?, janaEmployee=?, applicType=?, busiDesc=?, sourChannel=?, sourIdName=?, sourIdName1=?, leadId=?, typeCase=?, balTrans=?, branchName=?, branchState=?, loginBranch=?, applDate=?, roName=?, roCode=? WHERE sourceid=?", data).then(data => {
+        this.globalData.globalLodingDismiss();
+        this.globalData.showAlert("Alert!", "Sourcing Details Updated Successfully");
+        return data;
+      }, err => {
+        console.log("err: " + JSON.stringify(err));
+        this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addSourcingDetails", "Update Failure", JSON.stringify(err));
+        return err;
+      })
+    }
+  }
+  getSourcingDetails(refId, id) {
+    let data = [refId, id];
+    return this.database.executeSql("SELECT * FROM ORIG_SOURCING_DETAILS WHERE refId=? AND id=?", data).then((data) => {
+      return this.getAll(data);
+    }, err => {
+      console.log('Error: ', JSON.stringify(err));
+      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "getSourcingDetails", "Retrieve Failure", JSON.stringify(err));
+      return [];
+    })
+  }
+
+  //---------- Personal Details------------------------
+  addPersonalDetails(refId, id, URNnumber, customerType, value, profPic, userType, coAppGuaId, applType, promocustType, leadStatus, disableFirstName, disableLastName, disableFatherName, dobDisable, disableGender, isNameAsPerEkyc, ShowAadharDob, disablePan, panName, panValidation, nameValidation, DOBValidation, seedingStatus) {
+    let data = [refId, id, URNnumber, customerType, value.genTitle, value.firstname, value.middlename, value.lastname, value.fathername, value.mothername, value.dobAadhar, value.dobDocument, value.dob, value.marital, value.spouseName, value.gender, this.globFunc.basicEnc(value.mobNum), this.globFunc.basicEnc(value.altMobNum), value.panAvailable, this.globFunc.basicEnc(value.panNum), this.globFunc.basicEnc(value.form60), value.employment, value.employerName, value.employeeId, value.designation, value.joinDate, value.lmName, this.globFunc.basicEnc(value.lmEmail), value.experience, value.monthSalary, value.bussName, value.actDetail, value.monthIncome, value.vinOfServ, value.annualIncome, value.caste, value.religion, value.languages, value.resciStatus, value.education, this.globFunc.basicEnc(value.email), profPic, userType, coAppGuaId, applType, promocustType, leadStatus, value.coAppFlag, disableFirstName, disableLastName, disableFatherName, dobDisable, disableGender, isNameAsPerEkyc, value.nameEkyc, ShowAadharDob, disablePan, panName, panValidation, nameValidation, DOBValidation, seedingStatus, value.upiNo, value.nameupi, value.vap];
+    return this.database.executeSql("INSERT INTO ORIG_PERSONAL_DETAILS(refId, id, URNnumber, customerType, genTitle, firstname, middlename, lastname, fathername, mothername, dobAadhar, dobDocument, dob, marital,spouseName, gender, mobNum, altMobNum, panAvailable, panNum, form60, employment, employerName, employeeId, designation, joinDate, lmName, lmEmail, experience, monthSalary, bussName,actDetail,monthIncome,vinOfServ, annualIncome, caste, religion, languages, resciStatus, education, email, profPic, userType, coAppGuaId, applType, promocustType, leadStatus,coAppFlag,disableFirstName,disableLastName,disableFatherName,dobDisable,disableGender,isNameAsPerEkyc,nameAsPerEkyc,ShowAadharDob,disablePan,panName,panValidation,nameValidation,DOBValidation,seedingStatus,upiNo,nameupi,vap) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data).then((data) => {
+      return data;
+    }, err => {
+      console.log("err: " + JSON.stringify(err));
+      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "addPersonalDetails", "Insert Failure", JSON.stringify(err));
+      return err;
+    })
+  }
+  updatePesonalDetails(refId, id, URNnumber, customerType, value, profPic, perId) {
+    let data = [refId, id, URNnumber, customerType, value.genTitle, value.firstname, value.middlename, value.lastname, value.fathername, value.mothername, value.dobAadhar, value.dobDocument, value.dob, value.marital, value.spouseName, value.gender, this.globFunc.basicEnc(value.mobNum), this.globFunc.basicEnc(value.altMobNum), value.panAvailable, this.globFunc.basicEnc(value.panNum), this.globFunc.basicEnc(value.form60), value.employment, value.employerName, value.employeeId, value.designation, value.joinDate, value.lmName, this.globFunc.basicEnc(value.lmEmail), value.experience, value.monthSalary, value.bussName, value.actDetail, value.monthIncome, value.vinOfServ, value.annualIncome, value.caste, value.religion, value.languages, value.resciStatus, value.education, this.globFunc.basicEnc(value.email), profPic, value.coAppFlag, value.upiNo, value.nameupi, value.vap, perId];
+    return this.database.executeSql("UPDATE ORIG_PERSONAL_DETAILS SET refId=?, id=?, URNnumber=?, customerType=?, genTitle=?, firstname=?, middlename=?, lastname=?, fathername=?, mothername=?, dobAadhar=?, dobDocument=?, dob=?, marital=?,spouseName=?, gender=?, mobNum=?,altMobNum=?, panAvailable=?, panNum=?, form60=?, employment=?, employerName=?,employeeId=?,designation=?,joinDate=?,lmName=?,lmEmail=?, experience=?, monthSalary=?, bussName=?, actDetail=?, monthIncome=?, vinOfServ=?, annualIncome=?, caste=?, religion=?, languages=?, resciStatus=?, education=?, email=?, profPic=?, coAppFlag=?,upiNo=?,nameupi=?,vap=? WHERE perId=?", data).then(data => {
+      return data;
+    }, err => {
+      console.log("err: " + JSON.stringify(err));
+      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "updatePesonalDetails", "Update Failure", JSON.stringify(err));
+      return err;
+    })
+  }
+  getPersonalDetails(refId, id) {
+    let data = [refId, id];
+    return this.database.executeSql("SELECT * FROM ORIG_PERSONAL_DETAILS WHERE refId=? AND id=?", data).then((data) => {
+      return this.getAll(data);
+    }, err => {
+      console.log('Error: ', JSON.stringify(err));
+      this.addAuditTrail(moment(this.dateTime).format("YYYY-MM-DD HH:mm:ss"), "getPersonalDetails", "Retrieve Failure", JSON.stringify(err));
+      return [];
+    })
   }
 
 }

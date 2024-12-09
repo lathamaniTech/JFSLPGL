@@ -80,9 +80,7 @@ export class SourcingComponent implements OnInit {
     public modalCtrl: ModalController, public formBuilder: FormBuilder,
     public sqliteProvider: SqliteService, public alertCtrl: AlertController,
     public globalData: DataPassingProviderService, public device: Device,
-    // public viewCtrl: ViewController, 
     public loadCtrl: LoadingController, public activateRoute: ActivatedRoute,
-    // public geolocation: Geolocation, 
     public network: Network,
     private globFunc: GlobalService, public sqlSupport: SquliteSupportProviderService) {
     this.activateRoute.queryParamMap.subscribe((data: any) => {
@@ -138,48 +136,13 @@ export class SourcingComponent implements OnInit {
     if (this.naveParamsValue.fieldDisable) {
       this.submitDisable = true;
     }
-
-    // this.sourcingData.valueChanges.subscribe(() => {
-    //   // console.log(this.QDEIndividualDemoGraphic);
-    //   if (this.sourcingData.pristine == false) {
-    //     if (this.sourcingData.status === "INVALID") {
-    //       this.formActivater.disableForm = true;
-    //       this.globFunc.setapplicationDataChangeDetector('modified', this.pagename);
-    //     } else {
-    //       this.formActivater.disableForm = false;
-    //       this.globFunc.setapplicationDataChangeDetector('modified', this.pagename);
-    //     }
-    //   }
-    // })
   }
 
-  ngOnInit() {
-    // let root = this.viewCtrl.instance.navCtrl._app._appRoot;
-    document.addEventListener('click', function (event) {
-      let btn = <HTMLLIElement>document.querySelector('.remove-ok .alert-button-group');
-      let target = <HTMLElement>event.target;
-      if (btn && target.className == 'alert-radio-label' || target.className == 'alert-radio-inner' || target.className == 'alert-radio-icon') {
-        // let view = root._overlayPortal._views[0];
-        // let inputs = view.instance.d.inputs;
-        // for (let input of inputs) {
-        //   if (input.checked) {
-        //     view.instance.d.buttons[1].handler([input.value]);
-        //     view.dismiss();
-        //     break;
-        //   }
-        // }
-      }
-    });
-  }
+  ngOnInit() { }
 
   sourcingSave(value) {
     this.globalData.globalLodingPresent("Please wait...");
     let saveStatus = localStorage.getItem('Basic');
-    // this.globalData.getEditSaveStatus().forEach(element => {
-    //   if (element == "basicSaved") {
-    //     saveStatus = "basicSaved";
-    //   }
-    // });
     if (saveStatus == "basicSaved") {
       this.refId = this.globalData.getrefId();
       this.id = this.globalData.getId();
@@ -191,7 +154,6 @@ export class SourcingComponent implements OnInit {
         this.saveStatus.emit('sourcingTick');
         this.formActivater.disableForm = true;
         this.globFunc.setapplicationDataChangeDetector('saved', this.pagename);
-        // this.globalData.setEditSaveStatus("sourcingSaved");
         localStorage.setItem('Sourcing', 'sourcingSaved');
       })
     } else {
@@ -201,7 +163,6 @@ export class SourcingComponent implements OnInit {
   }
 
   async getSourcingData() {
-    // let applicantType = await this.sqliteProvider.getApplicantType(this.appLeadId)
     this.sqliteProvider.getSourcingDetails(this.refId, this.id).then(data => {
       if (data.length > 0) {
         this.sourcingData.controls.janaEmployee.setValue(data[0].janaEmployee);
@@ -226,7 +187,6 @@ export class SourcingComponent implements OnInit {
         this.sourceid = data[0].sourceid;
 
         this.saveStatus.emit('sourcingTick');
-        // this.globalData.setEditSaveStatus("sourcingSaved");
         localStorage.setItem('Sourcing', 'sourcingSaved');
       }
 
