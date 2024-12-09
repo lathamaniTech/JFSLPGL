@@ -108,12 +108,14 @@ export class ExistingPage {
   ionViewDidEnter() { }
 
   newapplication() {
-    if (this.network.type == 'none' || this.network.type == "unknown") {
+    if (this.network.type !== 'none' || this.network.type !== undefined) {
       this.leadStatus = "online";
       this.userType = "A";
       this.globalData.setborrowerType(this.userType);
       this.globalData.setCustType('N');
       this.router.navigate(['/ProofVerification'], { queryParams: { userType: this.userType, leadStatus: this.leadStatus }, skipLocationChange: true, replaceUrl: true });
+    } else {
+      this.globFunc.showAlert('Alert', 'Please Check your internet!')
     }
   }
 

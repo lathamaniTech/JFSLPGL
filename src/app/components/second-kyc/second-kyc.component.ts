@@ -18,10 +18,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KarzaDetailsPage } from 'src/app/pages/karza-details/karza-details.page';
 import { FingerprintPage } from 'src/app/pages/fingerprint/fingerprint.page';
 
-// import { NewapplicationPage } from './../../pages/newapplication/newapplication';
-// import { FingerprintPage } from './../../pages/fingerprint/fingerprint';
-// import { KarzaDetailsPage } from '../../pages/karza-details/karza-details';
-
 @Component({
   selector: 'app-second-kyc',
   templateUrl: './second-kyc.component.html',
@@ -99,32 +95,10 @@ export class SecondKycComponent {
       passport: [''],
       entityNum: [''],
       bpan: [''],
-      aepsStatus:['']
+      aepsStatus: ['']
     });
-    // let root = this.viewCtrl.instance.navCtrl._app._appRoot;
-    document.addEventListener('click', function (event) {
-      let btn = <HTMLLIElement>(
-        document.querySelector('.remove-ok .alert-button-group')
-      );
-      let target = <HTMLElement>event.target;
-      if (
-        (btn && target.className == 'alert-radio-label') ||
-        target.className == 'alert-radio-inner' ||
-        target.className == 'alert-radio-icon'
-      ) {
-        // let view = root._overlayPortal._views[0];
-        // let inputs = view.instance.d.inputs;
-        // for (let input of inputs) {
-        //   if (input.checked) {
-        //     view.instance.d.buttons[1].handler([input.value]);
-        //     view.dismiss();
-        //     break;
-        //   }
-        // }
-      }
-    });
+
     this.checkCustomerTypeData();
-    // this.custTypeChng(this.globalData.getCustomerType());
   }
 
   async closeModal() {
@@ -135,7 +109,7 @@ export class SecondKycComponent {
         {
           text: 'No',
           role: 'cancel',
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: 'Yes',
@@ -161,17 +135,13 @@ export class SecondKycComponent {
       );
     } else {
       console.log(value);
-      // this.globalData.globalLodingPresent("Fetching data...");
-      // this.globalData.setCustomerType(value.custType);
-      // let leadId = Math.floor(Math.random() * 900000000000) + 100000000000;
       if (
         value.aadhar != null &&
         value.aadhar != undefined &&
         value.aadhar != ''
       ) {
         this.globalData.globalLodingDismiss();
-        // this.aadharEkyc(value.idType[0], value.aadhar, leadId);
-        this.aadharVault(value.idType, value.aadhar,value.aepsStatus, this.leadId);
+        this.aadharVault(value.idType, value.aadhar, value.aepsStatus, this.leadId);
       } else if (
         value.pan != null &&
         value.pan != undefined &&
@@ -213,47 +183,11 @@ export class SecondKycComponent {
         this.stitchApiCall(value.idType, value.bpan, this.leadId);
       } else {
         this.stitchApiCall(value.idType, value.entityNum, this.leadId);
-        // this.initPosidex(value.idType[0], value.entityNum, leadId);
       }
     }
-
-    // if (this.globalData.getCustomerType() == '1') {
-    //   if (idType == 'PAN CARD') {
-    //     //this.initPosidex('pan', this.proofData.controls.promoIDRef.value, leadId);
-    //     this.panKarza(idType, this.proofData.controls.promoIDRef.value, leadId);
-    //   } else if (idType == 'VOTER ID') {
-    //     //this.initPosidex('voterid', this.proofData.controls.promoIDRef.value, leadId);
-    //     this.voterKarza(idType, this.proofData.controls.promoIDRef.value, leadId);
-    //   } else if (idType == 'Driving License'.toUpperCase()) {
-    //     if (this.proofData.controls.promoexpiry.value) {
-    //       // this.initPosidex('drivingLicence', this.proofData.controls.promoIDRef.value, leadId);
-    //       this.initKarzaAPi('drivingLicence', this.proofData.controls.promoIDRef.value, leadId);
-    //     } else {
-    //       setTimeout(() => {
-    //         this.globalFunc.showAlert("Alert!", "enter expiry date!");
-    //       }, 400);
-    //     }
-    //   } else if (idType == 'PASSPORT') {
-    //     // this.initPosidex('passport', this.proofData.controls.promoIDRef.value, leadId);
-    //     this.initKarzaAPi('passport', this.proofData.controls.promoIDRef.value, leadId);
-    //   } else if (idType == 'AADHAR CARD') {
-    //     if (this.vaultStatus == 'Y') {
-    //       this.aadhaarVaultRetrieve('', true, leadId);
-    //       // this.initAadhar('aadhar', this.proofData.controls.promoIDRef.value, leadId);
-    //     } else {
-    //       setTimeout(() => {
-    //         this.globalFunc.showAlert("Alert!", "Please complete aadhar vault process!!!");
-    //       }, 400);
-    //     }
-    //   }
-    // } else {
-    //   this.stitchApiCall(idType, this.proofData.controls.promoIDRef.value, leadId);
-    // }
   }
 
   async initKarzaAPi(idType, idNumber, leadId, body?, ekycData?) {
-    // let modal = this.modalCtrl.create('KarzaDetailsPage', { data: JSON.stringify(body), idType: idType, idNumber: idNumber, leadId: leadId, leadStatus: this.leadStatus,userType: this.globalData.getborrowerType()  });
-    // modal.present();
     const modal = await this.modalCtrl.create({
       component: KarzaDetailsPage,
       componentProps: {
@@ -530,18 +464,16 @@ export class SecondKycComponent {
           });
           alert.present();
 
-          // this.globalData.globalLodingDismiss();
-          // this.globalFunc.showAlert("Alert!", error.statusText);
         }
       );
     }
   }
   janaId;
-  aadharVault(idType, idNumber,aepsStatus, leadId) {
+  aadharVault(idType, idNumber, aepsStatus, leadId) {
     // this.navCtrl.push(FingerprintPage, { idType: idType, idNumber: idNumber, leadId: leadId, leadStatus: this.leadStatus });
     let body = {
       "aadhaar": idNumber,
-      "aepsStatus":aepsStatus[0]
+      "aepsStatus": aepsStatus[0]
     };
     this.master.restApiCallAngular('AadharInsertVoulting', body).then(
       (result) => {
@@ -549,7 +481,7 @@ export class SecondKycComponent {
           if ((<any>result).status === '00') {
             this.janaId = (<any>result).janaId;
             // this.navCtrl.push(FingerprintPage, { idType: idType, idNumber: idNumber, leadId: leadId, leadStatus: this.leadStatus, janaId: (<any>result).janaId, existAather: this.exisAadharCheck });
-            this.initAadhar(idType, idNumber, leadId,aepsStatus[0]);
+            this.initAadhar(idType, idNumber, leadId, aepsStatus[0]);
             // let leadId = Math.floor(Math.random() * 900000000000) + 100000000000;
             // this.globalData.setCustType('N');
             // this.navCtrl.push(NewapplicationPage, { newApplication: "N", leadStatus: this.leadStatus, aadhar: "aadhaar", leadId: leadId, idNumber: idNumber, userType: this.globalData.getborrowerType() });
@@ -566,7 +498,7 @@ export class SecondKycComponent {
     );
   }
 
-  async initAadhar(idType, idNumber, leadId,aepsStatus, body?) {
+  async initAadhar(idType, idNumber, leadId, aepsStatus, body?) {
     // let modal = this.modalCtrl.create('KarzaDetailsPage', { data: JSON.stringify(body), idType: idType, idNumber: idNumber, leadId: leadId, leadStatus: this.leadStatus,userType: this.globalData.getborrowerType()  });
     // modal.present();
     // let modal = this.modalCtrl.create(KarzaDetailsPage, { data: JSON.stringify(body), idType: idType, idNumber: idNumber, leadId: leadId, leadStatus: 'online', userType: this.globalData.getborrowerType() });
@@ -595,14 +527,9 @@ export class SecondKycComponent {
           this.ekycData = data.data.ekycData;
           this.ids.push(data.data.body);
           this.globalData.globalLodingDismiss();
-          // this.validated = true;
-          // this.globalFunc.secKycAdd({ id: 'aadhar', val: data });
-          // this.navCtrl.push(NewapplicationPage, { licence: data, leadStatus: this.leadStatus, leadId: leadId, userType: this.globalData.getborrowerType() });
         } else if (idType == 'passport') {
           this.globalData.setCustType('N');
           this.globalData.globalLodingDismiss();
-          // this.validated = true;
-          // this.navCtrl.push(NewapplicationPage, { passport: data, leadStatus: this.leadStatus, leadId: leadId, userType: this.globalData.getborrowerType() });
         }
       }
     });
@@ -676,10 +603,6 @@ export class SecondKycComponent {
       event.detail.value = val;
     }
   }
-
-  // toUpperCase(frmGrpName, ctrlName) {
-  //   this[frmGrpName].controls[ctrlName].setValue(this[frmGrpName].controls[ctrlName].value.toUpperCase());
-  // }
 
   proofTypeChng(event) {
     const selectedIdType = event.detail.value;
@@ -764,7 +687,7 @@ export class SecondKycComponent {
       this.idProofForm.controls.dobPan.setValue('');
       this.idProofForm.controls.aadhar.clearValidators();
       this.idProofForm.controls.aadhar.setValue('');
-      this.idProofForm.controls.aepsStatus.clearValidators(); 
+      this.idProofForm.controls.aepsStatus.clearValidators();
       this.idProofForm.controls.aepsStatus.setValue('');
       this.idProofForm.controls.voter.clearValidators();
       this.idProofForm.controls.voter.setValue('');
@@ -787,7 +710,7 @@ export class SecondKycComponent {
       this.idProofForm.controls.voter.setValue('');
       this.idProofForm.controls.aadhar.clearValidators();
       this.idProofForm.controls.aadhar.setValue('');
-      this.idProofForm.controls.aepsStatus.clearValidators(); 
+      this.idProofForm.controls.aepsStatus.clearValidators();
       this.idProofForm.controls.aepsStatus.setValue('');
       this.idProofForm.controls.pan.clearValidators();
       this.idProofForm.controls.pan.setValue('');
@@ -811,7 +734,7 @@ export class SecondKycComponent {
       this.idProofForm.controls.passport.setValue('');
       this.idProofForm.controls.aadhar.clearValidators();
       this.idProofForm.controls.aadhar.setValue('');
-      this.idProofForm.controls.aepsStatus.clearValidators(); 
+      this.idProofForm.controls.aepsStatus.clearValidators();
       this.idProofForm.controls.aepsStatus.setValue('');
       this.idProofForm.controls.pan.clearValidators();
       this.idProofForm.controls.pan.setValue('');
@@ -845,7 +768,7 @@ export class SecondKycComponent {
       this.idProofForm.controls.license.setValue('');
       this.idProofForm.controls.aadhar.clearValidators();
       this.idProofForm.controls.aadhar.setValue('');
-      this.idProofForm.controls.aepsStatus.clearValidators(); 
+      this.idProofForm.controls.aepsStatus.clearValidators();
       this.idProofForm.controls.aepsStatus.setValue('');
       this.idProofForm.controls.pan.clearValidators();
       this.idProofForm.controls.pan.setValue('');
@@ -883,7 +806,7 @@ export class SecondKycComponent {
       this.idProofForm.controls.entityNum.setValue('');
       this.idProofForm.controls.aadhar.clearValidators();
       this.idProofForm.controls.aadhar.setValue('');
-      this.idProofForm.controls.aepsStatus.clearValidators(); 
+      this.idProofForm.controls.aepsStatus.clearValidators();
       this.idProofForm.controls.aepsStatus.setValue('');
       this.idProofForm.controls.pan.clearValidators();
       this.idProofForm.controls.pan.setValue('');
@@ -917,7 +840,7 @@ export class SecondKycComponent {
       this.idProofForm.controls.bpan.setValue('');
       this.idProofForm.controls.aadhar.clearValidators();
       this.idProofForm.controls.aadhar.setValue('');
-      this.idProofForm.controls.aepsStatus.clearValidators(); 
+      this.idProofForm.controls.aepsStatus.clearValidators();
       this.idProofForm.controls.aepsStatus.setValue('');
       this.idProofForm.controls.voter.clearValidators();
       this.idProofForm.controls.voter.setValue('');
@@ -997,9 +920,6 @@ export class SecondKycComponent {
                   'Y'
                 );
                 this.ids.push(body);
-                // this.globalData.globalLodingDismissAll();
-                // this.navCtrl.push(NewapplicationPage, { voter: body, leadStatus: this.leadStatus, leadId: leadId, userType: this.globalData.getborrowerType() });
-                // this.initKarzaAPi(idType, idNumber, leadId, body);
               } else if (resData.status_code == 102) {
                 this.globalData.globalLodingDismiss();
                 this.globalFunc.showAlert(
@@ -1138,12 +1058,6 @@ export class SecondKycComponent {
                     'Please mention correct DOB as per PAN!!!'
                   );
                 } else {
-                  // this.validated = true
-                  // let res = resData[0];
-                  // let name = res.nameOnCard.replace(/[&\/\\#,+()$~%.'"-:*?<>{}]/g, '').trim();
-                  // let firstname = res.firstName.replace(/[&\/\\#,+()$~%.'"-:*?<>{}]/g, '').trim();
-                  // let lastname = res.lastName.replace(/[&\/\\#,+()$~%.'"-:*?<>{}]/g, '').trim();
-                  // let middlename = res.middleName.replace(/[&\/\\#,+()$~%.'"-:*?<>{}]/g, '').trim();
                   let body = {
                     name: panName,
                     firstname: firstName,
@@ -1177,8 +1091,6 @@ export class SecondKycComponent {
                   );
                   this.ids.push(body);
                   this.globalData.globalLodingDismiss();
-                  // this.initKarzaAPi(idType, idNumber, leadId, body);
-                  // this.navCtrl.push(NewapplicationPage, { pan: body, leadStatus: this.leadStatus, leadId: leadId, userType: this.globalData.getborrowerType() });
                 }
               } else {
                 this.globalData.globalLodingDismiss();

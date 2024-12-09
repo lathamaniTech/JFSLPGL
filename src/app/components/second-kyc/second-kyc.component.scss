@@ -1,146 +1,167 @@
 .labelcontent {
-    // font-size: 1.3rem;
-    font-size: 13px;
-    margin-left: 13px;
+  // font-size: 1.3rem;
+  font-size: 13px;
+  margin-left: 13px;
 }
 
 .labeltext {
-    // font-size: 1.4rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-left: 13px;
+  // font-size: 1.4rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left: 13px;
 }
 
 .card {
-    padding: 0.3rem 0.5rem;
-    border: 1px solid;
-    border-radius: 14px;
-    box-shadow: 0px 1px 0 1px #d9107bb4;
-    overflow: hidden;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid;
+  border-radius: 14px;
+  box-shadow: 0px 1px 0 1px #d9107bb4;
+  overflow: hidden;
 }
 
 .alpha {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .icons {
-    margin-top: 5px;
-    color: #DA107E;
-    // font-size: 32px;
-    font-size: 30px;
+  margin-top: 5px;
+  color: #da107e;
+  // font-size: 32px;
+  font-size: 30px;
 }
 
 .custom-popover::part(content) {
-    width: auto !important;
-    right: 20px !important;
-    left: auto !important;
-    transform-origin: right top !important;
-    max-width: 90% !important;
-    white-space: pre-line !important;
+  width: auto !important;
+  right: 20px !important;
+  left: auto !important;
+  transform-origin: right top !important;
+  max-width: 90% !important;
+  white-space: pre-line !important;
 }
 
 .closeIcon {
-    float: right;
-    margin-right: 10px;
-    zoom: 1.3;
-    color: #fff;
+  float: right;
+  margin-right: 10px;
+  zoom: 1.3;
+  color: #fff;
 }
 
 .label-md {
-    margin: 0px 8px 0px 0;
+  margin: 0px 8px 0px 0;
 }
 
 .field {
-    background: none;
-    margin-bottom: 10px;
+  background: none;
+  margin-bottom: 10px;
 }
 
 .inner-container {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .newcustomer {
-    color: #FFFFFF;
-    text-align: center;
-    padding: 5px 0px 5px 0px;
-    background-color: #FBA41D;
+  color: #ffffff;
+  text-align: center;
+  padding: 5px 0px 5px 0px;
+  background-color: #fba41d;
 }
 
 .mandatory {
-    color: red;
-    padding-left: 5px;
+  color: red;
+  padding-left: 5px;
 }
 
 .centerContent {
-    width: 100%;
-    height: 230px;
-    position: absolute;
-    margin: auto;
-    text-align: center;
-    top: 42%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-bottom: 5px solid #FBA41D;
-    border-radius: 11px;
+  width: 100%;
+  height: 230px;
+  position: absolute;
+  margin: auto;
+  text-align: center;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-bottom: 5px solid #fba41d;
+  border-radius: 11px;
 }
 
 .mandatory {
-    color: red;
-    padding-left: 5px;
+  color: red;
+  padding-left: 5px;
 }
 
 .errText {
-    color: red !important;
-    font-size: 14px !important;
-    display: flex;
-    justify-content: flex-start;
-    margin: 10px 0px 0px 10px;
+  color: red !important;
+  font-size: 14px !important;
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px 0px 0px 10px;
 }
 
 .buttspace {
-    margin-top: 4%;
-    clear: both !important;
-    margin: 0 auto;
-    padding: 10px 0px 3px 0px;
+  margin-top: 4%;
+  clear: both !important;
+  margin: 0 auto;
+  padding: 10px 0px 3px 0px;
 }
 
 .buttspace button:hover {
-    background-color: #FBA41D;
+  background-color: #fba41d;
 }
 
 .navIcon {
-    color: #FFFFFF;
-    text-align: center;
-    background-color: #FBA41D;
-    border-radius: 50%;
+  color: #ffffff;
+  text-align: center;
+  background-color: #fba41d;
+  border-radius: 50%;
 }
 
 .navIcon ion-icon {
-    zoom: 2.0;
+  zoom: 2;
 }
 
 .proceedbtn {
-    --background: #FBA41D;
-    color: white;
+  --background: #fba41d;
+  color: white;
 }
 
 .active {
-    opacity: 1;
+  opacity: 1;
 }
 
 .inactive {
-    // pointer-events: none;
-    opacity: 0.5;
+  // pointer-events: none;
+  opacity: 0.5;
 }
 
 .bckBtn {
-    color: white;
-    position: absolute;
-    font-size: x-large;
+  color: white;
+  position: absolute;
+  font-size: x-large;
 }
 
 .footerBtn {
-    position: absolute;
-    bottom: 70px;
-    right: 120px;
+  position: absolute;
+  bottom: 70px;
+  right: 120px;
+}
+
+.line {
+  width: 85%;
+  border-bottom: 1px solid;
+  margin-top: 10%;
+  position: absolute;
+  //   z-index: -1;
+}
+.custType {
+  width: auto;
+  background: #da107e;
+  color: #fff;
+  height: 35px;
+  top: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 0px 15px;
 }
