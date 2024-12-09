@@ -1,10 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Camera,
-  CameraResultType,
-  CameraSource,
-  ImageOptions,
-} from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ModalController } from '@ionic/angular';
 import { CropImageComponent } from 'src/app/components/crop-image/crop-image.component';
 import { GlobalService } from '../global.service';
@@ -12,6 +7,7 @@ import * as AppType from '../../utility/AppInterfaces';
 import * as AppConst from '../../utility/AppConstants';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
+import { getOSVersion } from './deviceDetails';
 const { WebPConvertorBase64 } = Plugins;
 
 @Injectable({
@@ -71,7 +67,8 @@ export class CameraFunctionality {
             if (imgSize < 1024) {
               resolve({ path: base64Data, size: imgSize });
             } else {
-              this.convertToWebPBase64(base64Data);
+              const data = await this.convertToWebPBase64(base64Data);
+              resolve(data);
             }
           }
         });
@@ -83,41 +80,40 @@ export class CameraFunctionality {
   };
 
   async convertToWebPBase64(data, sizeReq?: number) {
+    // try {
+    let imgData = sizeReq
+      ? +getOSVersion() > 10
+        ? `/storage/emulated/0/Documents/${data}`
+        : `/storage/emulated/0/Android/data/com.jfs.vlwebp/files/${data}`
+      : data;
     try {
-      let imgData = sizeReq
-        ? +this.globalfun.getAndroidV() > 10
-          ? `/storage/emulated/0/Documents/${data}`
-          : `/storage/emulated/0/Android/data/com.jfs.vlwebp/files/${data}`
-        : data;
-
       if (WebPConvertorBase64) {
-        try {
-          const result = await WebPConvertorBase64['convertToWebP']({
-            base64: imgData,
-          });
-          if (result && result.data) {
-            const size = await this.getBase64ImageDataSize(result.data);
-            if (size) {
-              return { path: result.data, size: size };
-            }
+        const result = await WebPConvertorBase64['convertToWebP']({
+          base64: imgData,
+        });
+        if (result && result.data) {
+          const size = await this.getBase64ImageDataSize(result.data);
+          if (size) {
+            return { path: result.data, size: size };
           }
-        } catch (err) {
-          this.globalfun.showAlert(
-            AppConst.AlertText.alert,
-            'convertToWebPBase64e - ' + err.message
-          );
         }
       }
-    } catch (e) {
+    } catch (err) {
       this.globalfun.showAlert(
         AppConst.AlertText.alert,
-        'convertToWebPBase64e - ' + e.message
+        'convertToWebPBase64e - ' + err.message
       );
-      return null;
     }
+    // } catch (e) {
+    //   this.globalfun.showAlert(
+    //     AppConst.AlertText.alert,
+    //     'convertToWebPBase64e - ' + e.message
+    //   );
+    //   return null;
+    // }
   }
 
-  async getBase64ImageDataSize(base64Data): Promise<number> {
+  async getBase64ImageDataSize(base64Data: string): Promise<number> {
     let size = base64Data.length / 1024;
     let chargesFormatValue = size.toFixed(2).toString().split('.');
     console.log(chargesFormatValue);
@@ -132,7 +128,7 @@ export class CameraFunctionality {
     }
   }
 
-  async onFileChoose(event) {
+  async onFileChoose(event): Promise<AppType.FileDataConfig> {
     return new Promise(async (resolve, reject) => {
       try {
         if (event.target.files && event.target.files[0]) {
@@ -180,8 +176,8 @@ export class CameraFunctionality {
                 filePath
               );
               if (moveFile && moveFile != null && moveFile != undefined) {
-                resolve({
-                  imgpath: convertedPdfData,
+                return resolve({
+                  imgData: convertedPdfData,
                   fileType: setFileType,
                   fileName: filename,
                   fileExten: event.target.files[0].type,
@@ -193,12 +189,12 @@ export class CameraFunctionality {
                 AppConst.AlertText.alert,
                 AppConst.AlertText.imageSize
               );
-              resolve(null);
+              reject(null);
             }
           }
         }
       } catch (error) {
-        reject(null);
+        reject(error);
       }
     });
   }
