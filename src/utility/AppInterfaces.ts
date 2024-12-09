@@ -32,3 +32,16 @@ export interface CapturedImageConfig {
   path: any;
   size: number;
 }
+
+export interface FileDataConfig {
+  imgData: string;
+  fileType: string;
+  fileName: string;
+  fileExten: string;
+  url: string;
+}
+
+export interface BioDeviceConfig {
+  code: string;
+  name: string;
+}
