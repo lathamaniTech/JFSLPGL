@@ -7,8 +7,8 @@ import * as AppType from '../../utility/AppInterfaces';
 import * as AppConst from '../../utility/AppConstants';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
-import { getOSVersion } from './deviceDetails';
 const { WebPConvertorBase64 } = Plugins;
+import * as GlobalAppConfig from '../../utility/GlobalAppConfigConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -79,13 +79,7 @@ export class CameraFunctionality {
     });
   };
 
-  async convertToWebPBase64(data, sizeReq?: number) {
-    // try {
-    let imgData = sizeReq
-      ? +getOSVersion() > 10
-        ? `/storage/emulated/0/Documents/${data}`
-        : `/storage/emulated/0/Android/data/com.jfs.vlwebp/files/${data}`
-      : data;
+  async convertToWebPBase64(imgData: string, sizeReq?: number) {
     try {
       if (WebPConvertorBase64) {
         const result = await WebPConvertorBase64['convertToWebP']({
@@ -104,17 +98,10 @@ export class CameraFunctionality {
         'convertToWebPBase64e - ' + err.message
       );
     }
-    // } catch (e) {
-    //   this.globalfun.showAlert(
-    //     AppConst.AlertText.alert,
-    //     'convertToWebPBase64e - ' + e.message
-    //   );
-    //   return null;
-    // }
   }
 
   async getBase64ImageDataSize(base64Data: string): Promise<number> {
-    let size = base64Data.length / 1024;
+    let size = base64Data.length / GlobalAppConfig.ImgeSizeValue.size;
     let chargesFormatValue = size.toFixed(2).toString().split('.');
     console.log(chargesFormatValue);
     if (chargesFormatValue[1] <= '49') {
@@ -168,7 +155,7 @@ export class CameraFunctionality {
                   AppConst.Base64DataString.base64TypeSet,
                   AppConst.Base64DataString.base64Charset
                 );
-              const filePath = `${AppConst.FolderNames.DOCUMENTS}/${
+              const filePath = `${GlobalAppConfig.FolderNames.DOCUMENTS}/${
                 new Date().getTime() + '.pdf'
               }`;
               const moveFile = await this.getWriteFileOnDevice(
