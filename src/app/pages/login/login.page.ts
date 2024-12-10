@@ -49,7 +49,6 @@ export class LoginPage {
   masterDataValues: any;
   masterDataValuesTest: any;
   versionvalue: any;
-
   droomModel: [];
   customPopoverOptions = {
     cssClass: 'custom-popover',
@@ -57,6 +56,7 @@ export class LoginPage {
   OhpDocsArray = [];
   @ViewChild('fileref') fileRef: ElementRef;
   capacitorVersion: number = 1;
+  network: string;
   constructor(
     public navCtrl: NavController,
     public globalData: DataPassingProviderService,
@@ -86,7 +86,7 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then(async () => {
       var self = this;
       if (parseFloat(self.device.version) >= 9.0) {
         self.deviceImei = self.device.uuid;
@@ -103,6 +103,7 @@ export class LoginPage {
       this.appVersion.getVersionNumber().then((version) => {
         this.versionDetails = version;
       });
+      this.network = (await network.logCurrentNetworkStatus()).connectionType;
     });
   }
 
@@ -190,7 +191,7 @@ export class LoginPage {
 
   mdmVersionCheck() {
     console.log(this.versionDetails);
-    if (this.network.type == 'none' || this.network.type == 'unknown') {
+    if (this.network == 'none' || this.network == 'unknown') {
       this.alertService.showAlert(
         'Alert',
         'Enable Internet connection / First Time Login Must be Online.',
@@ -344,7 +345,7 @@ export class LoginPage {
         ) {
           this.alertService.showAlert('Alert!', 'Please enter password!');
         } else {
-          if (this.network.type == 'none' || this.network.type == 'unknown') {
+          if (this.network == 'none' || this.network == 'unknown') {
             this.globFunc.globalLodingPresent(
               'Please wait... Fetching master data!',
             );
@@ -397,10 +398,7 @@ export class LoginPage {
                       }
                     });
                 } else {
-                  if (
-                    this.network.type == 'none' ||
-                    this.network.type == 'unknown'
-                  ) {
+                  if (this.network == 'none' || this.network == 'unknown') {
                     this.globFunc.globalLodingDismiss();
                     this.alertService.showAlert(
                       'Alert',
@@ -575,7 +573,7 @@ export class LoginPage {
             replaceUrl: true,
           });
         } else {
-          if (this.network.type == 'none' || this.network.type == 'unknown') {
+          if (this.network == 'none' || this.network == 'unknown') {
             this.globFunc.globalLodingDismiss();
             this.alertService.showAlert(
               'Alert',

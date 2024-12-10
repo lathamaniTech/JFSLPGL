@@ -128,7 +128,10 @@ export class AppComponent {
       this.globalData.networkData.connected == true &&
       this.globalData.networkData.connectionType != ''
     ) {
-      this.globFunc.showAlert('Alert!', 'Check your network data Connection');
+      this.alertService.showAlert(
+        'Alert!',
+        'Check your network data Connection',
+      );
     } else {
       this.alertService
         .confirmationAlert('Confirm logout?', 'Are you sure to logout?')
