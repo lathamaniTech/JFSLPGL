@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { Network } from '@awesome-cordova-plugins/network/ngx';
+// import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { StatusBar } from '@capacitor/status-bar';
 import {
@@ -17,6 +17,9 @@ import { Geolocation } from '@capacitor/geolocation';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { SquliteSupportProviderService } from 'src/providers/squlite-support-provider.service';
 import { CustomAlertControlService } from 'src/providers/custom-alert-control.service';
+
+import { PluginListenerHandle } from '@capacitor/core';
+import { geolocation, network } from 'src/providers/NativeProviders';
 declare var cordova: any;
 declare var window: any;
 @Component({
@@ -32,9 +35,9 @@ export class AppComponent {
   pages: Array<{ title: string; component: any; icon: any }>;
   @ViewChildren(IonRouterOutlet) routerOutlet: QueryList<IonRouterOutlet>;
   username: any;
-
+  listenerNetwork: PluginListenerHandle;
   constructor(
-    public network: Network,
+    // public network: Network,
     public globalData: DataPassingProviderService,
     public globFunc: GlobalService,
     private router: Router,
@@ -42,7 +45,7 @@ export class AppComponent {
     public sqliteSuportProvider: SquliteSupportProviderService,
     public platform: Platform,
     public menuCtrl: MenuController,
-    public alertService: CustomAlertControlService
+    public alertService: CustomAlertControlService,
   ) {
     this.pages = [
       {
@@ -79,7 +82,7 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then(async () => {
       StatusBar.setBackgroundColor({
         color: '#DA107E',
       });
@@ -97,6 +100,14 @@ export class AppComponent {
       });
       this.username = this.globFunc.basicDec(localStorage.getItem('username'));
       this.backButtonFun();
+
+      //Location
+      geolocation.getGpsStatus();
+      //network
+      this.globalData.networkData = await network.logCurrentNetworkStatus();
+      this.listenerNetwork = await network.networkListener(
+        this.globalData.networkData,
+      );
     });
   }
 
@@ -112,11 +123,11 @@ export class AppComponent {
   }
 
   async logout() {
-    if (this.network.type == 'none' || this.network.type == 'unknown') {
-      this.alertService.showAlert(
-        'Alert!',
-        'Check your network data Connection'
-      );
+    if (
+      this.globalData.networkData.connected == true &&
+      this.globalData.networkData.connectionType != ''
+    ) {
+      this.globFunc.showAlert('Alert!', 'Check your network data Connection');
     } else {
       this.alertService
         .confirmationAlert('Confirm logout?', 'Are you sure to logout?')
@@ -307,10 +318,10 @@ export class AppComponent {
                 .then(async (data) => {
                   if (data === 'Yes') {
                     this.sqliteSuportProvider.removeEkycData(
-                      this.globalData.getLeadId()
+                      this.globalData.getLeadId(),
                     );
                     this.sqliteSuportProvider.removeKarzaData(
-                      this.globalData.getLeadId()
+                      this.globalData.getLeadId(),
                     );
                     this.router.navigate(['/ExistApplicationsPage'], {
                       skipLocationChange: true,
@@ -327,14 +338,14 @@ export class AppComponent {
               this.alertService
                 .confirmationVersionAlert(
                   'Alert!',
-                  'Complete the Process! Otherwise Data will be lost!'
+                  'Complete the Process! Otherwise Data will be lost!',
                 )
                 .then(async (data) => {
                   if (data) {
                     let refId = this.globFunc.getScoreCardChecked();
                     this.sqliteProvider.updateScoreCardinPostsanctionWhileQuit(
                       'N',
-                      refId
+                      refId,
                     );
                     this.router.navigate(['/ExistApplicationsPage'], {
                       skipLocationChange: true,
@@ -407,7 +418,7 @@ export class AppComponent {
           // p_this.global.presentAlert(this.alertErrorLabel.AlertLabels.USB_Debugging_Enabled, this.alertErrorLabel.AlertLabels.Application_Not_Working_this_Environment);
           p_this.alertService.showAlert(
             'USB Debugging Enabled!',
-            'Application will not be working on this environment.'
+            'Application will not be working on this environment.',
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -419,7 +430,7 @@ export class AppComponent {
       function (error) {
         console.log('error ===>' + error);
         navigator['app'].exitApp();
-      }
+      },
     );
 
     cordova.plugins.pdfmake.checkPdfFshow('netstat', function (res) {
@@ -429,7 +440,7 @@ export class AppComponent {
           // p_this.global.presentAlert(this.alertErrorLabel.AlertLabels.Frida_Detected, this.alertErrorLabel.AlertLabels.Application_Not_Working_this_Environment);
           p_this.alertService.showAlert(
             'Frida Detected!',
-            'Application will not be working on this environment.'
+            'Application will not be working on this environment.',
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -452,7 +463,7 @@ export class AppComponent {
         if (val == true) {
           p_this.alertService.showAlert(
             'Virtual Device!',
-            'Application will not be working on this environment.'
+            'Application will not be working on this environment.',
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -461,7 +472,7 @@ export class AppComponent {
       },
       function (error) {
         navigator['app'].exitApp();
-      }
+      },
     );
   }
 }

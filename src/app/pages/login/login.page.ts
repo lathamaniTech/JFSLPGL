@@ -6,7 +6,6 @@ import {
   MenuController,
 } from '@ionic/angular';
 import { GlobalService } from 'src/providers/global.service';
-import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { RestService } from 'src/providers/rest.service';
 import { SqliteService } from 'src/providers/sqlite.service';
 import { SquliteSupportProviderService } from 'src/providers/squlite-support-provider.service';
@@ -20,7 +19,7 @@ import { environment } from 'src/environments/environment';
 import { OnRoadPriceService } from 'src/providers/on-road-price.service';
 import { BioNavigatorService } from 'src/providers/BioMetricPlugin/bio-navigator.service';
 import { CustomAlertControlService } from 'src/providers/custom-alert-control.service';
-
+import { network } from 'src/providers/NativeProviders';
 // import 'rxjs/add/operator/map';
 
 declare var cordova: any;
@@ -60,7 +59,6 @@ export class LoginPage {
   capacitorVersion: number = 1;
   constructor(
     public navCtrl: NavController,
-    public network: Network,
     public globalData: DataPassingProviderService,
     public loadCtrl: LoadingController,
     public platform: Platform,
@@ -75,7 +73,7 @@ export class LoginPage {
     private appVersion: AppVersion,
     public menuCtrl: MenuController,
     public orpService: OnRoadPriceService,
-    public alertService: CustomAlertControlService
+    public alertService: CustomAlertControlService,
   ) {
     this.userData = [{ username: '', password: '' }];
     this.userData.username = '0024CH';
@@ -186,7 +184,7 @@ export class LoginPage {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   }
 
@@ -195,7 +193,7 @@ export class LoginPage {
     if (this.network.type == 'none' || this.network.type == 'unknown') {
       this.alertService.showAlert(
         'Alert',
-        'Enable Internet connection / First Time Login Must be Online.'
+        'Enable Internet connection / First Time Login Must be Online.',
       );
     } else {
       let body = {
@@ -243,7 +241,7 @@ export class LoginPage {
                           'Version Update',
                           'Your Current Version is ' +
                             resp.CurrentVersion +
-                            ' Please Update!'
+                            ' Please Update!',
                         )
                         .then((data) => {
                           if (data) {
@@ -256,7 +254,7 @@ export class LoginPage {
                     } else {
                       this.alertService.showAlert(
                         'Alert',
-                        'login disabled as you are using older version of the APK. To Proceed please update the APK to the latest Version and Login again'
+                        'login disabled as you are using older version of the APK. To Proceed please update the APK to the latest Version and Login again',
                       );
                       setTimeout(() => {
                         // this.platform.exitApp();
@@ -271,7 +269,7 @@ export class LoginPage {
                             'Version Update',
                             'Your Current Version is ' +
                               resp.CurrentVersion +
-                              ' Please Update!'
+                              ' Please Update!',
                           )
                           .then((data) => {
                             if (data) {
@@ -348,7 +346,7 @@ export class LoginPage {
         } else {
           if (this.network.type == 'none' || this.network.type == 'unknown') {
             this.globFunc.globalLodingPresent(
-              'Please wait... Fetching master data!'
+              'Please wait... Fetching master data!',
             );
             this.sqliteProvider
               .getDocuments()
@@ -364,7 +362,7 @@ export class LoginPage {
                         this.sqliteProvider
                           .forOfflineLogin(
                             this.userData.username,
-                            this.userData.password
+                            this.userData.password,
                           )
                           .then((data) => {
                             if (data.length > 0) {
@@ -389,7 +387,7 @@ export class LoginPage {
                               this.globFunc.globalLodingDismiss();
                               this.alertService.showAlert(
                                 'Alert!',
-                                'Username or Password Invalid!!'
+                                'Username or Password Invalid!!',
                               );
                             }
                           })
@@ -406,7 +404,7 @@ export class LoginPage {
                     this.globFunc.globalLodingDismiss();
                     this.alertService.showAlert(
                       'Alert',
-                      'Enable Internet connection / First Time Login Must be Online.'
+                      'Enable Internet connection / First Time Login Must be Online.',
                     );
                   } else {
                     this.getProductList();
@@ -418,7 +416,7 @@ export class LoginPage {
               });
           } else {
             this.globFunc.globalLodingPresent(
-              'Please wait... Fetching master data!'
+              'Please wait... Fetching master data!',
             );
             this.master
               .restApiCallAngular('LoginService', body)
@@ -429,13 +427,13 @@ export class LoginPage {
                     this.orgscode = (<any>data).Orgscode;
                     localStorage.setItem(
                       'roname',
-                      this.globFunc.basicEnc((<any>data).UserName)
+                      this.globFunc.basicEnc((<any>data).UserName),
                     );
                     localStorage.setItem(
                       'userPrdSubCode',
                       (<any>data).UserPrdId
                         ? JSON.stringify((<any>data).UserPrdId)
-                        : JSON.stringify([])
+                        : JSON.stringify([]),
                     );
                     if (this.urlType) {
                       this.globalData.setJanaCenter('2351');
@@ -446,7 +444,7 @@ export class LoginPage {
                     }
                     localStorage.setItem(
                       'username',
-                      this.globFunc.basicEnc((<any>data).LPuserID)
+                      this.globFunc.basicEnc((<any>data).LPuserID),
                     );
                     localStorage.setItem('userGroups', (<any>data).UserGroups);
                     this.sqliteProvider
@@ -458,7 +456,7 @@ export class LoginPage {
                         (<any>data).StatusCode,
                         (<any>data).UserName,
                         (<any>data).LPuserID,
-                        (<any>data).UserGroups
+                        (<any>data).UserGroups,
                       )
                       .then((data) => {
                         this.getversion();
@@ -495,7 +493,7 @@ export class LoginPage {
                     this.globFunc.globalLodingDismiss();
                     alert('No Response from Server!');
                   }
-                }
+                },
               )
               .catch((err) => {
                 this.globFunc.globalLodingDismiss();
@@ -506,7 +504,7 @@ export class LoginPage {
       },
       (err) => {
         console.log('error: ' + err);
-      }
+      },
     );
   }
 
@@ -554,7 +552,7 @@ export class LoginPage {
               this.globFunc.globalLodingDismiss();
               alert('No Response from Server!');
             }
-          }
+          },
         );
       } else {
         this.checklogin();
@@ -581,7 +579,7 @@ export class LoginPage {
             this.globFunc.globalLodingDismiss();
             this.alertService.showAlert(
               'Alert',
-              'Enable Internet connection / First Time Login Must be Online.'
+              'Enable Internet connection / First Time Login Must be Online.',
             );
           } else {
             this.getProductList();
@@ -636,7 +634,7 @@ export class LoginPage {
                 this.globFunc.globalLodingDismiss();
                 this.alertService.showAlert(
                   'Alert!',
-                  'Product list values are empty!'
+                  'Product list values are empty!',
                 );
               }
             });
@@ -656,7 +654,7 @@ export class LoginPage {
           this.globFunc.globalLodingDismiss();
           alert('No Response from Server!');
         }
-      }
+      },
     );
   }
 
@@ -689,7 +687,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.ModeofRepayment,
-              'ModeofRepayment'
+              'ModeofRepayment',
             )
             .then((data) => {
               this.getSourcingChannel();
@@ -699,7 +697,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Mode of repayment values are empty!'
+        'Mode of repayment values are empty!',
       );
     }
   }
@@ -715,7 +713,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.SourcingChannel,
-              'SourcingChannel'
+              'SourcingChannel',
             )
             .then((data) => {
               this.getCustomerType();
@@ -725,7 +723,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Sourcing channel values are empty!'
+        'Sourcing channel values are empty!',
       );
     }
   }
@@ -738,7 +736,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.CustomerType,
-            'CustomerType'
+            'CustomerType',
           )
           .then((data) => {
             this.getTitleMaster();
@@ -778,7 +776,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.AddressAsPerKyc,
-              'AddressAsPerKyc'
+              'AddressAsPerKyc',
             )
             .then((data) => {
               this.otherDocuments();
@@ -789,7 +787,7 @@ export class LoginPage {
       this.otherDocuments();
       this.alertService.showAlert(
         'Alert!',
-        'AddressAsPerKyc values are empty!'
+        'AddressAsPerKyc values are empty!',
       );
     }
   }
@@ -803,7 +801,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.OtherDocuments,
-            'OtherDocuments'
+            'OtherDocuments',
           )
           .then((data) => {
             this.getCasteMaster();
@@ -863,7 +861,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.Noofyearsresidence,
-              'Noofyearsresidence'
+              'Noofyearsresidence',
             )
             .then((data) => {
               this.getEducationMaster();
@@ -874,7 +872,7 @@ export class LoginPage {
       this.getEducationMaster();
       this.alertService.showAlert(
         'Alert!',
-        'No of years residence values are empty!'
+        'No of years residence values are empty!',
       );
     }
   }
@@ -906,7 +904,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.MaritalStatus,
-            'MaritalStatus'
+            'MaritalStatus',
           )
           .then((data) => {
             this.getAddressType();
@@ -943,7 +941,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.AnnualIncome,
-            'AnnualIncome'
+            'AnnualIncome',
           )
           .then((data) => {
             this.getBusinessDescription();
@@ -965,7 +963,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.BusinessDescription,
-              'BusinessDescription'
+              'BusinessDescription',
             )
             .then((data) => {
               this.getEmploymentStatus();
@@ -975,7 +973,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Business Description values are empty!'
+        'Business Description values are empty!',
       );
     }
   }
@@ -990,7 +988,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.EmploymentStatus,
-              'EmploymentStatus'
+              'EmploymentStatus',
             )
             .then((data) => {
               this.geGLInterestType();
@@ -1000,7 +998,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Occupation Type values are empty!'
+        'Occupation Type values are empty!',
       );
     }
   }
@@ -1013,7 +1011,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.GLInterestType,
-            'GLInterestType'
+            'GLInterestType',
           )
           .then((data) => {
             this.getInterestRate();
@@ -1023,7 +1021,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Occupation Type values are empty!'
+        'Occupation Type values are empty!',
       );
     }
   }
@@ -1043,7 +1041,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Interest Rate Master values are empty!'
+        'Interest Rate Master values are empty!',
       );
     }
   }
@@ -1090,7 +1088,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.IndustryType,
-            'IndustryType'
+            'IndustryType',
           )
           .then((data) => {
             this.getNatureofBussiness();
@@ -1112,7 +1110,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.NatureofBussiness,
-              'NatureofBussiness'
+              'NatureofBussiness',
             )
             .then((data) => {
               this.getPddChargesMaster();
@@ -1122,7 +1120,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Nature of Bussiness values are empty!'
+        'Nature of Bussiness values are empty!',
       );
     }
   }
@@ -1142,7 +1140,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'DocumentsVehicle values are empty!'
+        'DocumentsVehicle values are empty!',
       );
     }
   }
@@ -1155,7 +1153,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.ProductScheme,
-            'ProductScheme'
+            'ProductScheme',
           )
           .then((data) => {
             this.getStateList();
@@ -1182,7 +1180,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'State City Master values are empty!'
+        'State City Master values are empty!',
       );
     }
   }
@@ -1231,7 +1229,7 @@ export class LoginPage {
       this.globFunc.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'Document Master values are empty!'
+        'Document Master values are empty!',
       );
     }
   }
