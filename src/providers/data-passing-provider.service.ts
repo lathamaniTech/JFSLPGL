@@ -13,6 +13,7 @@ import { RestService } from 'src/providers/rest.service';
 import { environment } from 'src/environments/environment';
 import { Plugins } from '@capacitor/core';
 const { WebPConvertorBase64 } = Plugins;
+import * as AppType from '../utility/AppInterfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +56,16 @@ export class DataPassingProviderService {
 
   nomineeValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
   loginUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  private _networkData: AppType.NetworkDataConfig;
+
+  set networkData(data: AppType.NetworkDataConfig) {
+    this.networkData = data;
+  }
+  get networkData() {
+    return this._networkData;
+  }
+
   constructor(
     // public alertCtrl: AlertController,
     // public global: GlobalService,
@@ -412,19 +423,19 @@ export class DataPassingProviderService {
     return this.device.version;
   }
 
-  getYearList(){
+  getYearList() {
     return [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020",
-      "2019",
-      "2018",
-      "2017",
-      "2016",
-      "2015",
-    ]
+      '2024',
+      '2023',
+      '2022',
+      '2021',
+      '2020',
+      '2019',
+      '2018',
+      '2017',
+      '2016',
+      '2015',
+    ];
   }
 
   /**
@@ -453,7 +464,7 @@ export class DataPassingProviderService {
           webpResult = { path: pathData, size: size };
           this.globalLodingDismiss();
           return webpResult;
-        }else{
+        } else {
           this.globalLodingDismiss();
         }
       }
@@ -473,28 +484,28 @@ export class DataPassingProviderService {
     return true;
   }
 
-    /** 
-* @method formatDateString
-* @description Function helps to change the Date into string.
-* @author HariHaraSuddhan S
-*/
+  /**
+   * @method formatDateString
+   * @description Function helps to change the Date into string.
+   * @author HariHaraSuddhan S
+   */
 
-formatDateString(dateString: string): string {
-  const dateParts: string[] = dateString.split('-');
-  const day: string = dateParts[0].padStart(2, '0');
-  const monthString: string = dateParts[1];
-  const year: string = dateParts[2];
-  const month: number = new Date(`${monthString} 01, ${year}`).getMonth() + 1;
-  const formattedMonth: string = month.toString().padStart(2, '0');
-  return `${year}-${formattedMonth}-${day}`;
-}
+  formatDateString(dateString: string): string {
+    const dateParts: string[] = dateString.split('-');
+    const day: string = dateParts[0].padStart(2, '0');
+    const monthString: string = dateParts[1];
+    const year: string = dateParts[2];
+    const month: number = new Date(`${monthString} 01, ${year}`).getMonth() + 1;
+    const formattedMonth: string = month.toString().padStart(2, '0');
+    return `${year}-${formattedMonth}-${day}`;
+  }
 
-/** 
-* @method convertToString
-* @description Function helps to array of values into string.
-* @author HariHaraSuddhan S
-*/
-convertToString(value: [string]) {
-  return Array.isArray(value) ? value.toString() : value;
-}
+  /**
+   * @method convertToString
+   * @description Function helps to array of values into string.
+   * @author HariHaraSuddhan S
+   */
+  convertToString(value: [string]) {
+    return Array.isArray(value) ? value.toString() : value;
+  }
 }
