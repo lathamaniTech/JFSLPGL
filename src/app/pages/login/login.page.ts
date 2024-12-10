@@ -6,7 +6,6 @@ import {
   MenuController,
 } from '@ionic/angular';
 import { GlobalService } from 'src/providers/global.service';
-// import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { RestService } from 'src/providers/rest.service';
 import { SqliteService } from 'src/providers/sqlite.service';
 import { SquliteSupportProviderService } from 'src/providers/squlite-support-provider.service';
@@ -19,7 +18,8 @@ import { DataPassingProviderService } from 'src/providers/data-passing-provider.
 import { environment } from 'src/environments/environment';
 import { OnRoadPriceService } from 'src/providers/on-road-price.service';
 import { BioNavigatorService } from 'src/providers/BioMetricPlugin/bio-navigator.service';
-
+import { CustomAlertControlService } from 'src/providers/custom-alert-control.service';
+import { network } from 'src/providers/NativeProviders';
 // import 'rxjs/add/operator/map';
 
 declare var cordova: any;
@@ -59,7 +59,6 @@ export class LoginPage {
   capacitorVersion: number = 1;
   constructor(
     public navCtrl: NavController,
-    // public network: Network,
     public globalData: DataPassingProviderService,
     public loadCtrl: LoadingController,
     public platform: Platform,
@@ -73,7 +72,8 @@ export class LoginPage {
     public bioService: BioNavigatorService,
     private appVersion: AppVersion,
     public menuCtrl: MenuController,
-    public orpService: OnRoadPriceService
+    public orpService: OnRoadPriceService,
+    public alertService: CustomAlertControlService,
   ) {
     this.userData = [{ username: '', password: '' }];
     this.userData.username = '0024CH';
@@ -184,19 +184,16 @@ export class LoginPage {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   }
 
   mdmVersionCheck() {
     console.log(this.versionDetails);
-    if (
-      this.globalData.networkData.connected == true &&
-      this.globalData.networkData.connectionType != ''
-    ) {
-      this.globFunc.showAlert(
+    if (this.network.type == 'none' || this.network.type == 'unknown') {
+      this.alertService.showAlert(
         'Alert',
-        'Enable Internet connection / First Time Login Must be Online.'
+        'Enable Internet connection / First Time Login Must be Online.',
       );
     } else {
       let body = {
@@ -239,12 +236,12 @@ export class LoginPage {
                 .then((data) => {
                   if (data.length > 0) {
                     if (this.todayLoginDate == data[0].AppDate) {
-                      this.globFunc
+                      this.alertService
                         .confirmationVersionAlert(
                           'Version Update',
                           'Your Current Version is ' +
                             resp.CurrentVersion +
-                            ' Please Update!'
+                            ' Please Update!',
                         )
                         .then((data) => {
                           if (data) {
@@ -255,9 +252,9 @@ export class LoginPage {
                           console.log(Error);
                         });
                     } else {
-                      this.globFunc.showAlert(
+                      this.alertService.showAlert(
                         'Alert',
-                        'login disabled as you are using older version of the APK. To Proceed please update the APK to the latest Version and Login again'
+                        'login disabled as you are using older version of the APK. To Proceed please update the APK to the latest Version and Login again',
                       );
                       setTimeout(() => {
                         // this.platform.exitApp();
@@ -267,12 +264,12 @@ export class LoginPage {
                     this.sqliteProvider
                       .insertApplicationVersionCheck(this.todayLoginDate)
                       .then((data) => {
-                        this.globFunc
+                        this.alertService
                           .confirmationVersionAlert(
                             'Version Update',
                             'Your Current Version is ' +
                               resp.CurrentVersion +
-                              ' Please Update!'
+                              ' Please Update!',
                           )
                           .then((data) => {
                             if (data) {
@@ -293,14 +290,14 @@ export class LoginPage {
                 });
             } else {
               this.globFunc.globalLodingDismiss();
-              this.globFunc.showAlert('Alert', resp.ErrorDesc);
+              this.alertService.showAlert('Alert', resp.ErrorDesc);
             }
           }
         })
         .catch((err) => {
           console.log(err);
           this.globFunc.globalLodingDismiss();
-          this.globFunc.showAlert('Alert!', 'No Response From Server!');
+          this.alertService.showAlert('Alert!', 'No Response From Server!');
         });
     }
   }
@@ -339,20 +336,17 @@ export class LoginPage {
           this.userData.username == null ||
           this.userData.username == ''
         ) {
-          this.globFunc.showAlert('Alert!', 'Please enter Username!');
+          this.alertService.showAlert('Alert!', 'Please enter Username!');
         } else if (
           this.userData.password == undefined ||
           this.userData.password == null ||
           this.userData.password == ''
         ) {
-          this.globFunc.showAlert('Alert!', 'Please enter password!');
+          this.alertService.showAlert('Alert!', 'Please enter password!');
         } else {
-          if (
-            this.globalData.networkData.connected == true &&
-            this.globalData.networkData.connectionType != ''
-          ) {
+          if (this.network.type == 'none' || this.network.type == 'unknown') {
             this.globFunc.globalLodingPresent(
-              'Please wait... Fetching master data!'
+              'Please wait... Fetching master data!',
             );
             this.sqliteProvider
               .getDocuments()
@@ -368,7 +362,7 @@ export class LoginPage {
                         this.sqliteProvider
                           .forOfflineLogin(
                             this.userData.username,
-                            this.userData.password
+                            this.userData.password,
                           )
                           .then((data) => {
                             if (data.length > 0) {
@@ -391,9 +385,9 @@ export class LoginPage {
                               });
                             } else {
                               this.globFunc.globalLodingDismiss();
-                              this.globFunc.showAlert(
+                              this.alertService.showAlert(
                                 'Alert!',
-                                'Username or Password Invalid!!'
+                                'Username or Password Invalid!!',
                               );
                             }
                           })
@@ -404,13 +398,13 @@ export class LoginPage {
                     });
                 } else {
                   if (
-                    this.globalData.networkData.connected == true &&
-                    this.globalData.networkData.connectionType != ''
+                    this.network.type == 'none' ||
+                    this.network.type == 'unknown'
                   ) {
                     this.globFunc.globalLodingDismiss();
-                    this.globFunc.showAlert(
+                    this.alertService.showAlert(
                       'Alert',
-                      'Enable Internet connection / First Time Login Must be Online.'
+                      'Enable Internet connection / First Time Login Must be Online.',
                     );
                   } else {
                     this.getProductList();
@@ -422,7 +416,7 @@ export class LoginPage {
               });
           } else {
             this.globFunc.globalLodingPresent(
-              'Please wait... Fetching master data!'
+              'Please wait... Fetching master data!',
             );
             this.master
               .restApiCallAngular('LoginService', body)
@@ -433,13 +427,13 @@ export class LoginPage {
                     this.orgscode = (<any>data).Orgscode;
                     localStorage.setItem(
                       'roname',
-                      this.globFunc.basicEnc((<any>data).UserName)
+                      this.globFunc.basicEnc((<any>data).UserName),
                     );
                     localStorage.setItem(
                       'userPrdSubCode',
                       (<any>data).UserPrdId
                         ? JSON.stringify((<any>data).UserPrdId)
-                        : JSON.stringify([])
+                        : JSON.stringify([]),
                     );
                     if (this.urlType) {
                       this.globalData.setJanaCenter('2351');
@@ -450,7 +444,7 @@ export class LoginPage {
                     }
                     localStorage.setItem(
                       'username',
-                      this.globFunc.basicEnc((<any>data).LPuserID)
+                      this.globFunc.basicEnc((<any>data).LPuserID),
                     );
                     localStorage.setItem('userGroups', (<any>data).UserGroups);
                     this.sqliteProvider
@@ -462,7 +456,7 @@ export class LoginPage {
                         (<any>data).StatusCode,
                         (<any>data).UserName,
                         (<any>data).LPuserID,
-                        (<any>data).UserGroups
+                        (<any>data).UserGroups,
                       )
                       .then((data) => {
                         this.getversion();
@@ -499,7 +493,7 @@ export class LoginPage {
                     this.globFunc.globalLodingDismiss();
                     alert('No Response from Server!');
                   }
-                }
+                },
               )
               .catch((err) => {
                 this.globFunc.globalLodingDismiss();
@@ -510,7 +504,7 @@ export class LoginPage {
       },
       (err) => {
         console.log('error: ' + err);
-      }
+      },
     );
   }
 
@@ -545,7 +539,7 @@ export class LoginPage {
                   this.checklogin();
                 } else {
                   this.globFunc.globalLodingDismiss();
-                  this.globFunc.showAlert('Alert', (<any>result).errorDesc);
+                  this.alertService.showAlert('Alert', (<any>result).errorDesc);
                 }
               }
             }
@@ -558,7 +552,7 @@ export class LoginPage {
               this.globFunc.globalLodingDismiss();
               alert('No Response from Server!');
             }
-          }
+          },
         );
       } else {
         this.checklogin();
@@ -581,14 +575,11 @@ export class LoginPage {
             replaceUrl: true,
           });
         } else {
-          if (
-            this.globalData.networkData.connected == true &&
-            this.globalData.networkData.connectionType != ''
-          ) {
+          if (this.network.type == 'none' || this.network.type == 'unknown') {
             this.globFunc.globalLodingDismiss();
-            this.globFunc.showAlert(
+            this.alertService.showAlert(
               'Alert',
-              'Enable Internet connection / First Time Login Must be Online.'
+              'Enable Internet connection / First Time Login Must be Online.',
             );
           } else {
             this.getProductList();
@@ -641,9 +632,9 @@ export class LoginPage {
                   });
               } else {
                 this.globFunc.globalLodingDismiss();
-                this.globFunc.showAlert(
+                this.alertService.showAlert(
                   'Alert!',
-                  'Product list values are empty!'
+                  'Product list values are empty!',
                 );
               }
             });
@@ -663,7 +654,7 @@ export class LoginPage {
           this.globFunc.globalLodingDismiss();
           alert('No Response from Server!');
         }
-      }
+      },
     );
   }
 
@@ -681,7 +672,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Organizations values are empty!');
+      this.alertService.showAlert('Alert!', 'Organizations values are empty!');
     }
   }
 
@@ -696,7 +687,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.ModeofRepayment,
-              'ModeofRepayment'
+              'ModeofRepayment',
             )
             .then((data) => {
               this.getSourcingChannel();
@@ -704,7 +695,10 @@ export class LoginPage {
         });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Mode of repayment values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'Mode of repayment values are empty!',
+      );
     }
   }
 
@@ -719,7 +713,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.SourcingChannel,
-              'SourcingChannel'
+              'SourcingChannel',
             )
             .then((data) => {
               this.getCustomerType();
@@ -727,7 +721,10 @@ export class LoginPage {
         });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Sourcing channel values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'Sourcing channel values are empty!',
+      );
     }
   }
   getCustomerType() {
@@ -739,7 +736,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.CustomerType,
-            'CustomerType'
+            'CustomerType',
           )
           .then((data) => {
             this.getTitleMaster();
@@ -748,7 +745,7 @@ export class LoginPage {
     } else {
       // this.globFunc.globalLodingDismiss();
       this.getTitleMaster();
-      this.globFunc.showAlert('Alert!', 'Customer Type values are empty!');
+      this.alertService.showAlert('Alert!', 'Customer Type values are empty!');
     }
   }
   getTitleMaster() {
@@ -765,7 +762,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Title Master values are empty!');
+      this.alertService.showAlert('Alert!', 'Title Master values are empty!');
     }
   }
   aadharAsPerKyc() {
@@ -779,7 +776,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.AddressAsPerKyc,
-              'AddressAsPerKyc'
+              'AddressAsPerKyc',
             )
             .then((data) => {
               this.otherDocuments();
@@ -788,7 +785,10 @@ export class LoginPage {
     } else {
       // this.globFunc.globalLodingDismiss();
       this.otherDocuments();
-      this.globFunc.showAlert('Alert!', 'AddressAsPerKyc values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'AddressAsPerKyc values are empty!',
+      );
     }
   }
 
@@ -801,7 +801,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.OtherDocuments,
-            'OtherDocuments'
+            'OtherDocuments',
           )
           .then((data) => {
             this.getCasteMaster();
@@ -810,7 +810,7 @@ export class LoginPage {
     } else {
       // this.globFunc.globalLodingDismiss();
       this.getCasteMaster();
-      this.globFunc.showAlert('Alert!', 'OtherDocuments values are empty!');
+      this.alertService.showAlert('Alert!', 'OtherDocuments values are empty!');
     }
   }
 
@@ -828,7 +828,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Caste values are empty!');
+      this.alertService.showAlert('Alert!', 'Caste values are empty!');
     }
   }
 
@@ -846,7 +846,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Religion values are empty!');
+      this.alertService.showAlert('Alert!', 'Religion values are empty!');
     }
   }
 
@@ -861,7 +861,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.Noofyearsresidence,
-              'Noofyearsresidence'
+              'Noofyearsresidence',
             )
             .then((data) => {
               this.getEducationMaster();
@@ -870,9 +870,9 @@ export class LoginPage {
     } else {
       // this.globFunc.globalLodingDismiss();
       this.getEducationMaster();
-      this.globFunc.showAlert(
+      this.alertService.showAlert(
         'Alert!',
-        'No of years residence values are empty!'
+        'No of years residence values are empty!',
       );
     }
   }
@@ -892,7 +892,7 @@ export class LoginPage {
     } else {
       // this.globFunc.globalLodingDismiss();
       this.getMaritalStatus();
-      this.globFunc.showAlert('Alert!', 'Education values are empty!');
+      this.alertService.showAlert('Alert!', 'Education values are empty!');
     }
   }
   getMaritalStatus() {
@@ -904,7 +904,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.MaritalStatus,
-            'MaritalStatus'
+            'MaritalStatus',
           )
           .then((data) => {
             this.getAddressType();
@@ -912,7 +912,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Marital Status values are empty!');
+      this.alertService.showAlert('Alert!', 'Marital Status values are empty!');
     }
   }
   getAddressType() {
@@ -929,7 +929,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'AddressType values are empty!');
+      this.alertService.showAlert('Alert!', 'AddressType values are empty!');
     }
   }
   getAnnualIncome() {
@@ -941,7 +941,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.AnnualIncome,
-            'AnnualIncome'
+            'AnnualIncome',
           )
           .then((data) => {
             this.getBusinessDescription();
@@ -949,7 +949,7 @@ export class LoginPage {
       });
     } else {
       this.globalData.globalLodingDismiss();
-      this.globalData.showAlert('Alert!', 'Annual Income values are empty!');
+      this.alertService.showAlert('Alert!', 'Annual Income values are empty!');
     }
   }
   getBusinessDescription() {
@@ -963,7 +963,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.BusinessDescription,
-              'BusinessDescription'
+              'BusinessDescription',
             )
             .then((data) => {
               this.getEmploymentStatus();
@@ -971,9 +971,9 @@ export class LoginPage {
         });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert(
+      this.alertService.showAlert(
         'Alert!',
-        'Business Description values are empty!'
+        'Business Description values are empty!',
       );
     }
   }
@@ -988,7 +988,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.EmploymentStatus,
-              'EmploymentStatus'
+              'EmploymentStatus',
             )
             .then((data) => {
               this.geGLInterestType();
@@ -996,7 +996,10 @@ export class LoginPage {
         });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Occupation Type values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'Occupation Type values are empty!',
+      );
     }
   }
   geGLInterestType() {
@@ -1008,7 +1011,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.GLInterestType,
-            'GLInterestType'
+            'GLInterestType',
           )
           .then((data) => {
             this.getInterestRate();
@@ -1016,7 +1019,10 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Occupation Type values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'Occupation Type values are empty!',
+      );
     }
   }
   getInterestRate() {
@@ -1033,9 +1039,9 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert(
+      this.alertService.showAlert(
         'Alert!',
-        'Interest Rate Master values are empty!'
+        'Interest Rate Master values are empty!',
       );
     }
   }
@@ -1053,7 +1059,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Gender values are empty!');
+      this.alertService.showAlert('Alert!', 'Gender values are empty!');
     }
   }
   getGLTenure() {
@@ -1070,7 +1076,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'GL Tenure values are empty!');
+      this.alertService.showAlert('Alert!', 'GL Tenure values are empty!');
     }
   }
   getIndustryType() {
@@ -1082,7 +1088,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.IndustryType,
-            'IndustryType'
+            'IndustryType',
           )
           .then((data) => {
             this.getNatureofBussiness();
@@ -1090,7 +1096,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Industry Type values are empty!');
+      this.alertService.showAlert('Alert!', 'Industry Type values are empty!');
     }
   }
   getNatureofBussiness() {
@@ -1104,7 +1110,7 @@ export class LoginPage {
           this.sqlSupport
             .insertAllMasterData(
               this.masterDataValues.NatureofBussiness,
-              'NatureofBussiness'
+              'NatureofBussiness',
             )
             .then((data) => {
               this.getPddChargesMaster();
@@ -1112,9 +1118,9 @@ export class LoginPage {
         });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert(
+      this.alertService.showAlert(
         'Alert!',
-        'Nature of Bussiness values are empty!'
+        'Nature of Bussiness values are empty!',
       );
     }
   }
@@ -1132,7 +1138,10 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'DocumentsVehicle values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'DocumentsVehicle values are empty!',
+      );
     }
   }
   getProductScheme() {
@@ -1144,7 +1153,7 @@ export class LoginPage {
         this.sqlSupport
           .insertAllMasterData(
             this.masterDataValues.ProductScheme,
-            'ProductScheme'
+            'ProductScheme',
           )
           .then((data) => {
             this.getStateList();
@@ -1152,7 +1161,7 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Product Scheme values are empty!');
+      this.alertService.showAlert('Alert!', 'Product Scheme values are empty!');
     }
   }
   getStateList() {
@@ -1169,7 +1178,10 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'State City Master values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'State City Master values are empty!',
+      );
     }
   }
   getYesNo() {
@@ -1186,7 +1198,7 @@ export class LoginPage {
       });
     } else {
       this.globalData.globalLodingDismiss();
-      this.globalData.showAlert('Alert!', 'YesNo values are empty!');
+      this.alertService.showAlert('Alert!', 'YesNo values are empty!');
     }
   }
   getDocuments() {
@@ -1215,7 +1227,10 @@ export class LoginPage {
       });
     } else {
       this.globFunc.globalLodingDismiss();
-      this.globFunc.showAlert('Alert!', 'Document Master values are empty!');
+      this.alertService.showAlert(
+        'Alert!',
+        'Document Master values are empty!',
+      );
     }
   }
 
