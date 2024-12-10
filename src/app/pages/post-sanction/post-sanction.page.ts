@@ -14,7 +14,7 @@ import { PicproofPage } from '../picproof/picproof.page';
 import { ServiceAfterPsPage } from '../service-after-ps/service-after-ps.page';
 import { SignAnnexImgsPage } from '../sign-annex-imgs/sign-annex-imgs.page';
 import { OnRoadPriceService } from 'src/providers/on-road-price.service';
-import { ORPApiStrings } from 'src/utility/AppConstants';
+import { ORPApiStrings } from 'src/utility/GlobalAppConfigConstants';
 import { CustomAlertControlService } from 'src/providers/custom-alert-control.service';
 
 @Component({

@@ -9,6 +9,7 @@ import { RestService } from 'src/providers/rest.service';
 import { environment } from 'src/environments/environment';
 import { Plugins } from '@capacitor/core';
 const { WebPConvertorBase64 } = Plugins;
+import * as AppType from '../utility/AppInterfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,16 @@ export class DataPassingProviderService {
 
   nomineeValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
   loginUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  private _networkData: AppType.NetworkDataConfig;
+
+  set networkData(data: AppType.NetworkDataConfig) {
+    this.networkData = data;
+  }
+  get networkData() {
+    return this._networkData;
+  }
+
   constructor(
     // public global: GlobalService,
     public loadingCtrl: LoadingController,

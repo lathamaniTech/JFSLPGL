@@ -102,7 +102,8 @@ export class AppComponent {
       this.backButtonFun();
 
       //Location
-      geolocation.getGpsStatus();
+      geolocation.getDeviceGpsStatus();
+
       //network
       this.globalData.networkData = await network.logCurrentNetworkStatus();
       this.listenerNetwork = await network.networkListener(
