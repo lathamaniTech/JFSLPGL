@@ -17,11 +17,9 @@ import { Geolocation } from '@capacitor/geolocation';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { SquliteSupportProviderService } from 'src/providers/squlite-support-provider.service';
 import { CustomAlertControlService } from 'src/providers/custom-alert-control.service';
-
 import { PluginListenerHandle } from '@capacitor/core';
 import { geolocation, network } from 'src/providers/NativeProviders';
 declare var cordova: any;
-declare var window: any;
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -37,7 +35,6 @@ export class AppComponent {
   username: any;
   listenerNetwork: PluginListenerHandle;
   constructor(
-    // public network: Network,
     public globalData: DataPassingProviderService,
     public globFunc: GlobalService,
     private router: Router,
@@ -45,7 +42,7 @@ export class AppComponent {
     public sqliteSuportProvider: SquliteSupportProviderService,
     public platform: Platform,
     public menuCtrl: MenuController,
-    public alertService: CustomAlertControlService,
+    public alertService: CustomAlertControlService
   ) {
     this.pages = [
       {
@@ -107,7 +104,7 @@ export class AppComponent {
       //network
       this.globalData.networkData = await network.logCurrentNetworkStatus();
       this.listenerNetwork = await network.networkListener(
-        this.globalData.networkData,
+        this.globalData.networkData
       );
     });
   }
@@ -130,7 +127,7 @@ export class AppComponent {
     ) {
       this.alertService.showAlert(
         'Alert!',
-        'Check your network data Connection',
+        'Check your network data Connection'
       );
     } else {
       this.alertService
@@ -322,10 +319,10 @@ export class AppComponent {
                 .then(async (data) => {
                   if (data === 'Yes') {
                     this.sqliteSuportProvider.removeEkycData(
-                      this.globalData.getLeadId(),
+                      this.globalData.getLeadId()
                     );
                     this.sqliteSuportProvider.removeKarzaData(
-                      this.globalData.getLeadId(),
+                      this.globalData.getLeadId()
                     );
                     this.router.navigate(['/ExistApplicationsPage'], {
                       skipLocationChange: true,
@@ -342,14 +339,14 @@ export class AppComponent {
               this.alertService
                 .confirmationVersionAlert(
                   'Alert!',
-                  'Complete the Process! Otherwise Data will be lost!',
+                  'Complete the Process! Otherwise Data will be lost!'
                 )
                 .then(async (data) => {
                   if (data) {
                     let refId = this.globFunc.getScoreCardChecked();
                     this.sqliteProvider.updateScoreCardinPostsanctionWhileQuit(
                       'N',
-                      refId,
+                      refId
                     );
                     this.router.navigate(['/ExistApplicationsPage'], {
                       skipLocationChange: true,
@@ -422,7 +419,7 @@ export class AppComponent {
           // p_this.global.presentAlert(this.alertErrorLabel.AlertLabels.USB_Debugging_Enabled, this.alertErrorLabel.AlertLabels.Application_Not_Working_this_Environment);
           p_this.alertService.showAlert(
             'USB Debugging Enabled!',
-            'Application will not be working on this environment.',
+            'Application will not be working on this environment.'
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -434,7 +431,7 @@ export class AppComponent {
       function (error) {
         console.log('error ===>' + error);
         navigator['app'].exitApp();
-      },
+      }
     );
 
     cordova.plugins.pdfmake.checkPdfFshow('netstat', function (res) {
@@ -444,7 +441,7 @@ export class AppComponent {
           // p_this.global.presentAlert(this.alertErrorLabel.AlertLabels.Frida_Detected, this.alertErrorLabel.AlertLabels.Application_Not_Working_this_Environment);
           p_this.alertService.showAlert(
             'Frida Detected!',
-            'Application will not be working on this environment.',
+            'Application will not be working on this environment.'
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -467,7 +464,7 @@ export class AppComponent {
         if (val == true) {
           p_this.alertService.showAlert(
             'Virtual Device!',
-            'Application will not be working on this environment.',
+            'Application will not be working on this environment.'
           );
           setTimeout(() => {
             navigator['app'].exitApp();
@@ -476,7 +473,7 @@ export class AppComponent {
       },
       function (error) {
         navigator['app'].exitApp();
-      },
+      }
     );
   }
 }

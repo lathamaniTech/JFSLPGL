@@ -9,12 +9,13 @@ import { Capacitor, Plugins } from '@capacitor/core';
 import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 const { WebPConvertorBase64 } = Plugins;
 import * as GlobalAppConfig from '../../utility/GlobalAppConfigConstants';
+import { CustomAlertControlService } from '../custom-alert-control.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CameraFunctionality {
-  globalfun = inject(GlobalService);
+  alertService = inject(CustomAlertControlService);
   modalCtrl = inject(ModalController);
 
   takeImageWithoutCrop = () => {
@@ -54,7 +55,7 @@ export class CameraFunctionality {
 
         cropComponent.onDidDismiss().then(async (cropdata) => {
           if (cropdata.data == 'data:,') {
-            this.globalfun.showAlert(
+            this.alertService.showAlert(
               AppConst.AlertText.alert,
               AppConst.AlertText.takeImgAgain
             );
@@ -93,7 +94,7 @@ export class CameraFunctionality {
         }
       }
     } catch (err) {
-      this.globalfun.showAlert(
+      this.alertService.showAlert(
         AppConst.AlertText.alert,
         'convertToWebPBase64e - ' + err.message
       );
@@ -172,7 +173,7 @@ export class CameraFunctionality {
                 });
               }
             } else {
-              this.globalfun.showAlert(
+              this.alertService.showAlert(
                 AppConst.AlertText.alert,
                 AppConst.AlertText.imageSize
               );
@@ -197,7 +198,7 @@ export class CameraFunctionality {
       });
       return fileResult.uri;
     } catch (err) {
-      this.globalfun.showAlert(AppConst.AlertText.alert, err.message);
+      this.alertService.showAlert(AppConst.AlertText.alert, err.message);
       return null;
     }
   }
@@ -215,7 +216,10 @@ export class CameraFunctionality {
         };
         reader.readAsDataURL(file);
       } catch (err) {
-        this.globalfun.showAlert('Alert-convertDocBlobToBase64', err.message);
+        this.alertService.showAlert(
+          'Alert-convertDocBlobToBase64',
+          err.message
+        );
       }
     });
   }
@@ -228,7 +232,7 @@ export class CameraFunctionality {
       });
       return delResult;
     } catch (err) {
-      this.globalfun.showAlert(AppConst.AlertText.alert, err.message);
+      this.alertService.showAlert(AppConst.AlertText.alert, err.message);
     }
   }
 
@@ -240,7 +244,7 @@ export class CameraFunctionality {
       });
       return sourcefile;
     } catch (err) {
-      this.globalfun.showAlert(AppConst.AlertText.alert, err.message);
+      this.alertService.showAlert(AppConst.AlertText.alert, err.message);
       return null;
     }
   }
@@ -253,7 +257,7 @@ export class CameraFunctionality {
       });
       return data;
     } catch (err) {
-      this.globalfun.showAlert(AppConst.AlertText.alert, err.message);
+      this.alertService.showAlert(AppConst.AlertText.alert, err.message);
       return null;
     }
   }
@@ -267,7 +271,7 @@ export class CameraFunctionality {
       });
       return data;
     } catch (err) {
-      this.globalfun.showAlert(AppConst.AlertText.alert, err.message);
+      this.alertService.showAlert(AppConst.AlertText.alert, err.message);
     }
   }
 }
