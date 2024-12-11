@@ -27,6 +27,7 @@ import { CasadetailsComponent } from 'src/app/components/casadetails/casadetails
 import { NomineedetailsComponent } from 'src/app/components/nomineedetails/nomineedetails.component';
 import { ServicedetailsComponent } from 'src/app/components/servicedetails/servicedetails.component';
 import { CropImageComponent } from 'src/app/components/crop-image/crop-image.component';
+import { EmailValidatorComponent } from 'src/app/formcontrols/email-validator/email-validator.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
     CasadetailsComponent,
     ServicedetailsComponent,
     CropImageComponent,
+    EmailValidatorComponent,
   ],
   imports: [
     CommonModule,
@@ -83,9 +85,10 @@ import { CropImageComponent } from 'src/app/components/crop-image/crop-image.com
     CasadetailsComponent,
     ServicedetailsComponent,
     CropImageComponent,
+    EmailValidatorComponent,
   ],
   entryComponents: [SecondKycComponent],
   providers: [HTTP, NavParams],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedModule { }
+export class SharedModule {}

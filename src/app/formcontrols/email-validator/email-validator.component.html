@@ -1,0 +1,10 @@
+<div>
+  <ion-input
+    id="app-email"
+    placeholder="Enter Email"
+    (ionChange)="changeInput()"
+    [value]="email"
+    [disabled]="disable"
+  ></ion-input>
+  <ion-button class="buttons" (click)="sendOTP()"> Send OTP </ion-button>
+</div>

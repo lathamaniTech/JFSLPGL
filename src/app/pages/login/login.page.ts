@@ -20,6 +20,7 @@ import { OnRoadPriceService } from 'src/providers/on-road-price.service';
 import { BioNavigatorService } from 'src/providers/BioMetricPlugin/bio-navigator.service';
 import { CustomAlertControlService } from 'src/providers/custom-alert-control.service';
 import { network } from 'src/providers/NativeProviders';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import 'rxjs/add/operator/map';
 
 declare var cordova: any;
@@ -57,6 +58,11 @@ export class LoginPage {
   @ViewChild('fileref') fileRef: ElementRef;
   capacitorVersion: number = 1;
   network: string;
+
+  // test formgroup object to test the custom email-validator
+
+  testform: FormGroup;
+
   constructor(
     public navCtrl: NavController,
     public globalData: DataPassingProviderService,
@@ -74,11 +80,20 @@ export class LoginPage {
     public menuCtrl: MenuController,
     public orpService: OnRoadPriceService,
     public alertService: CustomAlertControlService,
+    public fbg: FormBuilder,
   ) {
     this.userData = [{ username: '', password: '' }];
     this.userData.username = '0024CH';
     this.userData.password = 'Laps@1234';
     this.patch = this.master.patch;
+    this.testform = this.fbg.group({
+      email: ['', [Validators.email]],
+    });
+
+    setTimeout(() => {
+      this.testform.get('email').setValue('karthick');
+      this.testform.get('email').disable();
+    }, 10000);
   }
 
   ionViewDidLeave() {
@@ -1238,6 +1253,10 @@ export class LoginPage {
       skipLocationChange: true,
       replaceUrl: true,
     });
+  }
+
+  otp(otp: string) {
+    alert(otp);
   }
 
   // ---------------------------------------- END for GL Setup ---------------------------------------------------------------

@@ -264,7 +264,7 @@ export class PersonalComponent implements OnInit {
     public master: RestService,
     public sqlSupport: SquliteSupportProviderService,
     public globFunc: GlobalService,
-    public alertService: CustomAlertControlService
+    public alertService: CustomAlertControlService,
   ) {
     this.activateRoute.queryParamMap.subscribe((data: any) => {
       this.naveParamsValue = data.params;
@@ -446,7 +446,7 @@ export class PersonalComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.pattern(
-            '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$'
+            '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$',
           ),
         ]),
       ],
@@ -536,7 +536,7 @@ export class PersonalComponent implements OnInit {
           Validators.compose([
             Validators.required,
             Validators.pattern(
-              '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$'
+              '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$',
             ),
           ]),
         ],
@@ -615,7 +615,7 @@ export class PersonalComponent implements OnInit {
           Validators.compose([
             Validators.required,
             Validators.pattern(
-              '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$'
+              '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$',
             ),
           ]),
         ],
@@ -633,7 +633,7 @@ export class PersonalComponent implements OnInit {
                 this.applicantDetails.controls.panAvailable.setValue('Y');
                 this.panAvailabilityChecking('Y');
                 this.applicantDetails.controls.panNum.setValue(
-                  this.globFunc.basicDec(idType.idNumber)
+                  this.globFunc.basicDec(idType.idNumber),
                 );
                 this.panNumber = this.globFunc.basicDec(idType.idNumber);
                 this.disablePan = true;
@@ -732,7 +732,7 @@ export class PersonalComponent implements OnInit {
     // })
     this.karzaPanDataFetch();
     console.log(
-      `UserT : ${this.userType} , CustT : ${this.custType} , CustomerT : ${this.customerType}, refId : ${this.refId} , id : ${this.id}`
+      `UserT : ${this.userType} , CustT : ${this.custType} , CustomerT : ${this.customerType}, refId : ${this.refId} , id : ${this.id}`,
     );
   }
 
@@ -838,23 +838,23 @@ export class PersonalComponent implements OnInit {
         if (format.test(data[0].AppFirstName)) {
           console.log('true');
           this.applicantDetails.controls.firstname.setValue(
-            data[0].AppFirstName ? data[0].AppFirstName : ''
+            data[0].AppFirstName ? data[0].AppFirstName : '',
           );
         } else {
           console.log('false');
           this.applicantDetails.controls.firstname.setValue(
-            data[0].AppFirstName ? data[0].AppFirstName : ''
+            data[0].AppFirstName ? data[0].AppFirstName : '',
           );
         }
         if (format.test(data[0].AppLastName)) {
           console.log('true');
           this.applicantDetails.controls.lastname.setValue(
-            data[0].AppLastName ? data[0].AppLastName : ''
+            data[0].AppLastName ? data[0].AppLastName : '',
           );
         } else {
           console.log('false');
           this.applicantDetails.controls.lastname.setValue(
-            data[0].AppLastName ? data[0].AppLastName : ''
+            data[0].AppLastName ? data[0].AppLastName : '',
           );
         }
 
@@ -864,14 +864,14 @@ export class PersonalComponent implements OnInit {
           this.applicantDetails.controls.panAvailable.setValue('Y');
           this.panAvailabilityChecking('Y');
           this.applicantDetails.controls.panNum.setValue(
-            this.globFunc.basicDec(data[0].IdProofValue)
+            this.globFunc.basicDec(data[0].IdProofValue),
           );
           this.applicantDetails.controls.panNum.updateValueAndValidity();
         } else if (data[0].PanNum != undefined || null || '') {
           this.applicantDetails.controls.panAvailable.setValue('Y');
           this.panAvailabilityChecking('Y');
           this.applicantDetails.controls.panNum.setValue(
-            this.globFunc.basicDec(data[0].PanNum)
+            this.globFunc.basicDec(data[0].PanNum),
           );
           this.applicantDetails.controls.panNum.updateValueAndValidity();
         }
@@ -880,7 +880,7 @@ export class PersonalComponent implements OnInit {
         this.applicantDetails.controls.mobNum.setValue(
           this.globFunc.basicDec(data[0].Mobile)
             ? this.globFunc.basicDec(data[0].Mobile)
-            : ''
+            : '',
         );
         this.applicantDetails.controls.dob.setValue(
           data[0].DOB
@@ -889,24 +889,24 @@ export class PersonalComponent implements OnInit {
                 data[0].DOB.substring(3, 5) +
                 '-' +
                 data[0].DOB.substring(6, 10)
-            : ''
+            : '',
         );
         this.applicantDetails.controls.fathername.setValue(
-          data[0].FatherName ? data[0].FatherName : ''
+          data[0].FatherName ? data[0].FatherName : '',
         );
         // this.applicantDetails.controls.mothername.setValue(data[0].MotherName ? data[0].MotherName: "");
         this.applicantDetails.controls.marital.setValue(
-          data[0].MaritalStatus ? data[0].MaritalStatus : ''
+          data[0].MaritalStatus ? data[0].MaritalStatus : '',
         );
         // this.applicantDetails.controls.spousename.setValue(data[0].FatherOrSpouse);
         this.applicantDetails.controls.gender.setValue(
-          data[0].Gndr ? data[0].Gndr : ''
+          data[0].Gndr ? data[0].Gndr : '',
         );
         // this.applicantDetails.controls.education.setValue(data[0].Education ? data[0].Education : "");
         this.applicantDetails.controls.email.setValue(
           this.globFunc.basicDec(data[0].Email)
             ? this.globFunc.basicDec(data[0].Email)
-            : ''
+            : '',
         );
 
         if (this.existAather) {
@@ -945,7 +945,7 @@ export class PersonalComponent implements OnInit {
               Validators.maxLength(12),
               Validators.minLength(12),
               Validators.pattern('[0-9]{12}'),
-            ])
+            ]),
           );
         // this.personalData.get('aadharNum').setValue("");
         this.personalData.get('docName').clearValidators();
@@ -968,7 +968,7 @@ export class PersonalComponent implements OnInit {
             Validators.minLength(10),
             Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
             Validators.required,
-          ])
+          ]),
         );
       // this.personalData.get('aadharNum').setValue("");
       this.personalData.get('docName').clearValidators();
@@ -996,7 +996,7 @@ export class PersonalComponent implements OnInit {
               Validators.minLength(10),
               Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
               Validators.required,
-            ])
+            ]),
           );
         this.personalData.get('docName').clearValidators();
         this.personalData.get('docName').updateValueAndValidity();
@@ -1013,7 +1013,7 @@ export class PersonalComponent implements OnInit {
                 Validators.maxLength(10),
                 Validators.minLength(10),
                 Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
-              ])
+              ]),
             );
         } else {
           this.personalData
@@ -1023,7 +1023,7 @@ export class PersonalComponent implements OnInit {
                 Validators.maxLength(10),
                 Validators.minLength(10),
                 Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
-              ])
+              ]),
             );
         }
         this.personalData.get('docName').clearValidators();
@@ -1090,7 +1090,7 @@ export class PersonalComponent implements OnInit {
               Validators.minLength(8),
               Validators.pattern(/^[a-zA-Z]{1}[0-9]{7}$/),
               Validators.required,
-            ])
+            ]),
           );
       } else {
         console.log('no data recived for set doc validator');
@@ -1113,7 +1113,7 @@ export class PersonalComponent implements OnInit {
               Validators.maxLength(8),
               Validators.minLength(8),
               Validators.pattern(/^[a-zA-Z]{1}[0-9]{7}$/),
-            ])
+            ]),
           );
       } else {
         console.log('no data recived for set doc validator');
@@ -1166,7 +1166,7 @@ export class PersonalComponent implements OnInit {
       this.globalData.globalLodingDismiss();
       this.alertService.showAlert(
         'Alert!',
-        'The Customer Age should not be less than 21 years'
+        'The Customer Age should not be less than 21 years',
       );
     } else {
       if (this.profPic) {
@@ -1182,7 +1182,7 @@ export class PersonalComponent implements OnInit {
                 this.customerType,
                 value,
                 this.profPic,
-                this.perId
+                this.perId,
               )
               .then((data) => {
                 this.saveStatus.emit('personalTick');
@@ -1190,12 +1190,12 @@ export class PersonalComponent implements OnInit {
                 this.globalData.globalLodingDismiss();
                 this.alertService.showAlert(
                   'Alert!',
-                  'Guarantor Details Updated Successfully'
+                  'Guarantor Details Updated Successfully',
                 );
                 this.formActivater.disableForm = true;
                 this.globFunc.setapplicationDataChangeDetector(
                   'saved',
-                  this.pagename
+                  this.pagename,
                 );
               })
               .catch((Error) => {
@@ -1215,13 +1215,13 @@ export class PersonalComponent implements OnInit {
               this.sqliteProvider.insertIdproofData(
                 this.idNumber,
                 this.idType,
-                this.leadId
+                this.leadId,
               );
             } else {
               this.sqliteProvider.insertIdproofData(
                 this.idType.idNumber,
                 this.idType.type,
-                this.leadId
+                this.leadId,
               );
             }
             this.sqliteProvider.insertSubmitDetails(
@@ -1233,7 +1233,7 @@ export class PersonalComponent implements OnInit {
               this.applicationStatus,
               'G',
               '0',
-              '0'
+              '0',
             );
             this.sqliteProvider
               .addPersonalDetails(
@@ -1260,7 +1260,7 @@ export class PersonalComponent implements OnInit {
                 this.panValidation,
                 this.nameValidation,
                 this.DOBValidation,
-                this.seedingStatus
+                this.seedingStatus,
               )
               .then((data) => {
                 this.perId = data.insertId;
@@ -1271,12 +1271,12 @@ export class PersonalComponent implements OnInit {
                 localStorage.setItem('leadId', this.coAppGuaId);
                 this.alertService.showAlert(
                   'Alert!',
-                  'Guarantor Details Added Successfully'
+                  'Guarantor Details Added Successfully',
                 );
                 this.formActivater.disableForm = true;
                 this.globFunc.setapplicationDataChangeDetector(
                   'saved',
-                  this.pagename
+                  this.pagename,
                 );
                 this.sqliteProvider.updateCoAppFlag(this.refId, this.id);
               })
@@ -1296,7 +1296,7 @@ export class PersonalComponent implements OnInit {
                 this.customerType,
                 value,
                 this.profPic,
-                this.perId
+                this.perId,
               )
               .then((data) => {
                 this.saveStatus.emit('personalTick');
@@ -1304,12 +1304,12 @@ export class PersonalComponent implements OnInit {
                 this.globalData.globalLodingDismiss();
                 this.alertService.showAlert(
                   'Alert!',
-                  'Co-Applicant Details Updated Successfully'
+                  'Co-Applicant Details Updated Successfully',
                 );
                 this.formActivater.disableForm = true;
                 this.globFunc.setapplicationDataChangeDetector(
                   'saved',
-                  this.pagename
+                  this.pagename,
                 );
               })
               .catch((Error) => {
@@ -1328,13 +1328,13 @@ export class PersonalComponent implements OnInit {
               this.sqliteProvider.insertIdproofData(
                 this.idNumber,
                 this.idType,
-                this.leadId
+                this.leadId,
               );
             } else {
               this.sqliteProvider.insertIdproofData(
                 this.idType.idNumber,
                 this.idType.type,
-                this.leadId
+                this.leadId,
               );
             }
             this.sqliteProvider.insertSubmitDetails(
@@ -1346,7 +1346,7 @@ export class PersonalComponent implements OnInit {
               this.applicationStatus,
               'C',
               '0',
-              '0'
+              '0',
             );
             this.sqliteProvider
               .addPersonalDetails(
@@ -1373,7 +1373,7 @@ export class PersonalComponent implements OnInit {
                 this.panValidation,
                 this.nameValidation,
                 this.DOBValidation,
-                this.seedingStatus
+                this.seedingStatus,
               )
               .then((data) => {
                 this.perId = data.insertId;
@@ -1384,12 +1384,12 @@ export class PersonalComponent implements OnInit {
                 localStorage.setItem('leadId', this.coAppGuaId);
                 this.alertService.showAlert(
                   'Alert!',
-                  'Co-Applicant Details Added Successfully'
+                  'Co-Applicant Details Added Successfully',
                 );
                 this.formActivater.disableForm = true;
                 this.globFunc.setapplicationDataChangeDetector(
                   'saved',
-                  this.pagename
+                  this.pagename,
                 );
                 this.sqliteProvider.updateCoAppFlag(this.refId, this.id);
               })
@@ -1409,7 +1409,7 @@ export class PersonalComponent implements OnInit {
                 this.customerType,
                 value,
                 this.profPic,
-                this.perId
+                this.perId,
               )
               .then((data) => {
                 // (value.coAppFlag == 'Y') ? this.sqliteProvider.updateCoAppFlag(this.refId,this.id) : '';
@@ -1431,22 +1431,22 @@ export class PersonalComponent implements OnInit {
                 if (this.customerType == '2' && this.userType == 'A') {
                   this.alertService.showAlert(
                     'Alert!',
-                    'Promoter Details Updated Successfully'
+                    'Promoter Details Updated Successfully',
                   );
                   this.formActivater.disableForm = true;
                   this.globFunc.setapplicationDataChangeDetector(
                     'saved',
-                    this.pagename
+                    this.pagename,
                   );
                 } else {
                   this.alertService.showAlert(
                     'Alert!',
-                    'Applicant Details Updated Successfully'
+                    'Applicant Details Updated Successfully',
                   );
                   this.formActivater.disableForm = true;
                   this.globFunc.setapplicationDataChangeDetector(
                     'saved',
-                    this.pagename
+                    this.pagename,
                   );
                 }
               })
@@ -1477,7 +1477,7 @@ export class PersonalComponent implements OnInit {
               this.applicationStatus,
               'A',
               '0',
-              '0'
+              '0',
             );
             this.sqliteProvider
               .addPersonalDetails(
@@ -1504,7 +1504,7 @@ export class PersonalComponent implements OnInit {
                 this.panValidation,
                 this.nameValidation,
                 this.DOBValidation,
-                this.seedingStatus
+                this.seedingStatus,
               )
               .then((data) => {
                 //  (value.coAppFlag == 'Y') ? this.sqliteProvider.updateCoAppFlag(this.refId,this.id) : '';
@@ -1517,22 +1517,22 @@ export class PersonalComponent implements OnInit {
                 if (this.customerType == '2' && this.userType == 'A') {
                   this.alertService.showAlert(
                     'Alert!',
-                    'Promoter Details Added Successfully'
+                    'Promoter Details Added Successfully',
                   );
                   this.formActivater.disableForm = true;
                   this.globFunc.setapplicationDataChangeDetector(
                     'saved',
-                    this.pagename
+                    this.pagename,
                   );
                 } else {
                   this.alertService.showAlert(
                     'Alert!',
-                    'Applicant Details Added Successfully'
+                    'Applicant Details Added Successfully',
                   );
                   this.formActivater.disableForm = true;
                   this.globFunc.setapplicationDataChangeDetector(
                     'saved',
-                    this.pagename
+                    this.pagename,
                   );
                 }
                 this.sqliteProvider.updatePassedLMSData('1', this.coAppGuaId);
@@ -1551,7 +1551,7 @@ export class PersonalComponent implements OnInit {
               this.refId,
               this.id,
               '1556814',
-              'PAN CARD'
+              'PAN CARD',
             )
             .then((data) => {
               if (data.length > 0) {
@@ -1560,7 +1560,7 @@ export class PersonalComponent implements OnInit {
                   this.refId,
                   this.id,
                   '1556814',
-                  'PAN CARD'
+                  'PAN CARD',
                 );
               }
             });
@@ -1569,14 +1569,14 @@ export class PersonalComponent implements OnInit {
             this.refId,
             this.id,
             '1556814',
-            'PAN CARD'
+            'PAN CARD',
           );
         }
       } else {
         this.globalData.globalLodingDismiss();
         this.alertService.showAlert(
           'Alert!',
-          'Must Capture the Profile Image!'
+          'Must Capture the Profile Image!',
         );
       }
     }
@@ -1630,127 +1630,127 @@ export class PersonalComponent implements OnInit {
               }
 
               this.applicantDetails.controls.genTitle.setValue(
-                this.getPersonalData[0].genTitle
+                this.getPersonalData[0].genTitle,
               );
               this.applicantDetails.controls.firstname.setValue(
-                this.getPersonalData[0].firstname
+                this.getPersonalData[0].firstname,
               );
               this.applicantDetails.controls.middlename.setValue(
-                this.getPersonalData[0].middlename
+                this.getPersonalData[0].middlename,
               );
               this.applicantDetails.controls.lastname.setValue(
-                this.getPersonalData[0].lastname
+                this.getPersonalData[0].lastname,
               );
               this.applicantDetails.controls.fathername.setValue(
-                this.getPersonalData[0].fathername
+                this.getPersonalData[0].fathername,
               );
               this.applicantDetails.controls.spouseName.setValue(
-                this.getPersonalData[0].spouseName
+                this.getPersonalData[0].spouseName,
               );
               this.applicantDetails.controls.dob.setValue(
-                this.getPersonalData[0].dob
+                this.getPersonalData[0].dob,
               );
               this.applicantDetails.controls.dobAadhar.setValue(
-                this.getPersonalData[0].dobAadhar
+                this.getPersonalData[0].dobAadhar,
               );
               this.applicantDetails.controls.dobDocument.setValue(
-                this.getPersonalData[0].dobDocument
+                this.getPersonalData[0].dobDocument,
               );
               this.applicantDetails.controls.marital.setValue(
-                this.getPersonalData[0].marital
+                this.getPersonalData[0].marital,
               );
               this.applicantDetails.controls.gender.setValue(
-                this.getPersonalData[0].gender
+                this.getPersonalData[0].gender,
               );
               this.applicantDetails.controls.mobNum.setValue(
-                this.globFunc.basicDec(this.getPersonalData[0].mobNum)
+                this.globFunc.basicDec(this.getPersonalData[0].mobNum),
               );
               this.applicantDetails.controls.altMobNum.setValue(
-                this.globFunc.basicDec(this.getPersonalData[0].altMobNum)
+                this.globFunc.basicDec(this.getPersonalData[0].altMobNum),
               );
               this.applicantDetails.controls.panAvailable.setValue(
-                this.getPersonalData[0].panAvailable
+                this.getPersonalData[0].panAvailable,
               );
               this.applicantDetails.controls.panNum.setValue(
-                this.globFunc.basicDec(this.getPersonalData[0].panNum)
+                this.globFunc.basicDec(this.getPersonalData[0].panNum),
               );
               this.applicantDetails.controls.form60.setValue(
-                this.globFunc.basicDec(this.getPersonalData[0].form60)
+                this.globFunc.basicDec(this.getPersonalData[0].form60),
               );
               this.applicantDetails.controls.employment.setValue(
-                this.getPersonalData[0].employment
+                this.getPersonalData[0].employment,
               );
               this.applicantDetails.controls.bussName.setValue(
-                this.getPersonalData[0].bussName
+                this.getPersonalData[0].bussName,
               );
               this.applicantDetails.controls.actDetail.setValue(
-                this.getPersonalData[0].actDetail
+                this.getPersonalData[0].actDetail,
               );
               this.applicantDetails.controls.monthIncome.setValue(
-                this.getPersonalData[0].monthIncome
+                this.getPersonalData[0].monthIncome,
               );
               this.applicantDetails.controls.vinOfServ.setValue(
-                this.getPersonalData[0].vinOfServ
+                this.getPersonalData[0].vinOfServ,
               );
 
               this.applicantDetails.controls.employerName.setValue(
-                this.getPersonalData[0].employerName
+                this.getPersonalData[0].employerName,
               );
               this.applicantDetails.controls.employeeId.setValue(
-                this.getPersonalData[0].employeeId
+                this.getPersonalData[0].employeeId,
               );
               this.applicantDetails.controls.designation.setValue(
-                this.getPersonalData[0].designation
+                this.getPersonalData[0].designation,
               );
               this.applicantDetails.controls.joinDate.setValue(
-                this.getPersonalData[0].joinDate
+                this.getPersonalData[0].joinDate,
               );
               this.applicantDetails.controls.monthSalary.setValue(
-                this.getPersonalData[0].monthSalary
+                this.getPersonalData[0].monthSalary,
               );
               this.applicantDetails.controls.lmName.setValue(
-                this.getPersonalData[0].lmName
+                this.getPersonalData[0].lmName,
               );
               this.applicantDetails.controls.lmEmail.setValue(
-                this.globFunc.basicDec(this.getPersonalData[0].lmEmail)
+                this.globFunc.basicDec(this.getPersonalData[0].lmEmail),
               );
 
               this.applicantDetails.controls.experience.setValue(
-                this.getPersonalData[0].experience
+                this.getPersonalData[0].experience,
               );
               this.applicantDetails.controls.annualIncome.setValue(
-                this.getPersonalData[0].annualIncome
+                this.getPersonalData[0].annualIncome,
               );
               this.applicantDetails.controls.caste.setValue(
-                this.getPersonalData[0].caste
+                this.getPersonalData[0].caste,
               );
               this.applicantDetails.controls.religion.setValue(
-                this.getPersonalData[0].religion
+                this.getPersonalData[0].religion,
               );
               this.applicantDetails.controls.languages.setValue(
-                this.getPersonalData[0].languages
+                this.getPersonalData[0].languages,
               );
               this.applicantDetails.controls.resciStatus.setValue(
-                this.getPersonalData[0].resciStatus
+                this.getPersonalData[0].resciStatus,
               );
               this.applicantDetails.controls.education.setValue(
-                this.getPersonalData[0].education
+                this.getPersonalData[0].education,
               );
               this.applicantDetails.controls.email.setValue(
-                this.globFunc.basicDec(this.getPersonalData[0].email)
+                this.globFunc.basicDec(this.getPersonalData[0].email),
               );
               this.applicantDetails.controls.coAppFlag.setValue(
-                this.getPersonalData[0].coAppFlag
+                this.getPersonalData[0].coAppFlag,
               );
               this.applicantDetails.controls.nameEkyc.setValue(
-                this.getPersonalData[0].nameAsPerEkyc
+                this.getPersonalData[0].nameAsPerEkyc,
               );
               if (this.getPersonalData[0].upiNo) {
                 this.applicantDetails.controls.upiNo.setValue(
-                  this.getPersonalData[0].upiNo
+                  this.getPersonalData[0].upiNo,
                 );
                 this.applicantDetails.controls.nameupi.setValue(
-                  this.getPersonalData[0].nameupi
+                  this.getPersonalData[0].nameupi,
                 );
                 this.getPersonalData[0].nameupi.length > 0
                   ? (this.upiVerify = true)
@@ -1789,22 +1789,22 @@ export class PersonalComponent implements OnInit {
               this.perId = this.getPersonalData[0].perId;
 
               this.profPic = this.globalData.setProfileImage(
-                this.getPersonalData[0].profPic
+                this.getPersonalData[0].profPic,
               );
               this.saveStatus.emit('personalTick');
               // this.globalData.setEditSaveStatus("personalSaved");
               localStorage.setItem('Personal', 'personalSaved');
               if (this.getPersonalData[0].panAvailable == 'Y') {
                 this.setFilteredItems(
-                  this.globFunc.basicDec(this.getPersonalData[0].panNum)
+                  this.globFunc.basicDec(this.getPersonalData[0].panNum),
                 );
               } else if (this.getPersonalData[0].panAvailable == 'N') {
                 this.setFilteredItems(
-                  this.globFunc.basicDec(this.getPersonalData[0].form60)
+                  this.globFunc.basicDec(this.getPersonalData[0].form60),
                 );
               }
               this.panAvailabilityChecking(
-                this.getPersonalData[0].panAvailable
+                this.getPersonalData[0].panAvailable,
               );
               // this.\(undefined);
             } else {
@@ -1822,7 +1822,7 @@ export class PersonalComponent implements OnInit {
                       Validators.minLength(10),
                       Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
                       Validators.required,
-                    ])
+                    ]),
                   );
               } else {
                 this.personalData
@@ -1832,7 +1832,7 @@ export class PersonalComponent implements OnInit {
                       Validators.maxLength(10),
                       Validators.minLength(10),
                       Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
-                    ])
+                    ]),
                   );
               }
               this.personalData.get('panNum').updateValueAndValidity();
@@ -1886,7 +1886,7 @@ export class PersonalComponent implements OnInit {
       (err) => {
         this.globFunc.globalLodingDismiss();
         this.alertService.showAlert('Alert!', 'No Response from Server!');
-      }
+      },
     );
   }
 
@@ -1894,7 +1894,7 @@ export class PersonalComponent implements OnInit {
     if (this.network.type === 'none' || this.network.type == 'unknown') {
       this.alertService.showAlert(
         'Alert!',
-        'Please Check your Data Connection!'
+        'Please Check your Data Connection!',
       );
     } else {
       this.otpValue = 'RESEND OTP';
@@ -1912,7 +1912,7 @@ export class PersonalComponent implements OnInit {
         headers.append('Accept', 'application/json');
         headers.append(
           'Access-Control-Allow-Methods',
-          'POST, GET, OPTIONS, PUT'
+          'POST, GET, OPTIONS, PUT',
         );
         headers.append('Access-Control-Allow-Credentials', 'true');
         let body = {
@@ -1936,7 +1936,7 @@ export class PersonalComponent implements OnInit {
               // console.log(this.otpResult);
               this.alertService.showAlert(
                 'Alert!',
-                'OTP Sent to Entered Mobile number Success!'
+                'OTP Sent to Entered Mobile number Success!',
               );
             } else {
               if ((<any>data).SMS.Response.statusCode === 'Success') {
@@ -1944,14 +1944,14 @@ export class PersonalComponent implements OnInit {
                 this.verifiedMobNum = false;
                 this.alertService.showAlert(
                   'Alert!',
-                  'OTP Sent to Entered Mobile number Success!'
+                  'OTP Sent to Entered Mobile number Success!',
                 );
               } else {
                 this.verifiedMobNum = false;
                 this.otpResult = undefined;
                 this.alertService.showAlert(
                   'Alert!',
-                  'Not a valid Mobile number'
+                  'Not a valid Mobile number',
                 );
               }
             }
@@ -1959,7 +1959,7 @@ export class PersonalComponent implements OnInit {
           (err) => {
             this.globFunc.globalLodingDismiss();
             this.alertService.showAlert('Alert!', 'No Response from Server!');
-          }
+          },
         );
       }
     }
@@ -1974,7 +1974,7 @@ export class PersonalComponent implements OnInit {
       this.mobDisable = true;
       this.alertService.showAlert(
         'Alert!',
-        'Mobile Number verified Successfully!'
+        'Mobile Number verified Successfully!',
       );
     } else if (this.OTPNUM != value) {
       this.verifiedMobNum = false;
@@ -2276,7 +2276,7 @@ export class PersonalComponent implements OnInit {
             Validators.compose([
               Validators.required,
               Validators.pattern(
-                '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$'
+                '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$',
               ),
             ]),
           ],
@@ -2302,7 +2302,7 @@ export class PersonalComponent implements OnInit {
               Validators.maxLength(10),
               Validators.minLength(10),
               Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
-            ])
+            ]),
           );
         // this.personalData.get('panNum').setValue("");
         this.personalData.get('docName').clearValidators();
@@ -2317,7 +2317,7 @@ export class PersonalComponent implements OnInit {
           Validators.compose([
             Validators.maxLength(12),
             Validators.pattern('[0-9]{12}'),
-          ])
+          ]),
         );
       this.panform60 = 'panCheck';
       this.personalData
@@ -2328,7 +2328,7 @@ export class PersonalComponent implements OnInit {
             Validators.minLength(10),
             Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
             Validators.required,
-          ])
+          ]),
         );
       if (this.userType == 'A') {
         this.panform60 = 'panCheck';
@@ -2361,7 +2361,7 @@ export class PersonalComponent implements OnInit {
           Validators.minLength(10),
           Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
           Validators.required,
-        ])
+        ]),
       );
       this.applicantDetails.controls.panNum.updateValueAndValidity();
       this.applicantDetails.controls.form60.clearValidators();
@@ -2377,7 +2377,7 @@ export class PersonalComponent implements OnInit {
         this.ExCusData[0].IdProof == 'PAN'
       ) {
         this.applicantDetails.controls.panNum.setValue(
-          this.globFunc.basicDec(this.ExCusData[0].IdProofValue)
+          this.globFunc.basicDec(this.ExCusData[0].IdProofValue),
         );
         this.applicantDetails.controls.panNum.updateValueAndValidity();
         this.panNumber = this.globFunc.basicDec(this.ExCusData[0].IdProofValue);
@@ -2388,7 +2388,7 @@ export class PersonalComponent implements OnInit {
         ''
       ) {
         this.applicantDetails.controls.panNum.setValue(
-          this.globFunc.basicDec(this.ExCusData[0].PanNum)
+          this.globFunc.basicDec(this.ExCusData[0].PanNum),
         );
         this.applicantDetails.controls.panNum.updateValueAndValidity();
         this.panNumber = this.globFunc.basicDec(this.ExCusData[0].PanNum);
@@ -2400,7 +2400,7 @@ export class PersonalComponent implements OnInit {
           Validators.minLength(10),
           Validators.pattern(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$/),
           Validators.required,
-        ])
+        ]),
       );
       this.applicantDetails.controls.panNum.updateValueAndValidity();
     } else if (event == 'N') {
@@ -2496,18 +2496,18 @@ export class PersonalComponent implements OnInit {
     if (this.naveParamsValue.licence) {
       this.applicantDetails.controls.firstname.setValue(this.idType.firstname);
       this.applicantDetails.controls.middlename.setValue(
-        this.idType.middlename
+        this.idType.middlename,
       );
       this.applicantDetails.controls.lastname.setValue(this.idType.lastname);
       this.applicantDetails.controls.fathername.setValue(
-        this.idType.fathername
+        this.idType.fathername,
       );
       this.applicantDetails.controls.dob.setValue(
         this.idType.dob.substring(6, 10) +
           '-' +
           this.idType.dob.substring(3, 5) +
           '-' +
-          this.idType.dob.substring(0, 2)
+          this.idType.dob.substring(0, 2),
       );
     } else if (this.naveParamsValue.passport) {
       this.applicantDetails.controls.firstname.setValue(this.idType.name);
@@ -2525,7 +2525,7 @@ export class PersonalComponent implements OnInit {
     } else if (this.naveParamsValue.voter) {
       this.applicantDetails.controls.firstname.setValue(this.idType.name);
       this.applicantDetails.controls.fathername.setValue(
-        this.idType.fathername
+        this.idType.fathername,
       );
 
       if (this.idType.lastname) {
@@ -2538,7 +2538,7 @@ export class PersonalComponent implements OnInit {
             '-' +
             this.idType.dob.substring(3, 5) +
             '-' +
-            this.idType.dob.substring(0, 2)
+            this.idType.dob.substring(0, 2),
         );
       }
     } else if (this.naveParamsValue.nonIndividual) {
@@ -2572,7 +2572,7 @@ export class PersonalComponent implements OnInit {
             '-' +
             this.idType.panDOB.substring(3, 5) +
             '-' +
-            this.idType.panDOB.substring(0, 2)
+            this.idType.panDOB.substring(0, 2),
         );
       }
       this.applicantDetails.controls.panAvailable.setValue('Y');
@@ -2623,7 +2623,7 @@ export class PersonalComponent implements OnInit {
         this.applicantDetails.controls.mobNum.setValue('');
         this.alertService.showAlert(
           'Alert!',
-          'Given mobile number is not valid!'
+          'Given mobile number is not valid!',
         );
       }
     }
@@ -2717,7 +2717,7 @@ export class PersonalComponent implements OnInit {
         .setValidators([
           Validators.compose([
             Validators.pattern(
-              '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$'
+              '^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$',
             ),
             Validators.required,
           ]),
@@ -2815,7 +2815,7 @@ export class PersonalComponent implements OnInit {
           Validators.compose([
             Validators.maxLength(30),
             Validators.pattern('[a-zA-Z ]*'),
-          ])
+          ]),
         );
       this.applicantDetails.get('spouseName').updateValueAndValidity();
     } else {
@@ -2869,7 +2869,7 @@ export class PersonalComponent implements OnInit {
             '-' +
             EkycData.dob.substring(3, 5) +
             '-' +
-            EkycData.dob.substring(0, 2)
+            EkycData.dob.substring(0, 2),
         );
         this.applicantDetails.get('dobAadhar').setValue('');
         this.applicantDetails.get('dobAadhar').clearValidators();
@@ -2937,7 +2937,7 @@ export class PersonalComponent implements OnInit {
         if (data[0].idType == 'pan') {
           this.applicantDetails.controls.panAvailable.setValue('Y');
           this.applicantDetails.controls.panNum.setValue(
-            this.globFunc.basicDec(data[0].idNumber)
+            this.globFunc.basicDec(data[0].idNumber),
           );
           this.panNumber = this.globFunc.basicDec(data[0].idNumber);
           this.disablePan = true;
@@ -2974,7 +2974,7 @@ export class PersonalComponent implements OnInit {
             ) {
               this.upiVerify = true;
               this.applicantDetails.controls.nameupi.setValue(
-                (<any>result).nameAsPerBank
+                (<any>result).nameAsPerBank,
               );
               this.applicantDetails.controls.nameupi.updateValueAndValidity();
             } else {
@@ -3023,7 +3023,7 @@ export class PersonalComponent implements OnInit {
       const previousMonthDate = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth(),
-        0
+        0,
       );
       daysOfExperience += previousMonthDate.getDate();
     }
@@ -3038,8 +3038,8 @@ export class PersonalComponent implements OnInit {
     } else {
       console.log(
         `Experience is not valid. Actual experience: ${decimalExperience.toFixed(
-          1
-        )} years.`
+          1,
+        )} years.`,
       );
     }
   }
